@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useEffect, useRef, memo, useState } from 'react'
+import { Link } from 'react-router-dom'
 import './StudioSnapshot.css'
 const SplashCursor = lazy(() => import('./SplashCursor'));
 
@@ -83,9 +84,9 @@ const StudioSnapshot = memo(() => {
       <div className="abs-gallery-grid">
         {galleryImages.map((img, index) => (
           <div key={index} className="hover-gallery-image-wrapper">
-            <img 
+            <img
               alt={`Studio gallery ${index + 1}`}
-              className="hover-img" 
+              className="hover-img"
               loading="lazy"
               decoding="async"
               src={img}
@@ -97,7 +98,7 @@ const StudioSnapshot = memo(() => {
       <div className="service-hero-con">
         <div className="service-card">
           <div className="section-title in-service">STUDIO SNAPSHOT</div>
-          
+
           <h2 className="service-hero-title">
             Production-ready studio floor
             <br className="mobile-title-break" /> <span> </span>
@@ -149,16 +150,16 @@ const StudioSnapshot = memo(() => {
           </div>
 
           <div className="cta-row">
-            <a href="https://wa.me/916366623955?text=Hi%2C%20I%20am%20interested%20in%20booking%20Nearby%20Studio.%20Please%20share%20more%20details." className="primary-btn in-service" target="_blank" rel="noopener noreferrer">
+            <Link to="/book" state={{ package: { id: 'snapshot', name: 'Studio Snapshot', duration: '2 Hours', price: 2999, features: ['2 Hours AC Studio Session', 'Access to makeup & dressing room'] } }} className="primary-btn in-service">
               <div className="link-hover">
                 <div className="link-inner">
-                  <div className="button-text">ENQUIRE ON WHATSAPP</div>
+                  <div className="button-text">BOOK NEARBY STUDIO</div>
                 </div>
                 <div className="link-inner-hover">
-                  <div className="button-text">ENQUIRE ON WHATSAPP</div>
+                  <div className="button-text">BOOK NEARBY STUDIO</div>
                 </div>
               </div>
-            </a>
+            </Link>
             <div className="cta-note">
               Share your shoot window—
               <br className="mobile-cta-break" />

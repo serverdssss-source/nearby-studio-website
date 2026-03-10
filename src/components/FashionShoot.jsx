@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
 import ContactForm from './ContactForm'
 import InstagramTail from './Instagram_tail'
@@ -46,94 +47,93 @@ export default function FashionShoot() {
     <>
       <Navbar />
       <section className="fashion-section">
-      <div className="fashion-hero">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="fashion-tag"
-        >
-          Model Shoot — Pricing 2026
-        </motion.div>
-        <motion.h1 
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          Model Shoot<br /><span>Packages</span>
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="fashion-sub"
-        >
-          Professional model photography for brands, designers & e-commerce.<br /> Half day and full day packages with 1 cameraman, edited images, and complete studio access. All prices + GST.
-        </motion.p>
-      </div>
-
-      <motion.div 
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        className="who-banner"
-      >
-        <span className="who-label">Who?</span>
-        <span className="who-value">Model Shoot — Brands / Designers / E-commerce</span>
-      </motion.div>
-
-      <div className="fashion-grid">
-        {plans.map((plan, index) => (
+        <div className="fashion-hero">
           <motion.div
-            key={plan.id}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className="fashion-card"
+            className="fashion-tag"
           >
-            <div className="card-number">{plan.id}</div>
-            <span className={`plan-tag ${plan.tag === 'Plan A' ? 'tag-a' : 'tag-b'}`}>{plan.tag}</span>
-            <div className="card-set">Fashion Shoot</div>
-            <h3 className="card-name">{plan.name}</h3>
-            <div className="card-target">{plan.target}</div>
-            <div className="card-meta">
-              <div>
-                <span className="meta-label">Duration</span>
-                <span className="meta-value">{plan.duration}</span>
-              </div>
-              <div>
-                <span className="meta-label">Investment</span>
-                <span className="meta-price">{plan.price} <span className="meta-gst-inline">+GST</span></span>
-              </div>
-            </div>
-            <div className="section-divider">
-              <span className="divider-label">Includes</span>
-              <span className="divider-line"></span>
-            </div>
-            <ul className="features">
-              {plan.features.map((feature, i) => (
-                <li key={i} className={feature.highlight ? 'highlight' : ''}>{feature.text}</li>
-              ))}
-            </ul>
-            {plan.badge && <span className="delivery-badge">{plan.badge}</span>}
-            <span className="delivery-badge">Delivery: 7 Days</span>
-            <a 
-              className="enquiry-btn" 
-              href={`https://wa.me/916366623955?text=Hi%2C%20I%20am%20interested%20in%20the%20Fashion%20Shoot%20${plan.tag}%20%E2%80%94%20${plan.name}%20${plan.price}.%20Please%20share%20more%20details.`}
-              target="_blank" 
-              rel="noopener noreferrer"
-            >
-              ENQUIRE ON WHATSAPP
-            </a>
+            Model Shoot — Pricing 2026
           </motion.div>
-        ))}
-      </div>
+          <motion.h1
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            Model Shoot<br /><span>Packages</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="fashion-sub"
+          >
+            Professional model photography for brands, designers & e-commerce.<br /> Half day and full day packages with 1 cameraman, edited images, and complete studio access. All prices + GST.
+          </motion.p>
+        </div>
 
-      <div className="note-strip">
-        <div className="note-icon">!</div>
-        Bring your own storage device to copy the data · All prices + GST · Sessions by appointment only
-      </div>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          className="who-banner"
+        >
+          <span className="who-label">Who?</span>
+          <span className="who-value">Model Shoot — Brands / Designers / E-commerce</span>
+        </motion.div>
 
-      <InstagramTail />
-    </section>
+        <div className="fashion-grid">
+          {plans.map((plan, index) => (
+            <motion.div
+              key={plan.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className="fashion-card"
+            >
+              <div className="card-number">{plan.id}</div>
+              <span className={`plan-tag ${plan.tag === 'Plan A' ? 'tag-a' : 'tag-b'}`}>{plan.tag}</span>
+              <div className="card-set">Fashion Shoot</div>
+              <h3 className="card-name">{plan.name}</h3>
+              <div className="card-target">{plan.target}</div>
+              <div className="card-meta">
+                <div>
+                  <span className="meta-label">Duration</span>
+                  <span className="meta-value">{plan.duration}</span>
+                </div>
+                <div>
+                  <span className="meta-label">Investment</span>
+                  <span className="meta-price">{plan.price} <span className="meta-gst-inline">+GST</span></span>
+                </div>
+              </div>
+              <div className="section-divider">
+                <span className="divider-label">Includes</span>
+                <span className="divider-line"></span>
+              </div>
+              <ul className="features">
+                {plan.features.map((feature, i) => (
+                  <li key={i} className={feature.highlight ? 'highlight' : ''}>{feature.text}</li>
+                ))}
+              </ul>
+              {plan.badge && <span className="delivery-badge">{plan.badge}</span>}
+              <span className="delivery-badge">Delivery: 7 Days</span>
+              <Link
+                className="enquiry-btn"
+                to="/book"
+                state={{ package: { id: plan.id || plan.name, name: plan.name, duration: plan.duration || 'Custom', price: parseInt(String(plan.price || '0').replace(/,/g, '').match(/\\d+/)?.[0] || '0', 10), features: plan.features ? plan.features.map(f => f.text) : [] } }}
+              >
+                BOOK NOW
+              </Link>
+            </motion.div>
+          ))}
+        </div>
+
+        <div className="note-strip">
+          <div className="note-icon">!</div>
+          Bring your own storage device to copy the data · All prices + GST · Sessions by appointment only
+        </div>
+
+        <InstagramTail />
+      </section>
       <ContactForm />
     </>
   )

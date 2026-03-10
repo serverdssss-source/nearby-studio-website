@@ -1,4 +1,5 @@
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
 import ContactForm from './ContactForm'
 import InstagramTail from './Instagram_tail'
@@ -91,9 +92,9 @@ export default function GreenScreen() {
               </ul>
               {pkg.badge && <span className="delivery-badge">{pkg.badge}</span>}
               <span className="delivery-badge">Delivery: 7 Days</span>
-              <a className="enquiry-btn" href={`https://wa.me/916366623955?text=Hi%2C%20I%20am%20interested%20in%20Green%20Screen%20${pkg.name}%20${pkg.price}.%20Please%20share%20more%20details.`} target="_blank" rel="noopener noreferrer">
-                ENQUIRE ON WHATSAPP
-              </a>
+              <Link className="enquiry-btn" to="/book" state={{ package: { id: pkg.id || pkg.name, name: pkg.name, duration: pkg.duration || 'Custom', price: parseInt(String(pkg.price || '0').replace(/,/g, '').match(/\\d+/)?.[0] || '0', 10), features: pkg.features || [] } }}>
+                BOOK NOW
+              </Link>
             </motion.div>
           ))}
         </div>

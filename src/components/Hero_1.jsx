@@ -9,93 +9,93 @@ const SplashCursor = lazy(() => import('./SplashCursor'));
 const DEFAULT_COLOR = '#00C2A8';
 
 const hexToRgb = (hex) => {
-    const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
-    return m
-        ? [
-            parseInt(m[1], 16) / 255,
-            parseInt(m[2], 16) / 255,
-            parseInt(m[3], 16) / 255,
-        ]
-        : [1, 1, 1];
+  const m = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+  return m
+    ? [
+      parseInt(m[1], 16) / 255,
+      parseInt(m[2], 16) / 255,
+      parseInt(m[3], 16) / 255,
+    ]
+    : [1, 1, 1];
 };
 
 const getAnchorAndDir = (origin, w, h) => {
-    const outside = 0.2;
-    switch (origin) {
-        case 'top-left':
-            return { anchor: [0, -outside * h], dir: [0, 1] };
-        case 'top-right':
-            return { anchor: [w, -outside * h], dir: [0, 1] };
-        case 'left':
-            return { anchor: [-outside * w, 0.5 * h], dir: [1, 0] };
-        case 'right':
-            return { anchor: [(1 + outside) * w, 0.5 * h], dir: [-1, 0] };
-        case 'bottom-left':
-            return { anchor: [0, (1 + outside) * h], dir: [0, -1] };
-        case 'bottom-center':
-            return { anchor: [0.5 * w, (1 + outside) * h], dir: [0, -1] };
-        case 'bottom-right':
-            return { anchor: [w, (1 + outside) * h], dir: [0, -1] };
-        default:
-            return { anchor: [0.5 * w, -outside * h], dir: [0, 1] };
-    }
+  const outside = 0.2;
+  switch (origin) {
+    case 'top-left':
+      return { anchor: [0, -outside * h], dir: [0, 1] };
+    case 'top-right':
+      return { anchor: [w, -outside * h], dir: [0, 1] };
+    case 'left':
+      return { anchor: [-outside * w, 0.5 * h], dir: [1, 0] };
+    case 'right':
+      return { anchor: [(1 + outside) * w, 0.5 * h], dir: [-1, 0] };
+    case 'bottom-left':
+      return { anchor: [0, (1 + outside) * h], dir: [0, -1] };
+    case 'bottom-center':
+      return { anchor: [0.5 * w, (1 + outside) * h], dir: [0, -1] };
+    case 'bottom-right':
+      return { anchor: [w, (1 + outside) * h], dir: [0, -1] };
+    default:
+      return { anchor: [0.5 * w, -outside * h], dir: [0, 1] };
+  }
 };
 
 const LightRays = memo(({
-    raysOrigin = 'top-center',
-    raysColor = DEFAULT_COLOR,
-    raysSpeed = 1,
-    lightSpread = 1,
-    rayLength = 2,
-    pulsating = false,
-    fadeDistance = 1.0,
-    saturation = 1.0,
-    followMouse = true,
-    mouseInfluence = 0.1,
-    noiseAmount = 0.0,
-    distortion = 0.0,
-    className = '',
+  raysOrigin = 'top-center',
+  raysColor = DEFAULT_COLOR,
+  raysSpeed = 1,
+  lightSpread = 1,
+  rayLength = 2,
+  pulsating = false,
+  fadeDistance = 1.0,
+  saturation = 1.0,
+  followMouse = true,
+  mouseInfluence = 0.1,
+  noiseAmount = 0.0,
+  distortion = 0.0,
+  className = '',
 }) => {
-    const containerRef = useRef(null);
-    const uniformsRef = useRef(null);
-    const rendererRef = useRef(null);
-    const mouseRef = useRef({ x: 0.5, y: 0.5 });
-    const smoothMouseRef = useRef({ x: 0.5, y: 0.5 });
-    const animationIdRef = useRef(null);
-    const meshRef = useRef(null);
-    const cleanupFunctionRef = useRef(null);
-    const isInViewportRef = useRef(true);
-    const isTabVisibleRef = useRef(true);
-    const isAnimatingRef = useRef(false);
+  const containerRef = useRef(null);
+  const uniformsRef = useRef(null);
+  const rendererRef = useRef(null);
+  const mouseRef = useRef({ x: 0.5, y: 0.5 });
+  const smoothMouseRef = useRef({ x: 0.5, y: 0.5 });
+  const animationIdRef = useRef(null);
+  const meshRef = useRef(null);
+  const cleanupFunctionRef = useRef(null);
+  const isInViewportRef = useRef(true);
+  const isTabVisibleRef = useRef(true);
+  const isAnimatingRef = useRef(false);
 
-    /* =========================
-       WebGL Setup
-    ========================= */
+  /* =========================
+     WebGL Setup
+  ========================= */
 
-    useEffect(() => {
-        if (!containerRef.current) return;
+  useEffect(() => {
+    if (!containerRef.current) return;
 
-        if (cleanupFunctionRef.current) {
-            cleanupFunctionRef.current();
-            cleanupFunctionRef.current = null;
-        }
+    if (cleanupFunctionRef.current) {
+      cleanupFunctionRef.current();
+      cleanupFunctionRef.current = null;
+    }
 
-        const initializeWebGL = async () => {
-            const renderer = new Renderer({
-                dpr: Math.min(window.devicePixelRatio, 2),
-                alpha: true,
-            });
+    const initializeWebGL = async () => {
+      const renderer = new Renderer({
+        dpr: Math.min(window.devicePixelRatio, 2),
+        alpha: true,
+      });
 
-            rendererRef.current = renderer;
-            const gl = renderer.gl;
+      rendererRef.current = renderer;
+      const gl = renderer.gl;
 
-            gl.canvas.style.width = '100%';
-            gl.canvas.style.height = '100%';
+      gl.canvas.style.width = '100%';
+      gl.canvas.style.height = '100%';
 
-            containerRef.current.innerHTML = '';
-            containerRef.current.appendChild(gl.canvas);
+      containerRef.current.innerHTML = '';
+      containerRef.current.appendChild(gl.canvas);
 
-            const vert = `
+      const vert = `
 attribute vec2 position;
 varying vec2 vUv;
 void main() {
@@ -103,7 +103,7 @@ void main() {
   gl_Position = vec4(position, 0.0, 1.0);
 }`;
 
-            const frag = `
+      const frag = `
 precision highp float;
 
 uniform float iTime;
@@ -180,163 +180,163 @@ void main() {
   gl_FragColor = vec4(color, strength);
 }`;
 
-            const uniforms = {
-                iTime: { value: 0 },
-                iResolution: { value: [1, 1] },
-                rayPos: { value: [0, 0] },
-                rayDir: { value: [0, 1] },
-                raysColor: { value: hexToRgb(raysColor) },
-                raysSpeed: { value: raysSpeed },
-                lightSpread: { value: lightSpread },
-                rayLength: { value: rayLength },
-                pulsating: { value: pulsating ? 1.0 : 0.0 },
-                fadeDistance: { value: fadeDistance },
-                saturation: { value: saturation },
-                mousePos: { value: [0.5, 0.5] },
-                mouseInfluence: { value: mouseInfluence },
-                noiseAmount: { value: noiseAmount },
-                distortion: { value: distortion },
-            };
+      const uniforms = {
+        iTime: { value: 0 },
+        iResolution: { value: [1, 1] },
+        rayPos: { value: [0, 0] },
+        rayDir: { value: [0, 1] },
+        raysColor: { value: hexToRgb(raysColor) },
+        raysSpeed: { value: raysSpeed },
+        lightSpread: { value: lightSpread },
+        rayLength: { value: rayLength },
+        pulsating: { value: pulsating ? 1.0 : 0.0 },
+        fadeDistance: { value: fadeDistance },
+        saturation: { value: saturation },
+        mousePos: { value: [0.5, 0.5] },
+        mouseInfluence: { value: mouseInfluence },
+        noiseAmount: { value: noiseAmount },
+        distortion: { value: distortion },
+      };
 
-            uniformsRef.current = uniforms;
+      uniformsRef.current = uniforms;
 
-            const geometry = new Triangle(gl);
-            const program = new Program(gl, {
-                vertex: vert,
-                fragment: frag,
-                uniforms,
-            });
+      const geometry = new Triangle(gl);
+      const program = new Program(gl, {
+        vertex: vert,
+        fragment: frag,
+        uniforms,
+      });
 
-            const mesh = new Mesh(gl, { geometry, program });
-            meshRef.current = mesh;
+      const mesh = new Mesh(gl, { geometry, program });
+      meshRef.current = mesh;
 
-            const updatePlacement = () => {
-                const { clientWidth, clientHeight } = containerRef.current;
-                renderer.setSize(clientWidth, clientHeight);
+      const updatePlacement = () => {
+        const { clientWidth, clientHeight } = containerRef.current;
+        renderer.setSize(clientWidth, clientHeight);
 
-                const dpr = renderer.dpr;
-                const { anchor, dir } = getAnchorAndDir(
-                    raysOrigin,
-                    clientWidth * dpr,
-                    clientHeight * dpr
-                );
+        const dpr = renderer.dpr;
+        const { anchor, dir } = getAnchorAndDir(
+          raysOrigin,
+          clientWidth * dpr,
+          clientHeight * dpr
+        );
 
-                uniforms.iResolution.value = [
-                    clientWidth * dpr,
-                    clientHeight * dpr,
-                ];
-                uniforms.rayPos.value = anchor;
-                uniforms.rayDir.value = dir;
-            };
+        uniforms.iResolution.value = [
+          clientWidth * dpr,
+          clientHeight * dpr,
+        ];
+        uniforms.rayPos.value = anchor;
+        uniforms.rayDir.value = dir;
+      };
 
-            const isActive = () => isInViewportRef.current && isTabVisibleRef.current;
+      const isActive = () => isInViewportRef.current && isTabVisibleRef.current;
 
-            const loop = (t) => {
-                if (!isActive()) {
-                    isAnimatingRef.current = false;
-                    animationIdRef.current = null;
-                    return;
-                }
-                uniforms.iTime.value = t * 0.001;
+      const loop = (t) => {
+        if (!isActive()) {
+          isAnimatingRef.current = false;
+          animationIdRef.current = null;
+          return;
+        }
+        uniforms.iTime.value = t * 0.001;
 
-                if (followMouse) {
-                    const smoothing = 0.92;
-                    smoothMouseRef.current.x =
-                        smoothMouseRef.current.x * smoothing +
-                        mouseRef.current.x * (1 - smoothing);
-                    smoothMouseRef.current.y =
-                        smoothMouseRef.current.y * smoothing +
-                        mouseRef.current.y * (1 - smoothing);
+        if (followMouse) {
+          const smoothing = 0.92;
+          smoothMouseRef.current.x =
+            smoothMouseRef.current.x * smoothing +
+            mouseRef.current.x * (1 - smoothing);
+          smoothMouseRef.current.y =
+            smoothMouseRef.current.y * smoothing +
+            mouseRef.current.y * (1 - smoothing);
 
-                    uniforms.mousePos.value = [
-                        smoothMouseRef.current.x,
-                        smoothMouseRef.current.y,
-                    ];
-                }
+          uniforms.mousePos.value = [
+            smoothMouseRef.current.x,
+            smoothMouseRef.current.y,
+          ];
+        }
 
-                renderer.render({ scene: mesh });
-                animationIdRef.current = requestAnimationFrame(loop);
-            };
+        renderer.render({ scene: mesh });
+        animationIdRef.current = requestAnimationFrame(loop);
+      };
 
-            const startLoop = () => {
-                if (isAnimatingRef.current || !isActive()) return;
-                isAnimatingRef.current = true;
-                animationIdRef.current = requestAnimationFrame(loop);
-            };
+      const startLoop = () => {
+        if (isAnimatingRef.current || !isActive()) return;
+        isAnimatingRef.current = true;
+        animationIdRef.current = requestAnimationFrame(loop);
+      };
 
-            const stopLoop = () => {
-                isAnimatingRef.current = false;
-                if (animationIdRef.current !== null) {
-                    cancelAnimationFrame(animationIdRef.current);
-                    animationIdRef.current = null;
-                }
-            };
+      const stopLoop = () => {
+        isAnimatingRef.current = false;
+        if (animationIdRef.current !== null) {
+          cancelAnimationFrame(animationIdRef.current);
+          animationIdRef.current = null;
+        }
+      };
 
-            const observer = new IntersectionObserver(
-                ([entry]) => {
-                    isInViewportRef.current = Boolean(entry?.isIntersecting);
-                    if (isActive()) startLoop();
-                    else stopLoop();
-                },
-                { threshold: 0.01 }
-            );
-            observer.observe(containerRef.current);
+      const observer = new IntersectionObserver(
+        ([entry]) => {
+          isInViewportRef.current = Boolean(entry?.isIntersecting);
+          if (isActive()) startLoop();
+          else stopLoop();
+        },
+        { threshold: 0.01 }
+      );
+      observer.observe(containerRef.current);
 
-            const handleVisibilityChange = () => {
-                isTabVisibleRef.current = document.visibilityState === 'visible';
-                if (isActive()) startLoop();
-                else stopLoop();
-            };
-            document.addEventListener('visibilitychange', handleVisibilityChange);
-            handleVisibilityChange();
+      const handleVisibilityChange = () => {
+        isTabVisibleRef.current = document.visibilityState === 'visible';
+        if (isActive()) startLoop();
+        else stopLoop();
+      };
+      document.addEventListener('visibilitychange', handleVisibilityChange);
+      handleVisibilityChange();
 
-            requestAnimationFrame(() => {
-                if (containerRef.current) updatePlacement();
-            });
-            window.addEventListener('resize', updatePlacement);
-            startLoop();
+      requestAnimationFrame(() => {
+        if (containerRef.current) updatePlacement();
+      });
+      window.addEventListener('resize', updatePlacement);
+      startLoop();
 
-            cleanupFunctionRef.current = () => {
-                stopLoop();
-                observer.disconnect();
-                document.removeEventListener('visibilitychange', handleVisibilityChange);
-                window.removeEventListener('resize', updatePlacement);
-                renderer.gl.getExtension('WEBGL_lose_context')?.loseContext();
-                renderer.gl.canvas.remove();
-            };
-        };
+      cleanupFunctionRef.current = () => {
+        stopLoop();
+        observer.disconnect();
+        document.removeEventListener('visibilitychange', handleVisibilityChange);
+        window.removeEventListener('resize', updatePlacement);
+        renderer.gl.getExtension('WEBGL_lose_context')?.loseContext();
+        renderer.gl.canvas.remove();
+      };
+    };
 
-        initializeWebGL();
+    initializeWebGL();
 
-        return () => cleanupFunctionRef.current?.();
-    }, []);
+    return () => cleanupFunctionRef.current?.();
+  }, []);
 
-    /* =========================
-       Mouse Tracking
-    ========================= */
+  /* =========================
+     Mouse Tracking
+  ========================= */
 
-    useEffect(() => {
-        if (!followMouse) return;
+  useEffect(() => {
+    if (!followMouse) return;
 
-        const handleMouseMove = (e) => {
-            const rect = containerRef.current?.getBoundingClientRect();
-            if (!rect) return;
-            mouseRef.current = {
-                x: (e.clientX - rect.left) / rect.width,
-                y: (e.clientY - rect.top) / rect.height,
-            };
-        };
+    const handleMouseMove = (e) => {
+      const rect = containerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      mouseRef.current = {
+        x: (e.clientX - rect.left) / rect.width,
+        y: (e.clientY - rect.top) / rect.height,
+      };
+    };
 
-        window.addEventListener('mousemove', handleMouseMove, { passive: true });
-        return () => window.removeEventListener('mousemove', handleMouseMove);
-    }, [followMouse]);
+    window.addEventListener('mousemove', handleMouseMove, { passive: true });
+    return () => window.removeEventListener('mousemove', handleMouseMove);
+  }, [followMouse]);
 
-    return (
-        <div
-            ref={containerRef}
-            className={`w-full h-full pointer-events-none overflow-hidden relative ${className}`}
-        />
-    );
+  return (
+    <div
+      ref={containerRef}
+      className={`w-full h-full pointer-events-none overflow-hidden relative ${className}`}
+    />
+  );
 });
 
 LightRays.displayName = 'LightRays';
@@ -346,84 +346,84 @@ LightRays.displayName = 'LightRays';
 ========================= */
 
 const Hero_1 = memo(function Hero_1() {
-    const [isMobile, setIsMobile] = useState(
-        () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
-    );
-    const [isIOS, setIsIOS] = useState(false);
+  const [isMobile, setIsMobile] = useState(
+    () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
+  );
+  const [isIOS, setIsIOS] = useState(false);
 
-    useEffect(() => {
-        const mediaQuery = window.matchMedia('(max-width: 767px)');
-        const handleChange = (event) => setIsMobile(event.matches);
+  useEffect(() => {
+    const mediaQuery = window.matchMedia('(max-width: 767px)');
+    const handleChange = (event) => setIsMobile(event.matches);
 
-        // Keep state synced on mount too.
-        setIsMobile(mediaQuery.matches);
-        
-        // Detect iOS
-        const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-        setIsIOS(iOS);
+    // Keep state synced on mount too.
+    setIsMobile(mediaQuery.matches);
 
-        if (mediaQuery.addEventListener) {
-            mediaQuery.addEventListener('change', handleChange);
-            return () => mediaQuery.removeEventListener('change', handleChange);
-        }
+    // Detect iOS
+    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+    setIsIOS(iOS);
 
-        // Safari fallback
-        mediaQuery.addListener(handleChange);
-        return () => mediaQuery.removeListener(handleChange);
-    }, []);
+    if (mediaQuery.addEventListener) {
+      mediaQuery.addEventListener('change', handleChange);
+      return () => mediaQuery.removeEventListener('change', handleChange);
+    }
 
-    const videoRef = useRef(null);
-    const [showCursor, setShowCursor] = useState(false);
+    // Safari fallback
+    mediaQuery.addListener(handleChange);
+    return () => mediaQuery.removeListener(handleChange);
+  }, []);
 
-    useEffect(() => {
-        let idleId;
-        let timeoutId;
+  const videoRef = useRef(null);
+  const [showCursor, setShowCursor] = useState(false);
 
-        const enableHeavyEffects = () => {
-            if (!isMobile) {
-                setShowCursor(true);
-            }
-        };
+  useEffect(() => {
+    let idleId;
+    let timeoutId;
 
-        if ('requestIdleCallback' in window) {
-            idleId = window.requestIdleCallback(enableHeavyEffects, { timeout: 600 });
-        } else {
-            timeoutId = window.setTimeout(enableHeavyEffects, 250);
-        }
+    const enableHeavyEffects = () => {
+      if (!isMobile) {
+        setShowCursor(true);
+      }
+    };
 
-        return () => {
-            if (idleId) window.cancelIdleCallback(idleId);
-            if (timeoutId) window.clearTimeout(timeoutId);
-        };
-    }, [isMobile]);
+    if ('requestIdleCallback' in window) {
+      idleId = window.requestIdleCallback(enableHeavyEffects, { timeout: 600 });
+    } else {
+      timeoutId = window.setTimeout(enableHeavyEffects, 250);
+    }
 
-    useEffect(() => {
-        const video = videoRef.current;
-        if (!video) return;
+    return () => {
+      if (idleId) window.cancelIdleCallback(idleId);
+      if (timeoutId) window.clearTimeout(timeoutId);
+    };
+  }, [isMobile]);
 
-        const handleLoaded = () => {
-            video.currentTime = 0;
-            video.play();
-        };
+  useEffect(() => {
+    const video = videoRef.current;
+    if (!video) return;
 
-        const handleTimeUpdate = () => {
-            if (video.currentTime >= 5) {
-                video.currentTime = 0;
-            }
-        };
+    const handleLoaded = () => {
+      video.currentTime = 0;
+      video.play();
+    };
 
-        video.addEventListener("loadedmetadata", handleLoaded);
-        video.addEventListener("timeupdate", handleTimeUpdate);
+    const handleTimeUpdate = () => {
+      if (video.currentTime >= 5) {
+        video.currentTime = 0;
+      }
+    };
 
-        return () => {
-            video.removeEventListener("loadedmetadata", handleLoaded);
-            video.removeEventListener("timeupdate", handleTimeUpdate);
-        };
-    }, []);
+    video.addEventListener("loadedmetadata", handleLoaded);
+    video.addEventListener("timeupdate", handleTimeUpdate);
 
-    return (
-        <>
-            <style>{`
+    return () => {
+      video.removeEventListener("loadedmetadata", handleLoaded);
+      video.removeEventListener("timeupdate", handleTimeUpdate);
+    };
+  }, []);
+
+  return (
+    <>
+      <style>{`
                 @keyframes zoomIn {
                     0% {
                         opacity: 0;
@@ -435,108 +435,111 @@ const Hero_1 = memo(function Hero_1() {
                     }
                 }
             `}</style>
-            <div
-                style={{
-                    width: '100%',
-                    height: '80vh',
-                    position: 'relative',
-                    background: '#0F0F12',
-                }}
-            >
-            {!isMobile && showCursor && (
-                <Suspense fallback={null}>
-                    <SplashCursor />
-                </Suspense>
-            )}
-            {/* Light Rays Background */}
-            <LightRays
-                raysOrigin={isMobile ? "center" : "top-center"}
-                raysColor="#00C2A8"
-                raysSpeed={isMobile ? 0.8 : 1}
-                lightSpread={isMobile ? 0.35 : 0.5}
-                rayLength={isMobile ? 3 : 1}
-                mouseInfluence={isMobile ? 0.4 : 0.4}
-                noiseAmount={0}
-                distortion={0}
-                pulsating={false}
-                fadeDistance={isMobile ? 0.85 : 1}
-                saturation={1}
+      <div
+        style={{
+          width: '100%',
+          height: '80vh',
+          position: 'relative',
+          background: '#0F0F12',
+        }}
+      >
+        {!isMobile && showCursor && (
+          <Suspense fallback={null}>
+            <SplashCursor />
+          </Suspense>
+        )}
+        {/* Light Rays Background */}
+        <LightRays
+          raysOrigin={isMobile ? "center" : "top-center"}
+          raysColor="#00C2A8"
+          raysSpeed={isMobile ? 0.8 : 1}
+          lightSpread={isMobile ? 0.35 : 0.5}
+          rayLength={isMobile ? 3 : 1}
+          mouseInfluence={isMobile ? 0.4 : 0.4}
+          noiseAmount={0}
+          distortion={0}
+          pulsating={false}
+          fadeDistance={isMobile ? 0.85 : 1}
+          saturation={1}
+        />
+
+        {/* Center Logo */}
+        <div
+          style={{
+            position: 'absolute',
+            top: '50%',
+            left: '50%',
+            transform: 'translate(-50%, -50%)',
+            width: '100%',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 10,
+            pointerEvents: 'auto',
+          }}
+        >
+          {isMobile && isIOS ? (
+            <img
+              src="/Nearby studio_white.webp"
+              alt="Nearby Studio"
+              style={{
+                width: "clamp(200px, 70vw, 300px)",
+                mixBlendMode: "screen",
+                background: "transparent",
+                animation: 'zoomIn 1.5s ease-out',
+              }}
             />
-
-            {/* Center Logo */}
-            <div
-                style={{
-                    position: 'absolute',
-                    top: '50%',
-                    left: '50%',
-                    transform: 'translate(-50%, -50%)',
-                    width: '100%',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    zIndex: 10,
-                    pointerEvents: 'auto',
-                }}
+          ) : (
+            <video
+              ref={videoRef}
+              autoPlay
+              muted
+              loop
+              playsInline
+              preload="auto"
+              fetchPriority="high"
+              style={{
+                width: "clamp(280px, 80vw, 600px)",
+                mixBlendMode: "screen",
+                background: "transparent",
+                transform: "translateZ(0)",
+              }}
             >
-                {isMobile && isIOS ? (
-                    <img
-                        src="/Nearby studio_white.webp"
-                        alt="Nearby Studio"
-                        style={{
-                            width: "clamp(200px, 70vw, 300px)",
-                            mixBlendMode: "screen",
-                            background: "transparent",
-                            animation: 'zoomIn 1.5s ease-out',
-                        }}
-                    />
-                ) : (
-                    <video
-                        ref={videoRef}
-                        src="/nearby alpha logo.webm"
-                        autoPlay
-                        muted
-                        loop
-                        playsInline
-                        preload="auto"
-                        fetchPriority="high"
-                        style={{
-                            width: "clamp(280px, 80vw, 600px)",
-                            mixBlendMode: "screen",
-                            background: "transparent",
-                        }}
-                    />
-                )}
-            </div>
-
-            {/* Bottom Text */}
-            <div
-                style={{
-                    position: 'absolute',
-                    bottom: '20px',
-                    width: '100%',
-                    textAlign: 'center',
-                }}
-            >
-                <span style={{ color: '#F5F5F3' }}>
-                    a Studio Floor by{' '}
-                    <a
-                        href="https://sripadastudios.com/"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        style={{
-                            fontWeight: 700,
-                            textDecoration: 'none',
-                            color: 'inherit',
-                            cursor: 'pointer',
-                        }}
-                    >
-                        Sripada Studios
-                    </a>
-                </span>
-            </div>
+              <source src="/nearby alpha logo.mp4" type="video/mp4" />
+              <source src="/nearby alpha logo.webm" type="video/webm" />
+            </video>
+          )}
         </div>
-        </>
-    );
+
+        {/* Bottom Text */}
+        <div
+          style={{
+            position: 'absolute',
+            bottom: '20px',
+            width: '100%',
+            textAlign: 'center',
+          }}
+        >
+          <span style={{ color: '#F5F5F3' }}>
+            a Studio Floor by{' '}
+            <a
+              href="https://sripadastudios.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              style={{
+                fontWeight: 700,
+                textDecoration: 'none',
+                color: 'inherit',
+                cursor: 'pointer',
+              }}
+            >
+              Sripada Studios
+            </a>
+          </span>
+        </div>
+      </div>
+    </>
+  );
 });
 
 export default Hero_1;
