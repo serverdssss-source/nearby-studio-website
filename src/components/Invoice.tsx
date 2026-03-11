@@ -3,6 +3,8 @@
 import { Download, Mail, ArrowLeft, Printer } from "lucide-react";
 import { useEffect, useState, useMemo } from "react";
 import { format } from "date-fns";
+import { jsPDF } from "jspdf";
+import html2canvas from "html2canvas";
 
 export interface GSTInvoiceData {
   id: string;
@@ -493,12 +495,6 @@ export default function SripadaInvoice({
     if (pageElements.length === 0) {
       throw new Error("Invoice pages not found");
     }
-
-    const [{ jsPDF }, html2canvasModule] = await Promise.all([
-      import("jspdf"),
-      import("html2canvas"),
-    ]);
-    const html2canvas = html2canvasModule.default;
 
     const pdf = new jsPDF({
       orientation: "portrait",
