@@ -204,7 +204,7 @@ app.post('/api/verify', async (req, res) => {
 });
 
 // Route: Webhook for Razorpay (Bulletproof fallback)
-app.post('/api/webhook', async (req, res) => {
+app.post('/api/webhook', express.raw({type: 'application/json'}), async (req, res) => {
   try {
     const secret = process.env.RAZORPAY_WEBHOOK_SECRET || 'nearby_secret_2026';
     const razorpaySignature = req.headers['x-razorpay-signature'];
@@ -213,9 +213,10 @@ app.post('/api/webhook', async (req, res) => {
       return res.status(400).send('Missing signature');
     }
 
+    // Use the raw body buffer for signature validation
     const expectedSignature = crypto
       .createHmac('sha256', secret)
-      .update(JSON.stringify(req.body))
+      .update(req.body) // req.body is a Buffer here because of express.raw
       .digest('hex');
 
     if (expectedSignature !== razorpaySignature) {
@@ -223,9 +224,12 @@ app.post('/api/webhook', async (req, res) => {
       return res.status(400).send('Invalid signature');
     }
 
-    const event = req.body.event;
+    // Now parse the body manually since we used express.raw
+    const body = JSON.parse(req.body.toString());
+    const event = body.event;
+    
     if (event === 'payment.captured' || event === 'order.paid') {
-      const paymentData = req.body.payload.payment.entity;
+      const paymentData = body.payload.payment.entity;
       const orderId = paymentData.order_id;
       const paymentId = paymentData.id;
 
