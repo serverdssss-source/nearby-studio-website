@@ -1,9 +1,11 @@
-name: Deploy App to Hostinger VPS
+name: Deploy Backend to Hostinger VPS
 
 on:
   push:
     branches:
       - master
+    paths:
+      - 'server/**'
 
 jobs:
   deploy:
@@ -13,17 +15,6 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '20'
-          cache: 'npm'
-
-      - name: Install Dependencies & Build Frontend
-        run: |
-          npm install
-          npm run build
-
       - name: Deploy to Hostinger via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -32,29 +23,19 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT || 22 }}
           script: |
-            export TARGET_DIR="/var/www/ssstudio"
-            
+            export TARGET_DIR="/var/www/ssstudio" 
+
             cd $TARGET_DIR
             
-            # Reset and Pull latest code (Backend + Configs)
+            # Reset and Pull latest code
             git fetch origin master
             git reset --hard origin/master
             
-            # Sync the built frontend from GitHub workspace? 
-            # Note: We can't easily sync 'dist' via ssh-action without scp or rsync.
-            # Alternative: Build ON the VPS if memory allows. 
-            # OR use scp-action. 
-            
-            # Let's pivot: Build on VPS to keep logic simple for now, 
-            # as Hostinger VPS usually has enough RAM for a Vite build.
-            
-            cd $TARGET_DIR
-            npm install
-            npm run build
-            
-            # Restart backend
+            # Install backend dependencies
             cd server
-            npm install
+            npm ci || npm install
+            
+            # Restart backend using PM2
             pm2 restart ssstudio-backend || pm2 start index.js --name "ssstudio-backend"
             
-            echo "Universal Deployment to Hostinger completed successfully!"
+            echo "Backend Deployment to Hostinger completed successfully!"
