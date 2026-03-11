@@ -21,7 +21,7 @@ export const generateReceiptPDF = (booking) => {
         });
 
         // Branding & Logo
-        const logoPath = '/Users/ssmacmini04/Desktop/ssstudio/public/invoice-logo.png';
+        const logoPath = '/Users/ssmacmini04/Desktop/ssstudio/public/Untitled design.png';
         try {
             doc.image(logoPath, 50, 45, { width: 100 });
         } catch (e) {
