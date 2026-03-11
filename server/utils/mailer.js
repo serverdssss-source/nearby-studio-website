@@ -20,8 +20,9 @@ export const generateReceiptPDF = (booking) => {
             resolve(pdfData);
         });
 
-        // Branding & Logo
-        const logoPath = '/Users/ssmacmini04/Desktop/ssstudio/public/Untitled design.png';
+        // Define standard email attachments
+        const logoPath = '/Users/ssmacmini04/Desktop/ssstudio/public/Nearby studio_white.webp';
+        const videoPath = '/Users/ssmacmini04/Desktop/ssstudio/public/nearby alpha logo.webm';
         try {
             doc.image(logoPath, 50, 45, { width: 100 });
         } catch (e) {

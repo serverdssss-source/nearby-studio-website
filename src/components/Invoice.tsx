@@ -147,7 +147,6 @@ export default function SripadaInvoice({
     const loadLogos = async () => {
       try {
         const logoUrls = [
-          "/Untitled design.png",
           "/Nearby studio_white.webp",
           "/seal.png",
           "/logo.webp"
@@ -1298,13 +1297,9 @@ export default function SripadaInvoice({
                   }}
                 >
                   <img
-                    src={logos["/Untitled design.png"] || "/Untitled design.png"}
-                    alt="Nearby Studio Logo"
-                    style={{
-                      height: "65px",
-                      width: "auto",
-                      alignSelf: "center",
-                    }}
+                    alt="Nearby Studio"
+                    className="max-h-16 w-auto object-contain"
+                    src={logos["/Nearby studio_white.webp"] || "/Nearby studio_white.webp"}
                   />
                   <div
                     style={{ textAlign: "right", display: "grid", gap: "6px" }}
