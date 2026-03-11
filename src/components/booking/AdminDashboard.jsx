@@ -15,7 +15,7 @@ export default function AdminDashboard() {
     const fetchBookings = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch(`http://localhost:5001/api/admin/bookings?password=${password}`);
+            const response = await fetch(`${import.meta.env.VITE_API_URL}/api/admin/bookings?password=${password}`);
             if (response.ok) {
                 const data = await response.json();
                 setBookings(data);

@@ -618,7 +618,7 @@ export default function SripadaInvoice({
       // Send email with timeout
       const token = localStorage.getItem("authToken");
       const response = await Promise.race([
-        fetch("http://localhost:5001/api/send-invoice", {
+        fetch(`${import.meta.env.VITE_API_URL}/api/send-invoice`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

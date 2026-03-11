@@ -150,7 +150,7 @@ export default function BookingFlow() {
                 { startTime: '6:00 PM', endTime: '8:00 PM' }
             ].map(s => ({ startTime: formatTimeHHMM(s.startTime), endTime: formatTimeHHMM(s.endTime) }));
 
-            const res = await fetch(`http://localhost:5001/api/availability?date=${selectedDate}&packageDuration=${selectedPackage.duration}`);
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/availability?date=${selectedDate}&packageDuration=${selectedPackage.duration}`);
             if (res.ok) {
                 const data = await res.json();
                 const booked = data.bookedSlots || [];
@@ -205,7 +205,7 @@ export default function BookingFlow() {
                 }
             };
 
-            const res = await fetch('http://localhost:5001/api/orders', {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/orders`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(orderData)
@@ -226,7 +226,7 @@ export default function BookingFlow() {
                 order_id: order.id,
                 handler: async function (response) {
                     try {
-                        const verifyRes = await fetch('http://localhost:5001/api/verify', {
+                        const verifyRes = await fetch(`${import.meta.env.VITE_API_URL}/api/verify`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ ...response, bookingId: DBid })
