@@ -203,6 +203,59 @@ app.post('/api/verify', async (req, res) => {
   }
 });
 
+// Route: Webhook for Razorpay (Bulletproof fallback)
+app.post('/api/webhook', async (req, res) => {
+  try {
+    const secret = process.env.RAZORPAY_WEBHOOK_SECRET || 'nearby_secret_2026';
+    const razorpaySignature = req.headers['x-razorpay-signature'];
+    
+    if (!razorpaySignature) {
+      return res.status(400).send('Missing signature');
+    }
+
+    const expectedSignature = crypto
+      .createHmac('sha256', secret)
+      .update(JSON.stringify(req.body))
+      .digest('hex');
+
+    if (expectedSignature !== razorpaySignature) {
+      console.error('Webhook signature mismatch');
+      return res.status(400).send('Invalid signature');
+    }
+
+    const event = req.body.event;
+    if (event === 'payment.captured' || event === 'order.paid') {
+      const paymentData = req.body.payload.payment.entity;
+      const orderId = paymentData.order_id;
+      const paymentId = paymentData.id;
+
+      // Find the booking by Razorpay Order ID and update if not already confirmed
+      const result = await pool.query(`
+        UPDATE bookings 
+        SET status = 'Confirmed', payment_status = 'Paid', razorpay_payment_id = $1
+        WHERE razorpay_order_id = $2 AND status != 'Confirmed'
+        RETURNING *
+      `, [paymentId, orderId]);
+
+      if (result.rows.length > 0) {
+        const confirmedBooking = result.rows[0];
+        console.log("Webhook verified payment for Booking:", confirmedBooking.booking_id);
+        
+        // Send confirmation email asynchronously
+        sendConfirmationEmail(confirmedBooking).catch(err => console.error('Delayed Email Error:', err));
+      } else {
+        console.log("Webhook received, but booking already confirmed or not found for order:", orderId);
+      }
+    }
+    
+    // Always return 200 OK so Razorpay knows we received it
+    res.status(200).json({ status: 'ok' });
+  } catch (err) {
+    console.error("Webhook processing error:", err);
+    res.status(500).send('Internal Server Error');
+  }
+});
+
 // Route: Admin - Get All Bookings
 app.get('/api/admin/bookings', async (req, res) => {
   try {
