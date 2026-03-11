@@ -225,14 +225,21 @@ export default function BookingFlow() {
                 description: `Booking for ${selectedPackage.name}`,
                 order_id: order.id,
                 handler: async function (response) {
+                    console.log("Razorpay Success Response:", response);
                     try {
-                        const verifyRes = await fetch(`${import.meta.env.VITE_API_URL}/api/verify`, {
+                        const apiUrl = import.meta.env.VITE_API_URL || "https://api.nearbystudio.in";
+                        console.log("Calling verification at:", `${apiUrl}/api/verify`);
+                        
+                        const verifyRes = await fetch(`${apiUrl}/api/verify`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ ...response, bookingId: DBid })
                         });
 
-                        if (!verifyRes.ok) throw new Error("Verification failed");
+                        if (!verifyRes.ok) {
+                            const errorText = await verifyRes.text();
+                            throw new Error(`Verification failed: ${errorText}`);
+                        }
 
                         console.log("Payment Verified Successfully in DB:", DBid);
                         setBookingId(DBid);
