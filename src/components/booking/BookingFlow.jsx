@@ -2,6 +2,7 @@ import { useState, useEffect, useMemo } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import Navbar from '../Navbar';
+import SripadaInvoice from '../Invoice';
 import './BookingFlow.css';
 
 // Predefined Packages for direct entry (if they didn't come from a specific page)
@@ -129,6 +130,16 @@ export default function BookingFlow() {
         }
     }, [currentStep, selectedDate, selectedPackage]);
 
+    const formatTimeHHMM = (timeStr) => {
+        if (!timeStr) return '';
+        const parts = timeStr.trim().split(' ');
+        if (parts.length !== 2) return timeStr;
+        const [time, ampm] = parts;
+        const [h, m] = time.split(':');
+        if (!h || !m) return timeStr;
+        return `${h.padStart(2, '0')}:${m} ${ampm}`;
+    };
+
     const fetchAvailability = async () => {
         setIsLoadingSlots(true);
         try {
@@ -137,15 +148,15 @@ export default function BookingFlow() {
                 { startTime: '12:30 PM', endTime: '2:30 PM' },
                 { startTime: '3:00 PM', endTime: '5:00 PM' },
                 { startTime: '6:00 PM', endTime: '8:00 PM' }
-            ];
+            ].map(s => ({ startTime: formatTimeHHMM(s.startTime), endTime: formatTimeHHMM(s.endTime) }));
 
-            const res = await fetch(`/api/availability?date=${selectedDate}&packageDuration=${selectedPackage.duration}`);
+            const res = await fetch(`http://localhost:5001/api/availability?date=${selectedDate}&packageDuration=${selectedPackage.duration}`);
             if (res.ok) {
                 const data = await res.json();
                 const booked = data.bookedSlots || [];
                 generatedSlots = generatedSlots.map(slot => ({
                     ...slot,
-                    disabled: booked.some(b => b.startTime === slot.startTime && b.endTime === slot.endTime)
+                    disabled: booked.some(b => formatTimeHHMM(b.startTime) === slot.startTime && formatTimeHHMM(b.endTime) === slot.endTime)
                 }));
             }
             setAvailableSlots(generatedSlots);
@@ -153,9 +164,9 @@ export default function BookingFlow() {
             console.error(err);
             setAvailableSlots([
                 { startTime: '10:00 AM', endTime: '12:00 PM', disabled: false },
-                { startTime: '12:30 PM', endTime: '2:30 PM', disabled: false },
-                { startTime: '3:00 PM', endTime: '5:00 PM', disabled: false },
-                { startTime: '6:00 PM', endTime: '8:00 PM', disabled: false }
+                { startTime: '12:30 PM', endTime: '02:30 PM', disabled: false },
+                { startTime: '03:00 PM', endTime: '05:00 PM', disabled: false },
+                { startTime: '06:00 PM', endTime: '08:00 PM', disabled: false }
             ]);
         } finally {
             setIsLoadingSlots(false);
@@ -177,11 +188,16 @@ export default function BookingFlow() {
         try {
             const amountWithGst = selectedPackage.price;
 
+            const subtotal = (selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0));
+            const gstAmount = Math.round(subtotal * 0.18);
+            const totalWithGst = subtotal + gstAmount;
+
             const orderData = {
-                amount: (selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0)),
+                amount: totalWithGst,
                 bookingData: {
                     packageId: selectedPackage.id,
-                    packageName: `${selectedPackage.name} (${selectedDuration?.label}${extraHours > 0 ? ` + ${extraHours}h` : ''})`,
+                    packageName: `${selectedPackage.name} (${selectedDuration ? (hourlyRates[selectedPackage.name] ? parseInt(selectedDuration.label.split(' ')[0]) + extraHours + ' Hours' : selectedDuration.label) : ''})`,
+                    packageDescription: selectedPackage.features ? selectedPackage.features.join(", ") : "",
                     date: selectedDate,
                     startTime: selectedSlot.startTime,
                     endTime: selectedSlot.endTime,
@@ -189,7 +205,7 @@ export default function BookingFlow() {
                 }
             };
 
-            const res = await fetch('/api/orders', {
+            const res = await fetch('http://localhost:5001/api/orders', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(orderData)
@@ -210,7 +226,7 @@ export default function BookingFlow() {
                 order_id: order.id,
                 handler: async function (response) {
                     try {
-                        const verifyRes = await fetch('/api/verify', {
+                        const verifyRes = await fetch('http://localhost:5001/api/verify', {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ ...response, bookingId: DBid })
@@ -299,7 +315,11 @@ export default function BookingFlow() {
             const config = hourlyRates[selectedPackage.name];
             return (
                 <motion.div key="step-duration" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                    <h2 className="step-title">Select Session Duration</h2>
+                    <h2 className="step-title">
+                        {selectedDuration && extraHours > 0 
+                            ? `Total Session: ${parseInt(selectedDuration.label.split(' ')[0]) + extraHours} Hours` 
+                            : "Select Session Duration"}
+                    </h2>
                     <p style={{ color: "rgba(255,255,255,0.5)", marginBottom: "2rem" }}>Choose a base tier or add extra time to your session.</p>
 
                     {config ? (
@@ -317,8 +337,16 @@ export default function BookingFlow() {
                                             setExtraHours(0);
                                         }}
                                     >
-                                        <div className="pkg-name">{tier.label} Session</div>
-                                        <div className="pkg-price">{tier.price.toLocaleString('en-IN')}</div>
+                                        <div className="pkg-name">
+                                            {selectedDuration?.label === tier.label && extraHours > 0 
+                                                ? `${parseInt(tier.label.split(' ')[0]) + extraHours} Hours` 
+                                                : tier.label} Session
+                                        </div>
+                                        <div className="pkg-price">
+                                            {selectedDuration?.label === tier.label && extraHours > 0 
+                                                ? (tier.price + (extraHours * config.extra)).toLocaleString('en-IN')
+                                                : tier.price.toLocaleString('en-IN')}
+                                        </div>
                                     </div>
                                 ))}
                             </div>
@@ -327,8 +355,10 @@ export default function BookingFlow() {
                                 <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="summary-card" style={{ background: 'rgba(255,255,255,0.03)', border: '1px solid rgba(255,255,255,0.05)' }}>
                                     <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                                         <div>
-                                            <h4 style={{ margin: 0, color: '#00c2a8' }}>Add Extra Hours?</h4>
-                                            <p style={{ fontSize: '0.8rem', opacity: 0.6 }}>₹{config.extra.toLocaleString('en-IN')} per additional hour</p>
+                                            <h4 style={{ margin: 0, color: '#00c2a8' }}>
+                                                {selectedDuration ? `Total Session: ${parseInt(selectedDuration.label.split(' ')[0]) + extraHours} Hours` : "Add Extra Hours?"}
+                                            </h4>
+                                            <p style={{ fontSize: '0.8rem', opacity: 0.6 }}>Add more time for ₹{config.extra.toLocaleString('en-IN')}/hr</p>
                                         </div>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
                                             <button onClick={() => setExtraHours(prev => Math.max(0, prev - 1))} className="btn-back" style={{ padding: '5px 15px', minWidth: 'auto' }}>-</button>
@@ -409,8 +439,12 @@ export default function BookingFlow() {
                                     className={`time-slot ${slot.disabled ? 'disabled' : ''} ${selectedSlot?.startTime === slot.startTime ? 'selected' : ''}`}
                                     onClick={() => !slot.disabled && setSelectedSlot(slot)}
                                 >
-                                    {slot.startTime} - {slot.endTime}
-                                    {slot.disabled && <div style={{ fontSize: "0.7rem", marginTop: "4px", color: "#ff4d4d" }}>Booked</div>}
+                                    <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "8px" }}>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+                                        <span>{slot.startTime} - {slot.endTime}</span>
+                                    </div>
+                                    {slot.disabled && <div className="slot-badge-disabled">Unavailable</div>}
+                                    {!slot.disabled && selectedSlot?.startTime === slot.startTime && <div className="slot-badge-selected">Selected</div>}
                                 </div>
                             ))}
                         </div>
@@ -488,7 +522,10 @@ export default function BookingFlow() {
 
                     <div className="summary-item">
                         <span className="summary-label">Package Selected</span>
-                        <span className="summary-value" style={{ color: "#00c2a8" }}>{selectedPackage.name}</span>
+                        <span className="summary-value" style={{ color: "#00c2a8" }}>
+                            {selectedPackage.name}
+                            {extraHours > 0 && <span style={{ fontSize: "0.8rem", opacity: 0.7, marginLeft: "8px" }}>(+{extraHours}h)</span>}
+                        </span>
                     </div>
 
                     <div className="summary-item pkg-rate-summary">
@@ -515,13 +552,28 @@ export default function BookingFlow() {
                     <div className="summary-item">
                         <span className="summary-label">Selected Duration</span>
                         <span className="summary-value" style={{ color: "#00c2a8" }}>
-                            {selectedDuration ? `${selectedDuration.label}${extraHours > 0 ? ` + ${extraHours}h extra` : ''}` : 'Not Selected'}
+                            {selectedDuration ? (hourlyRates[selectedPackage.name] ? `${parseInt(selectedDuration.label.split(' ')[0]) + extraHours} Hours` : selectedDuration.label) : 'Not Selected'}
                         </span>
                     </div>
 
-                    <div className="summary-total" style={{ borderTop: "1px dashed rgba(255,255,255,0.2)", marginTop: "1.5rem", paddingTop: "1.5rem" }}>
-                        <span>Total <span style={{ fontSize: "0.75rem", fontWeight: "normal", color: "rgba(255,255,255,0.5)" }}>(Inc. GST)</span></span>
-                        <span>₹{((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))).toLocaleString('en-IN')}</span>
+                    <div className="summary-item">
+                        <span className="summary-label">Subtotal</span>
+                        <span className="summary-value">₹{((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))).toLocaleString('en-IN')}</span>
+                    </div>
+
+                    <div className="summary-item">
+                        <span className="summary-label">CGST (9%)</span>
+                        <span className="summary-value">₹{Math.round(((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))) * 0.09).toLocaleString('en-IN')}</span>
+                    </div>
+
+                    <div className="summary-item">
+                        <span className="summary-label">SGST (9%)</span>
+                        <span className="summary-value">₹{Math.round(((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))) * 0.09).toLocaleString('en-IN')}</span>
+                    </div>
+
+                    <div className="summary-total" style={{ borderTop: "1px dashed rgba(255,255,255,0.2)", marginTop: "1rem", paddingTop: "1rem" }}>
+                        <span>Total <span style={{ fontSize: "0.75rem", fontWeight: "normal", color: "rgba(255,255,255,0.5)" }}>(Incl. GST)</span></span>
+                        <span>₹{(Math.round(((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))) * 1.18)).toLocaleString('en-IN')}</span>
                     </div>
                 </div>
             </div>
@@ -562,6 +614,49 @@ export default function BookingFlow() {
                                 <p className="booking-id-tag">Booking ID: <strong>{bookingId}</strong></p>
                                 <p className="success-note">A confirmation email and PDF invoice has been sent to your email address. See you soon!</p>
                                 <button onClick={() => navigate('/')} className="btn-home">Return Home</button>
+                                
+                                {/* Hidden Auto-Sender for Rich PDF Invoice */}
+                                <div style={{ position: 'absolute', left: '-9999px', top: 0, opacity: 0, pointerEvents: 'none' }}>
+                                    {selectedPackage && (
+                                        <SripadaInvoice 
+                                            invoice={{
+                                                id: bookingId,
+                                                invoiceNo: "INV-" + bookingId,
+                                                gstNumber: "29XXXXX0000X1Z5",
+                                                clientId: bookingId,
+                                                clientName: clientDetails.name,
+                                                clientEmail: clientDetails.email,
+                                                clientPhone: clientDetails.phone,
+                                                clientGSTID: clientDetails.gst || "",
+                                                clientAddress: clientDetails.company || "N/A",
+                                                serviceDescription: selectedPackage.name,
+                                                packageDescription: (selectedPackage.features ? selectedPackage.features.join(", ") : "") + (clientDetails.notes ? " | Notes: " + clientDetails.notes : ""),
+                                                servicePeriodFrom: selectedDate,
+                                                servicePeriodTo: selectedDate,
+                                                date: new Date().toISOString().split('T')[0],
+                                                status: "paid",
+                                                amount: ((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))),
+                                                cgstRate: 9,
+                                                sgstRate: 9,
+                                                studioName: "Nearby Studio",
+                                                studioGSTNumber: "29ABRCS9041A1Z2",
+                                                sacHsn: "999612",
+                                                studioAddress: "No:4/2, 1st Floor, Chord Rd, Rajaji Nagar Industrial Town, Rajajinagar, Bengaluru, Karnataka 560 010",
+                                                studioPhone: "+91 9060870117",
+                                                studioWebsite: "www.nearbystudio.in",
+                                                studioEmail: "nearbystudiosocial@gmail.com",
+                                                bankAccountHolder: "Nearby Studio Private Limited",
+                                                bankAccountNumber: "44797145260",
+                                                bankName: "State Bank of India, Rajaji Nagar IND Estate",
+                                                ifscCode: "SBIN0000762",
+                                                upiId: "nearbystudio5260@sbi",
+                                                autoSend: true
+                                            }} 
+                                            onBack={() => {}} 
+                                            onSendEmail={(invoiceNo) => console.log('Successfully Auto-Sent PDF:', invoiceNo)} 
+                                        />
+                                    )}
+                                </div>
                             </motion.div>
                         ) : (
                             <div className={`booking-layout ${selectedPackage ? 'layout-split' : 'layout-full'}`}>
@@ -594,7 +689,7 @@ export default function BookingFlow() {
                                                 onClick={handlePayment}
                                                 disabled={isProcessing}
                                             >
-                                                {isProcessing ? <><span className="spinner"></span>Processing</> : 'Proceed to Payment — ₹' + (((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))).toLocaleString('en-IN'))}
+                                                {isProcessing ? <><span className="spinner"></span>Processing</> : 'Proceed to Payment — ₹' + (Math.round(((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))) * 1.18)).toLocaleString('en-IN')}
                                             </button>
                                         )}
                                     </div>

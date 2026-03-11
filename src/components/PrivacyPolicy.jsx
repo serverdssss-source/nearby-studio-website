@@ -13,7 +13,7 @@ export default function PrivacyPolicy() {
           <p className="effective-date"><strong>Effective Date:</strong> March 6, 2026</p>
           
           <p className="intro">
-            <strong>Sripada Studios PVT LTD</strong> ("we", "our", "us") respects your privacy and is committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, disclose, and protect your information when you visit our website or use our services.
+            <strong>Nearby Studio PVT LTD</strong> ("we", "our", "us") respects your privacy and is committed to protecting the personal information you share with us. This Privacy Policy explains how we collect, use, disclose, and protect your information when you visit our website or use our services.
           </p>
           
           <p className="intro">By using our website, you agree to the terms of this Privacy Policy.</p>
@@ -112,8 +112,8 @@ export default function PrivacyPolicy() {
           <section>
             <h2>9. Contact Us</h2>
             <p>If you have questions about this Privacy Policy or how we handle your information, please contact us:</p>
-            <p><strong>Sripada Studios PVT LTD</strong></p>
-            <p>Email: <a href="mailto:photography@sripadastudios.in">photography@sripadastudios.in</a></p>
+            <p><strong>Nearby Studio PVT LTD</strong></p>
+            <p>Email: <a href="mailto:nearbystudiosocial@gmail.com">nearbystudiosocial@gmail.com</a></p>
           </section>
         </div>
       </div>

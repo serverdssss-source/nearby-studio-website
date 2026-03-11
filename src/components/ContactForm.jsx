@@ -20,7 +20,7 @@ export default function ContactForm() {
             <div className="contact-card">
               <div className="contact-item">
                 <span className="label">EMAIL</span>
-                <a href="mailto:photography@sripadastudios.in">photography@sripadastudios.in</a>
+                <a href="mailto:nearbystudiosocial@gmail.com">nearbystudiosocial@gmail.com</a>
               </div>
 
               <div className="divider" />
@@ -143,8 +143,8 @@ export default function ContactForm() {
               </a>
               <span className="footer-owner-line">
                 {' '}| Developed & Owned by{' '}
-                <a href="https://sripadastudios.com/" target="_blank" rel="noopener noreferrer">
-                  Sripada Studios
+                <a href="https://nearbystudio.in/" target="_blank" rel="noopener noreferrer">
+                  Nearby Studio
                 </a>
               </span>
             </p>

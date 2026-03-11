@@ -52,7 +52,7 @@ function CompanyInfo() {
 
           <h2 className="company-heading">
             <span className="company-highlight">
-              Sripada Studios Pvt. Ltd.
+              Nearby Studio PVT. LTD.
             </span>
           </h2>
 
@@ -60,13 +60,13 @@ function CompanyInfo() {
 
           <div className="company-copy">
             <p>
-              nearbystudio is a proud vertical of Sripada Studios Pvt. Ltd., Bengaluru<br />
+              nearbystudio is a premier studio space in Rajajinagar, Bengaluru<br />
               A creative conglomerate built on originality, bold thinking,
               & service-oriented execution.
             </p>
 
             <p>
-              As part of Sripada Studios, we operate within a larger ecosystem
+              As Nearby Studio, we aim to provide a high-quality ecosystem
               of creative strategy, production excellence, and brand-building capabilities
               ensuring every deliverable is aligned to quality and impact.
             </p>

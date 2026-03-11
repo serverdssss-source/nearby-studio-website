@@ -2,6 +2,7 @@
 
 import { Download, Mail, ArrowLeft, Printer } from "lucide-react";
 import { useEffect, useState, useMemo } from "react";
+import { format } from "date-fns";
 
 export interface GSTInvoiceData {
   id: string;
@@ -16,6 +17,7 @@ export interface GSTInvoiceData {
   clientGSTID?: string;
   clientAddress: string;
   serviceDescription: string;
+  packageDescription?: string;
   servicePeriodFrom: string;
   servicePeriodTo: string;
   date: string;
@@ -126,8 +128,8 @@ export default function SripadaInvoice({
   // Static footer/contact details (matches provided invoice design)
   const footerAddress =
     "No:4/2, 1st Floor, Chord Rd, Rajaji Nagar Industrial Town, Rajajinagar, Bengaluru, Karnataka 560 010";
-  const footerWebsite = "www.sripadastudios.com";
-  const footerEmail = "contact@sripadastudios.com";
+  const footerWebsite = "www.nearbystudio.in";
+  const footerEmail = "nearbystudiosocial@gmail.com";
   const footerPhone = "+91 9060870117";
 
   const parseDate = (value?: string) => {
@@ -177,18 +179,26 @@ export default function SripadaInvoice({
 
   // Calculate totals from services array or fallback to single service
   const getServicesData = () => {
+    const taxRate = editData.taxRate || (editData.cgstRate + editData.sgstRate) || 0;
+    const getBaseAmount = (amount: number) => {
+      return taxRate > 0 ? amount / (1 + taxRate / 100) : amount;
+    };
+
     if (editData.services && editData.services.length > 0) {
-      return editData.services;
+      return editData.services.map(s => ({
+        ...s,
+        amount: getBaseAmount(s.amount)
+      }));
     }
     // Fallback to single service for backward compatibility
     const monthLabel = getServiceMonthLabel();
     const rangeLabel = defaultServiceDescription;
-    const description = [monthLabel, rangeLabel].filter(Boolean).join(" | ");
+    const description = editData.packageDescription || [monthLabel, rangeLabel].filter(Boolean).join(" | ");
     return [
       {
         serviceName: editData.serviceDescription || "Studio Booking",
         description: description || "-",
-        amount: editData.amount,
+        amount: getBaseAmount(editData.amount),
       },
     ];
   };
@@ -198,12 +208,16 @@ export default function SripadaInvoice({
     (sum, service) => sum + service.amount,
     0,
   );
-  const cgstAmount = (subtotalAmount * editData.cgstRate) / 100;
-  const sgstAmount = (subtotalAmount * editData.sgstRate) / 100;
+
+  const cgstAmount = (subtotalAmount * (editData.cgstRate || 0)) / 100;
+  const sgstAmount = (subtotalAmount * (editData.sgstRate || 0)) / 100;
   const combinedGstAmount = (subtotalAmount * (editData.taxRate || 0)) / 100;
+
   const totalGST = editData.taxRate
     ? combinedGstAmount
     : cgstAmount + sgstAmount;
+
+  // Final total should exactly match the sum of service amounts (inclusive of tax)
   const totalWithGST = subtotalAmount + totalGST;
   const tdsAmount = editData.tdsApplicable
     ? (subtotalAmount * (editData.tdsRate || 0)) / 100
@@ -448,10 +462,10 @@ export default function SripadaInvoice({
 
   // Auto-send email if autoSend flag is present
   useEffect(() => {
-    if (invoice.autoSend) {
-      // Remove auto-send, user must confirm manually
-      // Auto-trigger is removed to require user confirmation
+    if (invoice.autoSend && !isSending) {
+        handleSendEmail(true);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [invoice.autoSend]);
 
   const [_signatureDatePart, _signatureTimePart] = signatureStamp.split("\n");
@@ -536,8 +550,7 @@ export default function SripadaInvoice({
     window.print();
   };
 
-  const handleSendEmail = async () => {
-    // Show confirmation dialog first
+  const handleSendEmail = async (isAuto = false) => {
     const ccEmails: string[] = [];
     if (editData.ccEmail1) ccEmails.push(editData.ccEmail1);
     if (editData.ccEmail2) ccEmails.push(editData.ccEmail2);
@@ -550,7 +563,7 @@ export default function SripadaInvoice({
     const allRecipients = [editData.clientEmail, ...ccEmails].filter(Boolean);
     const confirmMessage = `Send invoice with PDF to:\n\nMain: ${editData.clientEmail}${ccEmails.length > 0 ? `\n\nCC: ${ccEmails.join(", ")}` : ""}\n\nTotal recipients: ${allRecipients.length}`;
 
-    if (!confirm(confirmMessage)) {
+    if (!isAuto && !confirm(confirmMessage)) {
       return;
     }
 
@@ -605,7 +618,7 @@ export default function SripadaInvoice({
       // Send email with timeout
       const token = localStorage.getItem("authToken");
       const response = await Promise.race([
-        fetch("/api/send-invoice", {
+        fetch("http://localhost:5001/api/send-invoice", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -639,9 +652,9 @@ export default function SripadaInvoice({
       if (response.ok) {
         console.log(`[EMAIL] Success! Total time: ${Date.now() - startTime}ms`);
         onSendEmail(editData.invoiceNo);
-        alert(
-          `✓ Invoice sent successfully to ${allRecipients.length} recipient(s)`,
-        );
+        if (!isAuto) {
+          alert(`✓ Invoice sent successfully to ${allRecipients.length} recipient(s)`);
+        }
       } else {
         console.error("[EMAIL] Failed:", result);
         alert(`Failed to send email: ${result.error || "Unknown error"}`);
@@ -650,11 +663,9 @@ export default function SripadaInvoice({
       console.error("[EMAIL] Process failed:", error);
       const errorMsg = error instanceof Error ? error.message : "Unknown error";
       if (errorMsg.includes("timeout")) {
-        alert(
-          "Email sending is taking longer than expected. Please try again or check your internet connection.",
-        );
+        if (!isAuto) alert("Email sending is taking longer than expected. Please try again or check your internet connection.");
       } else {
-        alert(`Failed to send email: ${errorMsg}`);
+        if (!isAuto) alert(`Failed to send email: ${errorMsg}`);
       }
     } finally {
       setIsSending(false);
@@ -715,7 +726,7 @@ export default function SripadaInvoice({
                   Download PDF
                 </button>
                 <button
-                  onClick={handleSendEmail}
+                  onClick={() => handleSendEmail(false)}
                   disabled={isSending}
                   className="flex items-center gap-2 px-4 py-2 bg-[#327d7d] text-white rounded hover:bg-[#265f5f] transition text-sm font-semibold disabled:opacity-50"
                 >
@@ -1229,7 +1240,7 @@ export default function SripadaInvoice({
                   }}
                 >
                   <img
-                    src="/sripada-logo-email.svg"
+                    src="/invoice-logo.png"
                     alt="Sripada Studios Logo"
                     style={{
                       height: "65px",
@@ -1257,8 +1268,9 @@ export default function SripadaInvoice({
                         lineHeight: 1.5,
                       }}
                     >
-                      <div>GST : {editData.gstNumber} </div>
-                      <div> SAC / HSN : {editData.sacHsn} </div>
+                      <div>Studio GST: 29ABRCS9041A1Z2</div>
+                      <div>Date: {format(new Date(), "d MMMM yyyy")}</div>
+                      <div>SAC/HSN Code: {editData.sacHsn}</div>
                     </div>
                   </div>
                 </div>
@@ -1643,6 +1655,9 @@ export default function SripadaInvoice({
                             borderBottom: "1px solid #111",
                             textAlign: "center",
                             padding: "10px 4px 8px",
+                            display: "flex",
+                            flexDirection: "column",
+                            alignItems: "center"
                           }}
                         >
                           <div
@@ -1651,10 +1666,26 @@ export default function SripadaInvoice({
                               color: accentColor,
                               fontSize: "11px",
                               letterSpacing: "0.2px",
+                              marginBottom: "8px"
                             }}
                           >
                             {" "}
                             THANK YOU FOR YOUR BUSINESS{" "}
+                          </div>
+                          <img 
+                            src="/Nearby studio_white.webp" 
+                            alt="Nearby Studio Logo" 
+                            style={{ width: "120px", marginBottom: "4px" }} 
+                          />
+                          <div
+                            style={{
+                              fontWeight: 600,
+                              color: "#4b5563",
+                              fontSize: "10px",
+                              marginBottom: "6px"
+                            }}
+                          >
+                            Thank you for choosing nearby studio
                           </div>
                           <div
                             style={{
@@ -1715,8 +1746,8 @@ export default function SripadaInvoice({
                               </div>
                               <div style={{ fontWeight: 600 }}>
                                 {" "}
-                                <strong>Account Holder Name: </strong> Sripada
-                                Studios Private Limited
+                                <strong>Account Holder Name: </strong> Nearby Studio
+                                Private Limited
                               </div>
                               <div style={{ fontWeight: 600 }}>
                                 {" "}
@@ -1733,7 +1764,7 @@ export default function SripadaInvoice({
                               </div>
                               <div style={{ fontWeight: 600 }}>
                                 {" "}
-                                <strong>UPI Id: </strong> sripadastudios5260@sbi
+                                <strong>UPI Id: </strong> nearbystudio5260@sbi
                               </div>
                             </div>
                             <div

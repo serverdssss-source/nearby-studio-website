@@ -3,7 +3,7 @@
 .booking-section {
     background: linear-gradient(to bottom right, #0F0F12, #1F1F22);
     min-height: 100vh;
-    padding: calc(80px + clamp(2rem, 5vh, 4rem)) 2rem 4rem;
+    padding: calc(60px + clamp(1rem, 3vh, 2rem)) 2rem 2rem;
     color: #f5f5f3;
     position: relative;
     overflow: hidden;
@@ -37,7 +37,7 @@
 
 .booking-header {
     text-align: center;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
 }
 
 .booking-tag {
@@ -63,7 +63,7 @@
     font-size: clamp(2.5rem, 6vw, 4rem);
     font-weight: 700;
     line-height: 1;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
 }
 
 .booking-header h1 span {
@@ -81,7 +81,7 @@
 .steps-indicator {
     display: flex;
     justify-content: space-between;
-    margin-bottom: 3rem;
+    margin-bottom: 2rem;
     position: relative;
     max-width: 1000px;
     margin-left: auto;
@@ -169,7 +169,8 @@
 
 .booking-layout {
     display: flex;
-    min-height: 500px;
+    min-height: 400px;
+    padding: 0;
     transition: all 0.3s ease;
 }
 
@@ -189,7 +190,7 @@
 
 .main-interactive-panel {
     flex: 1;
-    padding: 3rem;
+    padding: 1.5rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -199,7 +200,7 @@
     flex: 0 0 400px;
     background: rgba(0, 0, 0, 0.4);
     border-left: 1px solid rgba(255, 255, 255, 0.08);
-    padding: 3rem 2.5rem;
+    padding: 1.5rem 2rem;
 }
 
 .step-title {
@@ -210,9 +211,9 @@
 /* 60 Day Interactive Grid */
 .interactive-dates-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-    gap: 1rem;
-    max-height: 400px;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    gap: 0.75rem;
+    max-height: 300px;
     overflow-y: auto;
     padding-right: 15px;
 }
@@ -236,13 +237,13 @@
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    padding: 1.25rem 0.5rem;
+    padding: 0.8rem 0.5rem;
     text-align: center;
     cursor: pointer;
     transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
     display: flex;
     flex-direction: column;
-    gap: 0.25rem;
+    gap: 0.15rem;
 }
 
 .date-block:hover {
@@ -268,7 +269,7 @@
 }
 
 .date-num {
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 800;
     line-height: 1;
 }
@@ -288,41 +289,65 @@
 .time-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 1.25rem;
+    gap: 1rem;
 }
 
 .time-slot {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    padding: 1.25rem 1rem;
+    background: rgba(15, 15, 18, 0.8);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    padding: 1rem;
     border-radius: 12px;
     text-align: center;
     cursor: pointer;
-    transition: all 0.2s;
-    font-size: 0.95rem;
-    font-weight: 500;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    font-size: 1rem;
+    font-weight: 600;
+    position: relative;
+    overflow: hidden;
 }
 
 .time-slot:hover:not(.disabled) {
     background: rgba(255, 255, 255, 0.1);
-    border-color: rgba(255, 255, 255, 0.3);
+    border-color: #00c2a8;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 194, 168, 0.15);
 }
 
 .time-slot.selected {
-    background: #00c2a8;
+    background: linear-gradient(135deg, rgba(0, 194, 168, 0.1) 0%, rgba(0, 194, 168, 0.2) 100%);
     border-color: #00c2a8;
-    color: #000;
+    color: #fff;
     font-weight: 700;
     transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0, 194, 168, 0.2);
+    box-shadow: 0 5px 15px rgba(0, 194, 168, 0.25);
+}
+.time-slot.selected svg {
+    stroke: #00c2a8;
 }
 
 .time-slot.disabled {
-    opacity: 0.25;
+    opacity: 0.6;
     cursor: not-allowed;
-    background: rgba(255, 0, 0, 0.05);
-    border-color: rgba(255, 0, 0, 0.1);
-    text-decoration: line-through;
+    background: rgba(255, 255, 255, 0.02);
+    border-color: rgba(255, 255, 255, 0.05);
+}
+
+.slot-badge-disabled {
+    font-size: 0.7rem;
+    margin-top: 8px;
+    color: #ff4d4d;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
+}
+
+.slot-badge-selected {
+    font-size: 0.7rem;
+    margin-top: 8px;
+    color: #00c2a8;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    font-weight: 700;
 }
 
 /* Summary Panel Sticky */
@@ -353,7 +378,7 @@
 .summary-item {
     display: flex;
     justify-content: space-between;
-    padding: 1rem 0;
+    padding: 0.5rem 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     align-items: center;
 }
@@ -368,13 +393,13 @@
 .summary-value {
     font-weight: 600;
     text-align: right;
-    font-size: 1rem;
+    font-size: 0.9rem;
 }
 
 .summary-total {
     display: flex;
     justify-content: space-between;
-    padding-top: 1.5rem;
+    padding-top: 1rem;
     margin-top: 0.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.2);
     font-size: 1.5rem;
@@ -386,7 +411,7 @@
 .booking-form {
     display: flex;
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .b-form-group {
@@ -408,9 +433,9 @@
     background-color: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
-    padding: 1rem 1.25rem;
+    padding: 0.75rem 1rem;
     color: white;
-    font-size: 1rem;
+    font-size: 0.9rem;
     transition: all 0.3s;
     width: 100%;
     box-sizing: border-box;
@@ -425,7 +450,7 @@
 }
 
 .b-form-group textarea {
-    height: 120px;
+    height: 80px;
     resize: none;
 }
 
@@ -435,7 +460,7 @@
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
-    padding-top: 2rem;
+    padding-top: 1rem;
 }
 
 .btn-back,
@@ -561,14 +586,14 @@
 .package-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.5rem;
+    gap: 1rem;
 }
 
 .package-card {
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 12px;
-    padding: 2rem;
+    padding: 1.5rem;
     cursor: pointer;
     transition: all 0.3s;
     display: flex;
@@ -597,14 +622,14 @@
     color: rgba(255, 255, 255, 0.5);
     text-transform: uppercase;
     letter-spacing: 0.1em;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .pkg-price {
     font-size: 2rem;
     font-weight: 700;
     color: #00c2a8;
-    margin-bottom: 1.5rem;
+    margin-bottom: 0.5rem;
 }
 
 .pkg-includes p {
@@ -691,7 +716,7 @@
     }
 
     .interactive-dates-grid {
-        grid-template-columns: repeat(auto-fill, minmax(70px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(60px, 1fr));
         gap: 0.5rem;
     }
 

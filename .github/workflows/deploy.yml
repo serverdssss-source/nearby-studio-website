@@ -1,0 +1,43 @@
+name: Deploy Backend to Hostinger VPS
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'server/**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Deploy to Hostinger via SSH
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          port: ${{ secrets.VPS_PORT || 22 }}
+          script: |
+            # Navigate to the project directory
+            # Make sure to update TARGET_DIR to your exact absolute path on Hostinger!
+            export TARGET_DIR="/path/to/your/project" 
+
+            cd $TARGET_DIR
+            
+            # Pull latest code
+            git pull origin main
+            
+            # Install backend dependencies
+            cd server
+            npm ci || npm install
+            
+            # Restart backend using PM2 Let's assume the process is named 'ssstudio-backend'
+            # If you named you process differently in PM2, update this!
+            pm2 restart ssstudio-backend || pm2 start index.js --name "ssstudio-backend"
+            
+            echo "Deployment to Hostinger completed successfully!"

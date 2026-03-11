@@ -350,6 +350,7 @@ const Hero_1 = memo(function Hero_1() {
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches
   );
   const [isIOS, setIsIOS] = useState(false);
+  const [isSafari, setIsSafari] = useState(false);
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 767px)');
@@ -361,6 +362,10 @@ const Hero_1 = memo(function Hero_1() {
     // Detect iOS
     const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
     setIsIOS(iOS);
+
+    // Detect Safari (Desktop and Mobile)
+    const safari = /^((?!chrome|android).)*safari/i.test(navigator.userAgent);
+    setIsSafari(safari);
 
     if (mediaQuery.addEventListener) {
       mediaQuery.addEventListener('change', handleChange);
@@ -478,14 +483,14 @@ const Hero_1 = memo(function Hero_1() {
             pointerEvents: 'auto',
           }}
         >
-          {isMobile && isIOS ? (
+          {(isMobile && isIOS) || isSafari ? (
             <img
               src="/Nearby studio_white.webp"
               alt="Nearby Studio"
               style={{
                 width: "clamp(200px, 70vw, 300px)",
-                mixBlendMode: "screen",
                 background: "transparent",
+                mixBlendMode: "screen",
                 animation: 'zoomIn 1.5s ease-out',
               }}
             />
@@ -500,13 +505,13 @@ const Hero_1 = memo(function Hero_1() {
               fetchPriority="high"
               style={{
                 width: "clamp(280px, 80vw, 600px)",
-                mixBlendMode: "screen",
                 background: "transparent",
-                transform: "translateZ(0)",
+                mixBlendMode: "screen",
+                WebkitMixBlendMode: "screen"
               }}
             >
-              <source src="/nearby alpha logo.mp4" type="video/mp4" />
               <source src="/nearby alpha logo.webm" type="video/webm" />
+              <source src="/nearby alpha logo.mp4" type="video/mp4" />
             </video>
           )}
         </div>
@@ -523,17 +528,12 @@ const Hero_1 = memo(function Hero_1() {
           <span style={{ color: '#F5F5F3' }}>
             a Studio Floor by{' '}
             <a
-              href="https://sripadastudios.com/"
+              href="https://nearbystudio.in/"
               target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                fontWeight: 700,
-                textDecoration: 'none',
-                color: 'inherit',
-                cursor: 'pointer',
-              }}
+              rel="noreferrer"
+              className="footer-link-group"
             >
-              Sripada Studios
+              Nearby Studio
             </a>
           </span>
         </div>

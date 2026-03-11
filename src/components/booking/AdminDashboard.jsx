@@ -15,7 +15,7 @@ export default function AdminDashboard() {
     const fetchBookings = async () => {
         setIsLoading(true);
         try {
-            const response = await fetch(`/api/admin/bookings?password=${password}`);
+            const response = await fetch(`http://localhost:5001/api/admin/bookings?password=${password}`);
             if (response.ok) {
                 const data = await response.json();
                 setBookings(data);
@@ -92,7 +92,8 @@ export default function AdminDashboard() {
                                 clientPhone: selectedInvoiceBooking.client_phone,
                                 clientGSTID: selectedInvoiceBooking.client_gst || "",
                                 clientAddress: selectedInvoiceBooking.client_company || "N/A",
-                                serviceDescription: selectedInvoiceBooking.package_name + (selectedInvoiceBooking.client_notes ? " - " + selectedInvoiceBooking.client_notes : ""),
+                                serviceDescription: selectedInvoiceBooking.package_name,
+                                packageDescription: selectedInvoiceBooking.package_description || (selectedInvoiceBooking.client_notes ? "Notes: " + selectedInvoiceBooking.client_notes : ""),
                                 servicePeriodFrom: selectedInvoiceBooking.booking_date,
                                 servicePeriodTo: selectedInvoiceBooking.booking_date,
                                 date: new Date(selectedInvoiceBooking.created_at).toISOString().split('T')[0],
@@ -100,17 +101,18 @@ export default function AdminDashboard() {
                                 amount: selectedInvoiceBooking.amount,
                                 cgstRate: 9,
                                 sgstRate: 9,
-                                studioName: "Sripada Studios",
-                                studioGSTNumber: "29XXXXX0000X1Z5",
+                                studioName: "Nearby Studio",
+                                studioGSTNumber: "29ABRCS9041A1Z2",
+                                sacHsn: "999612",
                                 studioAddress: "No:4/2, 1st Floor, Chord Rd, Rajaji Nagar Industrial Town, Rajajinagar, Bengaluru, Karnataka 560 010",
                                 studioPhone: "+91 9060870117",
-                                studioWebsite: "www.sripadastudios.com",
-                                studioEmail: "contact@sripadastudios.com",
-                                bankAccountHolder: "Sripada Studios Private Limited",
+                                studioWebsite: "www.nearbystudio.in",
+                                studioEmail: "nearbystudiosocial@gmail.com",
+                                bankAccountHolder: "Nearby Studio Private Limited",
                                 bankAccountNumber: "44797145260",
                                 bankName: "State Bank of India, Rajaji Nagar IND Estate",
                                 ifscCode: "SBIN0000762",
-                                upiId: "sripadastudios5260@sbi"
+                                upiId: "nearbystudio5260@sbi"
                             }} 
                             onBack={() => setSelectedInvoiceBooking(null)} 
                             onSendEmail={(invoiceNo) => console.log('Successfully sent', invoiceNo)} 
