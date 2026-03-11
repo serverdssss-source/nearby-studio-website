@@ -3,7 +3,7 @@ name: Deploy Backend to Hostinger VPS
 on:
   push:
     branches:
-      - main
+      - master
     paths:
       - 'server/**'
 
@@ -30,7 +30,7 @@ jobs:
             cd $TARGET_DIR
             
             # Pull latest code
-            git pull origin main
+            git pull origin master
             
             # Install backend dependencies
             cd server
