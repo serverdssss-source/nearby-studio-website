@@ -11,6 +11,7 @@ export default function AdminDashboard() {
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [selectedInvoiceBooking, setSelectedInvoiceBooking] = useState(null);
+    const [downloadingBookingId, setDownloadingBookingId] = useState(null);
 
     const fetchBookings = async () => {
         setIsLoading(true);
@@ -175,10 +176,27 @@ export default function AdminDashboard() {
                                                 borderRadius: '4px',
                                                 cursor: 'pointer',
                                                 fontSize: '0.8rem',
-                                                fontWeight: '600'
+                                                fontWeight: '600',
+                                                marginRight: '8px'
                                             }}
                                         >
-                                            View Invoice
+                                            View
+                                        </button>
+                                        <button 
+                                            onClick={() => setDownloadingBookingId(b.id)}
+                                            style={{
+                                                background: '#00c2a8',
+                                                color: 'white',
+                                                border: 'none',
+                                                padding: '6px 12px',
+                                                borderRadius: '4px',
+                                                cursor: 'pointer',
+                                                fontSize: '0.8rem',
+                                                fontWeight: '600'
+                                            }}
+                                            disabled={downloadingBookingId === b.id}
+                                        >
+                                            {downloadingBookingId === b.id ? '...' : 'PDF'}
                                         </button>
                                     </td>
                                 </tr>
@@ -191,6 +209,53 @@ export default function AdminDashboard() {
                         </div>
                     )}
                 </div>
+                )}
+                
+                {/* Hidden Invoice component for PDF Generation */}
+                {downloadingBookingId && (
+                    <div style={{ display: 'none' }}>
+                        {bookings.filter(b => b.id === downloadingBookingId).map(b => (
+                            <SripadaInvoice 
+                                key={`download-${b.id}`}
+                                invoice={{
+                                    id: b.id.toString(),
+                                    invoiceNo: "INV-" + b.booking_id,
+                                    gstNumber: "29XXXXX0000X1Z5",
+                                    clientId: b.id.toString(),
+                                    clientName: b.client_name,
+                                    clientEmail: b.client_email,
+                                    clientPhone: b.client_phone,
+                                    clientGSTID: b.client_gst || "",
+                                    clientAddress: b.client_company || "N/A",
+                                    serviceDescription: b.package_name,
+                                    packageDescription: b.package_description || (b.client_notes ? "Notes: " + b.client_notes : ""),
+                                    servicePeriodFrom: b.booking_date,
+                                    servicePeriodTo: b.booking_date,
+                                    date: new Date(b.created_at).toISOString().split('T')[0],
+                                    status: b.payment_status === "Paid" ? "paid" : "draft",
+                                    amount: b.amount,
+                                    cgstRate: 9,
+                                    sgstRate: 9,
+                                    studioName: "Nearby Studio",
+                                    studioGSTNumber: "29ABRCS9041A1Z2",
+                                    sacHsn: "999612",
+                                    studioAddress: "No:4/2, 1st Floor, Chord Rd, Rajaji Nagar Industrial Town, Rajajinagar, Bengaluru, Karnataka 560 010",
+                                    studioPhone: "+91 9060870117",
+                                    studioWebsite: "www.nearbystudio.in",
+                                    studioEmail: "nearbystudiosocial@gmail.com",
+                                    bankAccountHolder: "Nearby Studio Private Limited",
+                                    bankAccountNumber: "44797145260",
+                                    bankName: "State Bank of India, Rajaji Nagar IND Estate",
+                                    ifscCode: "SBIN0000762",
+                                    upiId: "nearbystudio5260@sbi"
+                                }} 
+                                onBack={() => {}} 
+                                onSendEmail={() => {}} 
+                                autoDownload={true}
+                                onDownloadFinished={() => setDownloadingBookingId(null)}
+                            />
+                        ))}
+                    </div>
                 )}
             </div>
         </div>

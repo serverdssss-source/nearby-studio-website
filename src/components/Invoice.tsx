@@ -60,6 +60,8 @@ interface SripadaInvoiceProps {
   onBack: () => void;
   onSendEmail: (invoiceNo: string) => void;
   onEdit?: (invoice: GSTInvoiceData) => Promise<void> | void;
+  autoDownload?: boolean;
+  onDownloadFinished?: () => void;
 }
 
 interface ServiceRowLayout {
@@ -83,6 +85,8 @@ export default function SripadaInvoice({
   onBack,
   onSendEmail,
   onEdit,
+  autoDownload = false,
+  onDownloadFinished,
 }: SripadaInvoiceProps) {
   const clients: any[] = [];
   const [clientSearchTerm, setClientSearchTerm] = useState("");
@@ -116,6 +120,64 @@ export default function SripadaInvoice({
 
     return `${year}.${month}.${day}\n${hours}:${minutes}:${seconds} ${sign}${offsetHours}'${offsetMins}'`;
   };
+
+  const convertImageToBase64 = (url: string): Promise<string> => {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.crossOrigin = "anonymous";
+      img.onload = () => {
+        const canvas = document.createElement("canvas");
+        canvas.width = img.width;
+        canvas.height = img.height;
+        const ctx = canvas.getContext("2d");
+        if (ctx) {
+          ctx.drawImage(img, 0, 0);
+          resolve(canvas.toDataURL("image/png"));
+        } else {
+          reject(new Error("Could not get canvas context"));
+        }
+      };
+      img.onerror = (err) => reject(err);
+      img.src = url;
+    });
+  };
+
+  const [logos, setLogos] = useState<{ [key: string]: string }>({});
+  useEffect(() => {
+    const loadLogos = async () => {
+      try {
+        const logoUrls = [
+          "/invoice-logo.png",
+          "/Nearby studio_white.webp",
+          "/seal.png",
+          "/logo.webp"
+        ];
+        const loadedLogos: { [key: string]: string } = {};
+        await Promise.all(
+          logoUrls.map(async (url) => {
+            try {
+              const base64 = await convertImageToBase64(url);
+              loadedLogos[url] = base64;
+            } catch (err) {
+              console.error(`Failed to load logo: ${url}`, err);
+            }
+          })
+        );
+        setLogos(loadedLogos);
+      } catch (err) {
+        console.error("Failed to load logos", err);
+      }
+    };
+    loadLogos();
+  }, []);
+
+  useEffect(() => {
+    if (autoDownload && Object.keys(logos).length > 0) {
+      handleDownloadPDF().then(() => {
+        if (onDownloadFinished) onDownloadFinished();
+      });
+    }
+  }, [autoDownload, logos]);
 
   const [isSending, setIsSending] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -1236,7 +1298,7 @@ export default function SripadaInvoice({
                   }}
                 >
                   <img
-                    src="/invoice-logo.png"
+                    src={logos["/invoice-logo.png"] || "/invoice-logo.png"}
                     alt="Sripada Studios Logo"
                     style={{
                       height: "65px",
@@ -1669,9 +1731,15 @@ export default function SripadaInvoice({
                             THANK YOU FOR YOUR BUSINESS{" "}
                           </div>
                           <img 
-                            src="/Nearby studio_white.webp" 
+                            src={logos["/Nearby studio_white.webp"] || "/Nearby studio_white.webp"} 
                             alt="Nearby Studio Logo" 
-                            style={{ width: "120px", marginBottom: "4px" }} 
+                            style={{ 
+                              width: "120px", 
+                              marginBottom: "4px",
+                              backgroundColor: "#111", // Add dark background for white logo
+                              borderRadius: "4px",
+                              padding: "4px"
+                            }} 
                           />
                           <div
                             style={{
@@ -1772,7 +1840,7 @@ export default function SripadaInvoice({
                               }}
                             >
                               <img
-                                src="/seal.png"
+                                src={logos["/seal.png"] || "/seal.png"}
                                 alt="Digital Seal"
                                 style={{
                                   width: "120px",
