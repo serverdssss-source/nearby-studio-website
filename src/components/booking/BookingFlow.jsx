@@ -93,6 +93,24 @@ export default function BookingFlow() {
         }
     }, [selectedPackage, selectedDuration]);
 
+    // Handle redirect-back from Razorpay (production robust fix for mobile/UPI)
+    useEffect(() => {
+        const params = new URLSearchParams(window.location.search);
+        if (params.get('confirmed') === 'true') {
+            const confirmedId = params.get('id');
+            if (confirmedId) {
+                console.log("Detected payment confirmation from URL for ID:", confirmedId);
+                setBookingId(confirmedId);
+                setIsConfirmed(true);
+                setCurrentStep(7);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                // Clean URL after handling
+                const newUrl = window.location.origin + window.location.pathname;
+                window.history.replaceState({}, document.title, newUrl);
+            }
+        }
+    }, []);
+
     // Generate 60 Days for Custom Calendar Grid
     const selectableDatesByMonth = useMemo(() => {
         const dates = [];
@@ -224,6 +242,8 @@ export default function BookingFlow() {
                 name: 'Nearby Studio',
                 description: `Booking for ${selectedPackage.name}`,
                 order_id: order.id,
+                callback_url: `${import.meta.env.VITE_API_URL || "https://api.nearbystudio.in"}/api/verify?bookingId=${DBid}`,
+                redirect: true,
                 handler: async function (response) {
                     console.log("Razorpay Success Response:", response);
                     try {

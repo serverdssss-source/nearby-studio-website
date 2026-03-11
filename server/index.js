@@ -143,9 +143,16 @@ app.post('/api/orders', async (req, res) => {
 // Route: Verify Payment Signature and Confirm Booking
 app.post('/api/verify', async (req, res) => {
   try {
-    const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingId } = req.body;
+    const { razorpay_order_id, razorpay_payment_id, razorpay_signature } = req.body;
+    const bookingId = req.body.bookingId || req.query.bookingId;
+    
     console.log("Verification Request received for Booking:", bookingId);
     console.log("Payload:", { razorpay_order_id, razorpay_payment_id });
+
+    if (!razorpay_order_id || !razorpay_payment_id || !razorpay_signature || !bookingId) {
+       console.error("Missing verification data:", { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingId });
+       return res.status(400).send("Invalid verification data");
+    }
 
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
@@ -161,29 +168,35 @@ app.post('/api/verify', async (req, res) => {
         UPDATE bookings 
         SET status = 'Confirmed', payment_status = 'Paid', razorpay_payment_id = $1
         WHERE booking_id = $2
-    RETURNING *
+        RETURNING *
       `, [razorpay_payment_id, bookingId]);
 
       if (result.rows.length === 0) {
+        console.error("Booking not found in DB during verification:", bookingId);
         return res.status(404).json({ error: "Booking not found" });
       }
 
       const confirmedBooking = result.rows[0];
 
       // Send confirmation email to client
-      // We don't await to avoid blocking the response
       sendConfirmationEmail(confirmedBooking).catch(err => console.error('Delayed Email Error:', err));
 
-      // Send alert to admin
       console.log("Payment Verified Successfully in DB for Booking:", bookingId);
-      res.status(200).json({ message: "Payment verified successfully", booking: result.rows[0] });
+
+      // Handle Redirect vs JSON response
+      if (req.headers['accept'] && req.headers['accept'].includes('text/html')) {
+        // This was likely a Razorpay redirect
+        return res.redirect(`https://nearbystudio.in/book?confirmed=true&id=${bookingId}`);
+      }
+      
+      return res.status(200).json({ message: "Payment verified successfully", booking: confirmedBooking });
     } else {
-      console.error("Signature Mismatch for Booking:", bookingId);
-      res.status(400).json({ error: "Invalid payment signature!" });
+      console.error("Signature mismatch for booking:", bookingId);
+      return res.status(400).json({ error: "Invalid signature" });
     }
   } catch (err) {
-    console.error(err);
-    res.status(500).json({ error: 'Failed to verify payment' });
+    console.error("Verification endpoint error:", err);
+    res.status(500).json({ error: 'Verification failed internal error' });
   }
 });
 
