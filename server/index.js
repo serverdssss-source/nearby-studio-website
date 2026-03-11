@@ -102,6 +102,8 @@ app.post('/api/orders', async (req, res) => {
     };
 
     const order = await razorpay.orders.create(options);
+    console.log("Razorpay Order Created:", order.id);
+
     const countResult = await pool.query('SELECT COUNT(*) FROM bookings');
     const orderNumber = parseInt(countResult.rows[0].count) + 1;
     const bookingId = `SS-NBS${orderNumber.toString().padStart(2, '0')}`;
@@ -142,12 +144,16 @@ app.post('/api/orders', async (req, res) => {
 app.post('/api/verify', async (req, res) => {
   try {
     const { razorpay_order_id, razorpay_payment_id, razorpay_signature, bookingId } = req.body;
+    console.log("Verification Request received for Booking:", bookingId);
+    console.log("Payload:", { razorpay_order_id, razorpay_payment_id });
 
     const sign = razorpay_order_id + "|" + razorpay_payment_id;
     const expectedSign = crypto
       .createHmac("sha256", process.env.RAZORPAY_KEY_SECRET)
       .update(sign.toString())
       .digest("hex");
+
+    console.log("Signature Check:", { received: razorpay_signature, expected: expectedSign });
 
     if (razorpay_signature === expectedSign) {
       // Payment is verified
@@ -169,10 +175,10 @@ app.post('/api/verify', async (req, res) => {
       sendConfirmationEmail(confirmedBooking).catch(err => console.error('Delayed Email Error:', err));
 
       // Send alert to admin
-      sendAdminNotification(confirmedBooking).catch(err => console.error('Delayed Admin Alert:', err));
-
+      console.log("Payment Verified Successfully in DB for Booking:", bookingId);
       res.status(200).json({ message: "Payment verified successfully", booking: result.rows[0] });
     } else {
+      console.error("Signature Mismatch for Booking:", bookingId);
       res.status(400).json({ error: "Invalid payment signature!" });
     }
   } catch (err) {
