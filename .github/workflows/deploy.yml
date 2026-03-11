@@ -25,7 +25,7 @@ jobs:
           script: |
             # Navigate to the project directory
             # Make sure to update TARGET_DIR to your exact absolute path on Hostinger!
-            export TARGET_DIR="/path/to/your/project" 
+            export TARGET_DIR="/var/www/ssstudio" 
 
             cd $TARGET_DIR
             
