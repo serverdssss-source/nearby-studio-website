@@ -1,11 +1,9 @@
-name: Deploy Backend to Hostinger VPS
+name: Deploy App to Hostinger VPS
 
 on:
   push:
     branches:
       - master
-    paths:
-      - 'server/**'
 
 jobs:
   deploy:
@@ -15,6 +13,17 @@ jobs:
       - name: Checkout Code
         uses: actions/checkout@v3
 
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install Dependencies & Build Frontend
+        run: |
+          npm install
+          npm run build
+
       - name: Deploy to Hostinger via SSH
         uses: appleboy/ssh-action@v1.0.3
         with:
@@ -23,21 +32,29 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           port: ${{ secrets.VPS_PORT || 22 }}
           script: |
-            # Navigate to the project directory
-            # Make sure to update TARGET_DIR to your exact absolute path on Hostinger!
-            export TARGET_DIR="/var/www/ssstudio" 
-
+            export TARGET_DIR="/var/www/ssstudio"
+            
             cd $TARGET_DIR
             
-            # Pull latest code
-            git pull origin master
+            # Reset and Pull latest code (Backend + Configs)
+            git fetch origin master
+            git reset --hard origin/master
             
-            # Install backend dependencies
+            # Sync the built frontend from GitHub workspace? 
+            # Note: We can't easily sync 'dist' via ssh-action without scp or rsync.
+            # Alternative: Build ON the VPS if memory allows. 
+            # OR use scp-action. 
+            
+            # Let's pivot: Build on VPS to keep logic simple for now, 
+            # as Hostinger VPS usually has enough RAM for a Vite build.
+            
+            cd $TARGET_DIR
+            npm install
+            npm run build
+            
+            # Restart backend
             cd server
-            npm ci || npm install
-            
-            # Restart backend using PM2 Let's assume the process is named 'ssstudio-backend'
-            # If you named you process differently in PM2, update this!
+            npm install
             pm2 restart ssstudio-backend || pm2 start index.js --name "ssstudio-backend"
             
-            echo "Deployment to Hostinger completed successfully!"
+            echo "Universal Deployment to Hostinger completed successfully!"
