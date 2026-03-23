@@ -5,3 +5,8 @@ dist
 
 # Prevent oversized source video from being committed
 public/nearby studio logo 1.mov
+
+# Environment Variables
+.env
+.env.*
+!.env.example
