@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Link } from 'react-router-dom'
+// import { Link } from 'react-router-dom' - Removed as we route via WhatsApp now
 import Navbar from './Navbar'
 import ContactForm from './ContactForm'
 import InstagramTail from './Instagram_tail'
@@ -116,13 +116,14 @@ export default function FashionShoot() {
               </ul>
               {plan.badge && <span className="delivery-badge">{plan.badge}</span>}
               <span className="delivery-badge">Delivery: 7 Days</span>
-              <Link
+              <a
+                href={`https://wa.me/919060870117?text=${encodeURIComponent(`Hi, I would like to enquire about the Model Shoot - ${plan.name} package.`)}`}
                 className="enquiry-btn"
-                to="/book"
-                state={{ package: { id: plan.id || plan.name, name: plan.name, duration: plan.duration || 'Custom', price: parseInt(String(plan.price || '0').replace(/,/g, '').match(/\\d+/)?.[0] || '0', 10), features: plan.features ? plan.features.map(f => f.text) : [] } }}
+                target="_blank"
+                rel="noopener noreferrer"
               >
-                BOOK NOW
-              </Link>
+                ENQUIRE NOW
+              </a>
             </motion.div>
           ))}
         </div>
