@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
+import { Link } from 'react-router-dom'
 import Navbar from './Navbar'
 import ContactForm from './ContactForm'
 import InstagramTail from './Instagram_tail'
@@ -36,7 +37,7 @@ export default function Podcast() {
         target: 'Corporate Heads',
         duration: '2.5 hrs',
         price: '₹54,999',
-        features: ['Up to 4 Guests' , '1 Round Table', '4 Rotating Chairs', '3 Camera Setup', 'Premium lighting • 4 Collar Mics', '4 Reels <90 sec each • 1 Hook Teaser', '40–60 min Podcast • Podcast Switcher', '1 Iteration'],
+        features: ['Up to 4 Guests', '1 Round Table', '4 Rotating Chairs', '3 Camera Setup', 'Premium lighting • 4 Collar Mics', '4 Reels <90 sec each • 1 Hook Teaser', '40–60 min Podcast • Podcast Switcher', '1 Iteration'],
         delivery: '7 Days'
       },
       {
@@ -55,7 +56,7 @@ export default function Podcast() {
         target: 'Brands',
         duration: '2.5 hrs',
         price: '₹54,999',
-        features: ['2–3 Guests' ,'Coffee Table Setup', 'Floor Mat • Logo Placement • Artificial Props', '2-Seater Sofa + Premium Chair', '3 Camera Setup', 'Premium Lighting' ,'2–3 Collar Mics', '4 Reels <90 sec each + 1 Hook Teaser', '40–60 min Show + Podcast Switcher', '1 Iteration'],
+        features: ['2–3 Guests', 'Coffee Table Setup', 'Floor Mat • Logo Placement • Artificial Props', '2-Seater Sofa + Premium Chair', '3 Camera Setup', 'Premium Lighting', '2–3 Collar Mics', '4 Reels <90 sec each + 1 Hook Teaser', '40–60 min Show + Podcast Switcher', '1 Iteration'],
         delivery: '7 Days'
       }
     ],
@@ -126,93 +127,92 @@ export default function Podcast() {
     <>
       <Navbar />
       <section className="podcast-section">
-      <div className="podcast-hero">
-        <motion.div 
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          className="podcast-tag"
-        >
-          Podcast Studio — Pricing 2026
-        </motion.div>
-        <motion.h1 
-          initial={{ opacity: 0, y: 0 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ delay: 0.1 }}
-        >
-          Podcast<br /><span>Packages</span>
-        </motion.h1>
-        <motion.p 
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="podcast-sub"
-        >
-          Professional podcast studio packages for founders, corporates, influencers, and brands. Pick your setup. Show up. Ship it.
-        </motion.p>
-      </div>
-
-      <div className="section-tabs">
-        {tabConfig.map((tab) => (
-          <div 
-            key={tab.key}
-            className={`section-tab ${activePart === tab.key ? 'active' : ''}`}
-            onClick={() => setActivePart(tab.key)}
-          >
-            <span className="tab-letter">{tab.key.toUpperCase()}</span>
-            <div className="tab-meta">
-              <span className="tab-label">{tab.label}</span>
-            </div>
-          </div>
-        ))}
-      </div>
-
-      <div className="packages-grid">
-        {filteredPackages.map((pkg, index) => (
+        <div className="podcast-hero">
           <motion.div
-            key={pkg.id}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ delay: index * 0.1 }}
-            className={`package-card ${pkg.custom ? 'custom' : ''}`}
+            className="podcast-tag"
           >
-            <h3 className="card-name">{pkg.name}</h3>
-            <div className="card-target">{pkg.target}</div>
-            <div className="card-meta">
-              <div>
-                <span className="meta-label">Duration</span>
-                <span className="meta-value">{pkg.duration}</span>
-              </div>
-              <div>
-                <span className="meta-label">Investment</span>
-                <span className="meta-price">{pkg.price}</span>
+            Podcast Studio — Pricing 2026
+          </motion.div>
+          <motion.h1
+            initial={{ opacity: 0, y: 0 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            Podcast<br /><span>Packages</span>
+          </motion.h1>
+          <motion.p
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="podcast-sub"
+          >
+            Professional podcast studio packages for founders, corporates, influencers, and brands. Pick your setup. Show up. Ship it.
+          </motion.p>
+        </div>
+
+        <div className="section-tabs">
+          {tabConfig.map((tab) => (
+            <div
+              key={tab.key}
+              className={`section-tab ${activePart === tab.key ? 'active' : ''}`}
+              onClick={() => setActivePart(tab.key)}
+            >
+              <span className="tab-letter">{tab.key.toUpperCase()}</span>
+              <div className="tab-meta">
+                <span className="tab-label">{tab.label}</span>
               </div>
             </div>
-            <ul className="features">
-              {pkg.features.map((feature, i) => (
-                <li key={i}>{feature}</li>
-              ))}
-            </ul>
-            {pkg.custom && <span className="custom-badge">Fully Customisable</span>}
-            <span className="delivery-badge">Delivery: 7 Days</span>
-            <a 
-              className="enquiry-btn" 
-              href="https://wa.me/916366623955?text=Hi%2C%20I%20am%20interested%20in%20booking%20a%20studio%20session.%20Please%20share%20more%20details." 
-              target="_blank" 
-              rel="noopener noreferrer"
+          ))}
+        </div>
+
+        <div className="packages-grid">
+          {filteredPackages.map((pkg, index) => (
+            <motion.div
+              key={pkg.id}
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
+              className={`package-card ${pkg.custom ? 'custom' : ''}`}
             >
-              ENQUIRE ON WHATSAPP
-            </a>
-          </motion.div>
-        ))}
-      </div>
+              <h3 className="card-name">{pkg.name}</h3>
+              <div className="card-target">{pkg.target}</div>
+              <div className="card-meta">
+                <div>
+                  <span className="meta-label">Duration</span>
+                  <span className="meta-value">{pkg.duration}</span>
+                </div>
+                <div>
+                  <span className="meta-label">Investment</span>
+                  <span className="meta-price">{pkg.price}</span>
+                </div>
+              </div>
+              <ul className="features">
+                {pkg.features.map((feature, i) => (
+                  <li key={i}>{feature}</li>
+                ))}
+              </ul>
+              {pkg.custom && <span className="custom-badge">Fully Customisable</span>}
+              <span className="delivery-badge">Delivery: 7 Days</span>
+              <Link
+                className="enquiry-btn"
+                to="/book"
+                state={{ package: { id: pkg.id || pkg.name, name: pkg.name, duration: pkg.duration || 'Custom', price: parseInt(String(pkg.price || '0').replace(/,/g, '').match(/\\d+/)?.[0] || '0', 10), features: pkg.features || [] } }}
+              >
+                BOOK NOW
+              </Link>
+            </motion.div>
+          ))}
+        </div>
 
-      <div className="note-strip">
-        <div className="note-icon">!</div>
-        Bring your own storage device to copy the data · All prices + GST · Sessions by appointment only
-      </div>
+        <div className="note-strip">
+          <div className="note-icon">!</div>
+          Bring your own storage device to copy the data · All prices + GST · Sessions by appointment only
+        </div>
 
-      <InstagramTail />
-    </section>
+        <InstagramTail />
+      </section>
       <ContactForm />
     </>
   )
