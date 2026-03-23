@@ -1,7 +1,139 @@
-import { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
+import { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
+import jsPDF from 'jspdf';
 import Navbar from '../Navbar';
 import './BookingFlow.css';
+
+// Generate PDF blob from booking data
+async function generateBookingPDF(b) {
+    const doc = new jsPDF({ orientation: 'portrait', unit: 'mm', format: 'a4' });
+    const teal = [0, 194, 168];
+    const dark = [15, 15, 18];
+
+    // Header bar
+    doc.setFillColor(...teal);
+    doc.rect(0, 0, 210, 28, 'F');
+    doc.setTextColor(255, 255, 255);
+    doc.setFontSize(18);
+    doc.setFont('helvetica', 'bold');
+    doc.text('Nearby Studio', 14, 12);
+    doc.setFontSize(9);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Booking Receipt', 14, 20);
+    doc.setFontSize(9);
+    doc.text(`Booking ID: ${b.booking_id}`, 196, 12, { align: 'right' });
+    doc.text(`Date: ${new Date().toLocaleDateString('en-IN')}`, 196, 20, { align: 'right' });
+
+    // Section helper
+    const section = (title, y) => {
+        doc.setFillColor(240, 253, 250);
+        doc.rect(10, y, 190, 7, 'F');
+        doc.setTextColor(...teal);
+        doc.setFontSize(10);
+        doc.setFont('helvetica', 'bold');
+        doc.text(title, 14, y + 5);
+        return y + 12;
+    };
+
+    const row = (label, value, y, x = 14) => {
+        doc.setTextColor(80, 80, 80);
+        doc.setFontSize(9);
+        doc.setFont('helvetica', 'bold');
+        doc.text(label, x, y);
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(30, 30, 30);
+        doc.text(String(value || '-'), x + 45, y);
+        return y + 7;
+    };
+
+    let y = 36;
+
+    // Client Info
+    y = section('Client Information', y);
+    y = row('Name:', b.client_name, y);
+    y = row('Email:', b.client_email, y);
+    y = row('Phone:', b.client_phone, y);
+    if (b.client_company) y = row('Company:', b.client_company, y);
+    if (b.client_gst) y = row('GST:', b.client_gst, y);
+    y += 4;
+
+    // Booking Details
+    y = section('Booking Details', y);
+    y = row('Package:', b.package_name, y);
+    y = row('Date:', new Date(b.booking_date).toLocaleDateString('en-IN'), y);
+    y = row('Time:', `${b.start_time} - ${b.end_time}`, y);
+    if (b.client_notes) y = row('Notes:', b.client_notes, y);
+    y += 4;
+
+    // Payment Info
+    y = section('Payment Information', y);
+    y = row('Amount:', `INR ${Number(b.amount).toLocaleString('en-IN')}`, y);
+    y = row('Status:', b.payment_status, y);
+    if (b.razorpay_payment_id) y = row('Transaction ID:', b.razorpay_payment_id, y);
+    if (b.razorpay_order_id) y = row('Order ID:', b.razorpay_order_id, y);
+    y += 8;
+
+    // Footer
+    doc.setDrawColor(...teal);
+    doc.setLineWidth(0.5);
+    doc.line(10, y, 200, y);
+    y += 6;
+    doc.setTextColor(150, 150, 150);
+    doc.setFontSize(8);
+    doc.setFont('helvetica', 'normal');
+    doc.text('Thank you for choosing Nearby Studio! | help@nearby-studio.in | www.nearbystudio.in', 105, y, { align: 'center' });
+
+    return doc.output('blob');
+}
+
+function PDFModal({ booking, onClose }) {
+    const [pdfUrl, setPdfUrl] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        generateBookingPDF(booking).then(blob => {
+            setPdfUrl(URL.createObjectURL(blob));
+            setLoading(false);
+        });
+        return () => { if (pdfUrl) URL.revokeObjectURL(pdfUrl); };
+    }, [booking]);
+
+    const handleDownload = async () => {
+        const blob = await generateBookingPDF(booking);
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob);
+        a.download = `Receipt_${booking.booking_id}.pdf`;
+        a.click();
+    };
+
+    return (
+        <div style={{
+            position: 'fixed', inset: 0, background: 'rgba(0,0,0,0.85)',
+            zIndex: 1000, display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center'
+        }}>
+            <div style={{ width: '90%', maxWidth: '800px', background: '#1a1a1f', borderRadius: '12px', overflow: 'hidden' }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '1rem 1.5rem', borderBottom: '1px solid rgba(255,255,255,0.1)' }}>
+                    <span style={{ color: '#00c2a8', fontWeight: '700' }}>Receipt — {booking.booking_id}</span>
+                    <div style={{ display: 'flex', gap: '0.75rem' }}>
+                        <button onClick={handleDownload} style={{ background: '#00c2a8', color: '#000', border: 'none', borderRadius: '6px', padding: '6px 14px', fontWeight: '700', cursor: 'pointer', fontSize: '0.8rem' }}>
+                            ⬇ Download
+                        </button>
+                        <button onClick={onClose} style={{ background: 'rgba(255,255,255,0.1)', color: 'white', border: 'none', borderRadius: '6px', padding: '6px 14px', cursor: 'pointer', fontSize: '0.8rem' }}>
+                            ✕ Close
+                        </button>
+                    </div>
+                </div>
+                <div style={{ height: '75vh' }}>
+                    {loading ? (
+                        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#00c2a8' }}>Generating PDF...</div>
+                    ) : (
+                        <iframe src={pdfUrl} style={{ width: '100%', height: '100%', border: 'none' }} title="Booking Receipt" />
+                    )}
+                </div>
+            </div>
+        </div>
+    );
+}
 
 export default function AdminDashboard() {
     const [bookings, setBookings] = useState([]);
@@ -9,6 +141,9 @@ export default function AdminDashboard() {
     const [isAuthorized, setIsAuthorized] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
+    const [selectedPDF, setSelectedPDF] = useState(null);
+    const [resendStatus, setResendStatus] = useState({});
+    const adminPassword = 'nearby_admin_2026';
 
     const fetchBookings = async () => {
         setIsLoading(true);
@@ -30,36 +165,40 @@ export default function AdminDashboard() {
         }
     };
 
-    const handleLogin = (e) => {
-        e.preventDefault();
-        fetchBookings();
+    const handleResend = async (bookingId) => {
+        setResendStatus(s => ({ ...s, [bookingId]: 'sending' }));
+        try {
+            const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const res = await fetch(`${baseUrl}/api/admin/resend-invoice`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ password: adminPassword, bookingId })
+            });
+            const data = await res.json();
+            setResendStatus(s => ({ ...s, [bookingId]: res.ok ? 'sent' : 'error' }));
+            setTimeout(() => setResendStatus(s => ({ ...s, [bookingId]: null })), 3000);
+        } catch {
+            setResendStatus(s => ({ ...s, [bookingId]: 'error' }));
+            setTimeout(() => setResendStatus(s => ({ ...s, [bookingId]: null })), 3000);
+        }
     };
+
+    const handleLogin = (e) => { e.preventDefault(); fetchBookings(); };
 
     if (!isAuthorized) {
         return (
             <div className="booking-section" style={{ minHeight: '100vh', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <Navbar />
-                <motion.div
-                    initial={{ opacity: 0, scale: 0.9 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    className="summary-card"
-                    style={{ maxWidth: '400px', width: '90%' }}
-                >
+                <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} className="summary-card" style={{ maxWidth: '400px', width: '90%' }}>
                     <h2 style={{ marginBottom: '2rem', textAlign: 'center', color: '#00c2a8' }}>Admin Login</h2>
                     <form onSubmit={handleLogin} style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                         <div className="b-form-group">
                             <label>Admin Password</label>
-                            <input
-                                type="password"
-                                value={password}
-                                onChange={(e) => setPassword(e.target.value)}
-                                placeholder="Enter secure key..."
-                                required
-                            />
+                            <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder="Enter secure key..." required />
                         </div>
                         {error && <p style={{ color: '#ff4444', fontSize: '0.8rem' }}>{error}</p>}
                         <button type="submit" className="btn-next" style={{ width: '100%' }}>
-                            ACCESS DASHBOARD
+                            {isLoading ? 'Checking...' : 'ACCESS DASHBOARD'}
                         </button>
                     </form>
                 </motion.div>
@@ -70,12 +209,17 @@ export default function AdminDashboard() {
     return (
         <div className="booking-section" style={{ minHeight: '100vh', padding: '120px 2rem 5rem' }}>
             <Navbar />
+            {selectedPDF && <PDFModal booking={selectedPDF} onClose={() => setSelectedPDF(null)} />}
+
             <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
                     <h1 style={{ fontSize: '2.5rem', fontWeight: '800' }}>
                         Global <span style={{ color: '#00c2a8' }}>Bookings</span>
                     </h1>
-                    <button onClick={() => setIsAuthorized(false)} className="btn-back">LOGOUT</button>
+                    <div style={{ display: 'flex', gap: '1rem' }}>
+                        <button onClick={fetchBookings} className="btn-next" style={{ padding: '0.5rem 1.25rem', fontSize: '0.85rem' }}>↻ Refresh</button>
+                        <button onClick={() => setIsAuthorized(false)} className="btn-back">LOGOUT</button>
+                    </div>
                 </div>
 
                 <div className="summary-card" style={{ padding: '0', overflowX: 'auto' }}>
@@ -88,6 +232,7 @@ export default function AdminDashboard() {
                                 <th style={{ padding: '1.5rem' }}>Date/Time</th>
                                 <th style={{ padding: '1.5rem' }}>Amount</th>
                                 <th style={{ padding: '1.5rem' }}>Status</th>
+                                <th style={{ padding: '1.5rem' }}>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -99,28 +244,49 @@ export default function AdminDashboard() {
                                     <td style={{ padding: '1.25rem' }}>
                                         <div style={{ fontWeight: '600' }}>{b.client_name}</div>
                                         <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem' }}>{b.client_email}</div>
+                                        <div style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.75rem' }}>{b.client_phone}</div>
                                     </td>
                                     <td style={{ padding: '1.25rem' }}>
                                         <div style={{ color: '#00c2a8' }}>{b.package_name}</div>
                                     </td>
                                     <td style={{ padding: '1.25rem' }}>
-                                        <div>{new Date(b.booking_date).toLocaleDateString()}</div>
+                                        <div>{new Date(b.booking_date).toLocaleDateString('en-IN')}</div>
                                         <div style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem' }}>{b.start_time} - {b.end_time}</div>
                                     </td>
                                     <td style={{ padding: '1.25rem' }}>
-                                        ₹{b.amount.toLocaleString()}
+                                        ₹{Number(b.amount).toLocaleString('en-IN')}
                                     </td>
                                     <td style={{ padding: '1.25rem' }}>
                                         <span style={{
                                             background: b.payment_status === 'Paid' ? 'rgba(0,194,168,0.1)' : 'rgba(255,68,68,0.1)',
                                             color: b.payment_status === 'Paid' ? '#00c2a8' : '#ff4444',
-                                            padding: '4px 10px',
-                                            borderRadius: '4px',
-                                            fontSize: '0.75rem',
-                                            fontWeight: '700'
+                                            padding: '4px 10px', borderRadius: '4px', fontSize: '0.75rem', fontWeight: '700'
                                         }}>
                                             {b.payment_status === 'Paid' ? 'CONFIRMED' : 'UNPAID'}
                                         </span>
+                                    </td>
+                                    <td style={{ padding: '1.25rem' }}>
+                                        <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                            <button
+                                                onClick={() => setSelectedPDF(b)}
+                                                style={{ background: 'rgba(0,194,168,0.15)', color: '#00c2a8', border: '1px solid rgba(0,194,168,0.3)', borderRadius: '6px', padding: '5px 12px', fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap' }}
+                                            >
+                                                📄 View PDF
+                                            </button>
+                                            {b.payment_status === 'Paid' && (
+                                                <button
+                                                    onClick={() => handleResend(b.booking_id)}
+                                                    disabled={resendStatus[b.booking_id] === 'sending'}
+                                                    style={{
+                                                        background: resendStatus[b.booking_id] === 'sent' ? 'rgba(0,200,100,0.15)' : resendStatus[b.booking_id] === 'error' ? 'rgba(255,68,68,0.15)' : 'rgba(255,255,255,0.05)',
+                                                        color: resendStatus[b.booking_id] === 'sent' ? '#00c864' : resendStatus[b.booking_id] === 'error' ? '#ff4444' : 'rgba(255,255,255,0.7)',
+                                                        border: '1px solid rgba(255,255,255,0.1)', borderRadius: '6px', padding: '5px 12px', fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer', whiteSpace: 'nowrap'
+                                                    }}
+                                                >
+                                                    {resendStatus[b.booking_id] === 'sending' ? '⏳ Sending...' : resendStatus[b.booking_id] === 'sent' ? '✓ Sent!' : resendStatus[b.booking_id] === 'error' ? '✗ Failed' : '✉ Resend'}
+                                                </button>
+                                            )}
+                                        </div>
                                     </td>
                                 </tr>
                             ))}

@@ -191,6 +191,28 @@ app.get('/api/admin/bookings', async (req, res) => {
   }
 });
 
+// Route: Resend Invoice Email for a booking
+app.post('/api/admin/resend-invoice', async (req, res) => {
+  try {
+    const { password, bookingId } = req.body;
+    if (password !== 'nearby_admin_2026') {
+      return res.status(401).json({ error: 'Unauthorized' });
+    }
+
+    const result = await pool.query('SELECT * FROM bookings WHERE booking_id = $1', [bookingId]);
+    if (result.rows.length === 0) {
+      return res.status(404).json({ error: 'Booking not found' });
+    }
+
+    const booking = result.rows[0];
+    await sendConfirmationEmail(booking);
+    res.json({ message: 'Invoice resent successfully' });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ error: 'Failed to resend invoice' });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Backend running on port ${PORT} `));
 
