@@ -179,7 +179,7 @@ app.post('/api/verify', async (req, res) => {
 app.get('/api/admin/bookings', async (req, res) => {
   try {
     const { password } = req.query;
-    if (password !== 'nearby_admin_2026') {
+    if (password !== '2026') {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 
@@ -195,7 +195,7 @@ app.get('/api/admin/bookings', async (req, res) => {
 app.post('/api/admin/resend-invoice', async (req, res) => {
   try {
     const { password, bookingId } = req.body;
-    if (password !== 'nearby_admin_2026') {
+    if (password !== '2026') {
       return res.status(401).json({ error: 'Unauthorized' });
     }
 

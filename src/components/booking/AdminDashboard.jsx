@@ -161,7 +161,7 @@ export default function AdminDashboard() {
   const [receiptBooking, setReceiptBooking] = useState(null);
   const [invoiceBooking, setInvoiceBooking] = useState(null);
   const [resendStatus, setResendStatus] = useState({});
-  const adminPassword = 'nearby_admin_2026';
+  const adminPassword = '2026';
 
   const fetchBookings = async () => {
     setIsLoading(true);

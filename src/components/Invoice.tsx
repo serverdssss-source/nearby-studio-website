@@ -759,61 +759,6 @@ export default function SripadaInvoice({
             <ArrowLeft size={20} />
             Back
           </button>
-
-          <div className="flex gap-3">
-            {!isEditing && (
-              <>
-                <button
-                  onClick={() => setIsEditing(true)}
-                  className="flex items-center gap-2 px-4 py-2 bg-yellow-600 text-white rounded hover:bg-yellow-700 transition text-sm font-semibold"
-                >
-                  Edit
-                </button>
-                <button
-                  onClick={handlePrint}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition text-sm font-semibold"
-                >
-                  <Printer size={16} />
-                  Print
-                </button>
-                <button
-                  onClick={handleDownloadPDF}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-800 text-white rounded hover:bg-gray-900 transition text-sm font-semibold"
-                >
-                  <Download size={16} />
-                  Download PDF
-                </button>
-                <button
-                  onClick={() => handleSendEmail(false)}
-                  disabled={isSending}
-                  className="flex items-center gap-2 px-4 py-2 bg-[#327d7d] text-white rounded hover:bg-[#265f5f] transition text-sm font-semibold disabled:opacity-50"
-                >
-                  <Mail size={16} />
-                  {isSending ? "Sending..." : "Send Email"}
-                </button>
-              </>
-            )}
-            {isEditing && (
-              <>
-                <button
-                  onClick={handleSaveEdit}
-                  disabled={isSavingEdit}
-                  className="flex items-center gap-2 px-4 py-2 bg-green-600 text-white rounded hover:bg-green-700 transition text-sm font-semibold disabled:opacity-60 disabled:cursor-not-allowed"
-                >
-                  {isSavingEdit ? "Saving..." : "Save Changes"}
-                </button>
-                <button
-                  onClick={() => {
-                    setIsEditing(false);
-                    setEditData(invoice);
-                  }}
-                  className="flex items-center gap-2 px-4 py-2 bg-gray-600 text-white rounded hover:bg-gray-700 transition text-sm font-semibold"
-                >
-                  Cancel
-                </button>
-              </>
-            )}
-          </div>
         </div>
 
         {/* Edit Form Modal */}
@@ -1301,7 +1246,7 @@ export default function SripadaInvoice({
                     src={logos["/Untitled design.png"] || "/Untitled design.png"}
                     alt="Nearby Studio Logo"
                     style={{
-                      height: "110px",
+                      height: "160px",
                       width: "auto",
                       alignSelf: "center",
                     }}
