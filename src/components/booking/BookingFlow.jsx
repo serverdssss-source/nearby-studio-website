@@ -139,7 +139,8 @@ export default function BookingFlow() {
                 { startTime: '6:00 PM', endTime: '8:00 PM' }
             ];
 
-            const res = await fetch(`http://localhost:5000/api/availability?date=${selectedDate}&packageDuration=${selectedPackage.duration}`);
+            const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const res = await fetch(`${baseUrl}/api/availability?date=${selectedDate}&packageDuration=${selectedPackage.duration}`);
             if (res.ok) {
                 const data = await res.json();
                 const booked = data.bookedSlots || [];
@@ -189,7 +190,8 @@ export default function BookingFlow() {
                 }
             };
 
-            const res = await fetch('http://localhost:5000/api/orders', {
+            const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+            const res = await fetch(`${baseUrl}/api/orders`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(orderData)
@@ -210,7 +212,8 @@ export default function BookingFlow() {
                 order_id: order.id,
                 handler: async function (response) {
                     try {
-                        const verifyRes = await fetch('http://localhost:5000/api/verify', {
+                        const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+                        const verifyRes = await fetch(`${baseUrl}/api/verify`, {
                             method: 'POST',
                             headers: { 'Content-Type': 'application/json' },
                             body: JSON.stringify({ ...response, bookingId: DBid })
