@@ -1246,7 +1246,7 @@ export default function SripadaInvoice({
                     src={logos["/Nearby studio_white.webp"] || "/Nearby studio_white.webp"}
                     alt="Nearby Studio Logo"
                     style={{
-                      height: "110px",
+                      height: "66px",
                       width: "auto",
                       alignSelf: "center",
                     }}
