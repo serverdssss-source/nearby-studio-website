@@ -1243,10 +1243,10 @@ export default function SripadaInvoice({
                   }}
                 >
                   <img
-                    src={logos["/Untitled design.png"] || "/Untitled design.png"}
+                    src={logos["/Nearby studio_white.webp"] || "/Nearby studio_white.webp"}
                     alt="Nearby Studio Logo"
                     style={{
-                      height: "230px",
+                      height: "110px",
                       width: "auto",
                       alignSelf: "center",
                     }}
