@@ -165,30 +165,23 @@ export default function BookingFlow() {
         return h < 23;
     };
 
+    // Valid coupon codes (client-side fast check — server re-validates on booking)
+    const VALID_COUPONS = ['SS308612', 'BUZZIWAH308612', 'INHOUSESS1'];
+
     // Coupon handlers
-    const handleApplyCoupon = async () => {
+    const handleApplyCoupon = () => {
         if (!couponCode.trim()) return;
         setCouponLoading(true);
         setCouponError('');
-        try {
-            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/validate-coupon`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ code: couponCode.trim() })
-            });
-            const data = await res.json();
-            if (data.valid) {
-                setCouponApplied(true);
-                setCouponError('');
-            } else {
-                setCouponError(data.message || 'Invalid coupon code.');
-                setCouponApplied(false);
-            }
-        } catch (err) {
-            setCouponError('Could not validate coupon. Please try again.');
-        } finally {
-            setCouponLoading(false);
+        const entered = couponCode.trim().toUpperCase();
+        if (VALID_COUPONS.includes(entered)) {
+            setCouponApplied(true);
+            setCouponError('');
+        } else {
+            setCouponError('Invalid coupon code. Please try again.');
+            setCouponApplied(false);
         }
+        setCouponLoading(false);
     };
 
     const handleFreeBooking = async () => {
