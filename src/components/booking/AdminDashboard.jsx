@@ -152,6 +152,221 @@ function ReceiptModal({ booking, onClose }) {
   );
 }
 
+// ── Calendar Component ──────────────────────────────────────────────────
+function CalendarTab({ bookings, onViewReceipt }) {
+  const today = new Date();
+  const [calYear, setCalYear] = useState(today.getFullYear());
+  const [calMonth, setCalMonth] = useState(today.getMonth()); // 0-indexed
+  const [selectedDay, setSelectedDay] = useState(null); // Date string 'YYYY-MM-DD'
+
+  const monthNames = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+  const dayNames = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+
+  // Build a map: { 'YYYY-MM-DD': [booking, ...] }
+  const bookingMap = {};
+  bookings.forEach(b => {
+    const dateKey = b.booking_date ? b.booking_date.split('T')[0] : null;
+    if (!dateKey) return;
+    if (!bookingMap[dateKey]) bookingMap[dateKey] = [];
+    bookingMap[dateKey].push(b);
+  });
+
+  // Days in month
+  const firstDay = new Date(calYear, calMonth, 1).getDay(); // 0=Sun
+  const daysInMonth = new Date(calYear, calMonth + 1, 0).getDate();
+
+  const prevMonth = () => {
+    if (calMonth === 0) { setCalYear(y => y - 1); setCalMonth(11); }
+    else setCalMonth(m => m - 1);
+    setSelectedDay(null);
+  };
+  const nextMonth = () => {
+    if (calMonth === 11) { setCalYear(y => y + 1); setCalMonth(0); }
+    else setCalMonth(m => m + 1);
+    setSelectedDay(null);
+  };
+
+  const pad = n => String(n).padStart(2, '0');
+  const todayStr = `${today.getFullYear()}-${pad(today.getMonth()+1)}-${pad(today.getDate())}`;
+
+  const selectedBookings = selectedDay ? (bookingMap[selectedDay] || []) : [];
+
+  return (
+    <div style={{ display: 'flex', gap: '2rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+      {/* Calendar Grid */}
+      <div className="summary-card" style={{ flex: '1', minWidth: '340px', padding: '1.5rem' }}>
+        {/* Month Nav */}
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '1.5rem' }}>
+          <button onClick={prevMonth} style={{ background: 'rgba(255,255,255,0.08)', border: 'none', color: 'white', borderRadius: '8px', padding: '6px 14px', cursor: 'pointer', fontSize: '1.1rem' }}>‹</button>
+          <span style={{ fontWeight: '800', fontSize: '1.2rem', color: '#00c2a8' }}>{monthNames[calMonth]} {calYear}</span>
+          <button onClick={nextMonth} style={{ background: 'rgba(255,255,255,0.08)', border: 'none', color: 'white', borderRadius: '8px', padding: '6px 14px', cursor: 'pointer', fontSize: '1.1rem' }}>›</button>
+        </div>
+
+        {/* Day Headers */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '4px', marginBottom: '4px' }}>
+          {dayNames.map(d => (
+            <div key={d} style={{ textAlign: 'center', fontSize: '0.72rem', color: 'rgba(255,255,255,0.35)', fontWeight: '700', padding: '4px 0' }}>{d}</div>
+          ))}
+        </div>
+
+        {/* Day Cells */}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: '4px' }}>
+          {/* Empty cells before first day */}
+          {Array.from({ length: firstDay }).map((_, i) => (
+            <div key={`empty-${i}`} />
+          ))}
+          {/* Day cells */}
+          {Array.from({ length: daysInMonth }, (_, i) => i + 1).map(day => {
+            const dateKey = `${calYear}-${pad(calMonth+1)}-${pad(day)}`;
+            const dayBookings = bookingMap[dateKey] || [];
+            const count = dayBookings.length;
+            const isToday = dateKey === todayStr;
+            const isSelected = dateKey === selectedDay;
+            const hasBookings = count > 0;
+
+            return (
+              <div
+                key={day}
+                onClick={() => setSelectedDay(isSelected ? null : dateKey)}
+                style={{
+                  borderRadius: '10px',
+                  padding: '8px 4px 6px',
+                  textAlign: 'center',
+                  cursor: hasBookings ? 'pointer' : 'default',
+                  background: isSelected
+                    ? 'rgba(0,194,168,0.25)'
+                    : isToday
+                      ? 'rgba(0,194,168,0.1)'
+                      : hasBookings
+                        ? 'rgba(255,255,255,0.05)'
+                        : 'transparent',
+                  border: isSelected
+                    ? '1.5px solid #00c2a8'
+                    : isToday
+                      ? '1.5px solid rgba(0,194,168,0.4)'
+                      : '1.5px solid transparent',
+                  transition: 'all 0.15s',
+                  minHeight: '52px',
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                  justifyContent: 'flex-start',
+                  gap: '4px',
+                }}
+              >
+                <span style={{ fontSize: '0.8rem', fontWeight: isToday ? '800' : '500', color: isSelected ? '#00c2a8' : isToday ? '#00c2a8' : hasBookings ? 'white' : 'rgba(255,255,255,0.35)' }}>
+                  {day}
+                </span>
+                {hasBookings && (
+                  <span style={{
+                    background: isSelected ? '#00c2a8' : 'rgba(0,194,168,0.7)',
+                    color: isSelected ? '#000' : 'white',
+                    borderRadius: '20px',
+                    fontSize: '0.65rem',
+                    fontWeight: '800',
+                    padding: '1px 7px',
+                    lineHeight: '1.6',
+                  }}>
+                    {count}
+                  </span>
+                )}
+              </div>
+            );
+          })}
+        </div>
+
+        {/* Legend */}
+        <div style={{ marginTop: '1.5rem', display: 'flex', gap: '1rem', flexWrap: 'wrap', fontSize: '0.72rem', color: 'rgba(255,255,255,0.4)' }}>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}><span style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(0,194,168,0.7)', display: 'inline-block' }} /> Has bookings</span>
+          <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}><span style={{ width: 10, height: 10, borderRadius: '3px', border: '1.5px solid rgba(0,194,168,0.4)', display: 'inline-block' }} /> Today</span>
+        </div>
+      </div>
+
+      {/* Day Detail Panel */}
+      <div style={{ flex: '1', minWidth: '300px' }}>
+        {!selectedDay ? (
+          <div className="summary-card" style={{ padding: '2.5rem', textAlign: 'center', color: 'rgba(255,255,255,0.3)' }}>
+            <div style={{ fontSize: '2.5rem', marginBottom: '0.75rem' }}>📅</div>
+            <div style={{ fontSize: '0.9rem' }}>Click on a day with bookings to see details</div>
+          </div>
+        ) : (
+          <div className="summary-card" style={{ padding: '1.5rem' }}>
+            <h3 style={{ color: '#00c2a8', marginBottom: '1.25rem', fontWeight: '700', fontSize: '1.1rem' }}>
+              {new Date(selectedDay + 'T12:00:00').toLocaleDateString('en-IN', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' })}
+              <span style={{ marginLeft: '0.75rem', color: 'rgba(255,255,255,0.4)', fontWeight: '500', fontSize: '0.85rem' }}>
+                {selectedBookings.length} booking{selectedBookings.length !== 1 ? 's' : ''}
+              </span>
+            </h3>
+            {selectedBookings.length === 0 ? (
+              <div style={{ color: 'rgba(255,255,255,0.35)', textAlign: 'center', padding: '2rem 0', fontSize: '0.9rem' }}>No bookings on this day</div>
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                {selectedBookings
+                  .slice()
+                  .sort((a, b) => {
+                    const toMins = t => {
+                      if (!t || t === 'N/A') return 0;
+                      const [time, period] = t.split(' ');
+                      let [h, m] = time.split(':').map(Number);
+                      if (period === 'PM' && h !== 12) h += 12;
+                      if (period === 'AM' && h === 12) h = 0;
+                      return h * 60 + m;
+                    };
+                    return toMins(a.start_time) - toMins(b.start_time);
+                  })
+                  .map(b => (
+                    <div key={b.booking_id} style={{
+                      background: 'rgba(255,255,255,0.04)',
+                      border: '1px solid rgba(255,255,255,0.08)',
+                      borderRadius: '10px',
+                      padding: '1rem 1.25rem',
+                    }}>
+                      {/* Time badge + client */}
+                      <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: '0.5rem' }}>
+                        <div>
+                          <div style={{ color: '#00c2a8', fontWeight: '800', fontSize: '0.95rem' }}>
+                            {b.start_time} – {b.end_time}
+                          </div>
+                          <div style={{ fontWeight: '600', marginTop: '2px' }}>{b.client_name}</div>
+                          <div style={{ color: 'rgba(255,255,255,0.45)', fontSize: '0.78rem' }}>{b.client_email}</div>
+                        </div>
+                        <span style={{
+                          background: b.payment_status === 'Paid' ? 'rgba(0,194,168,0.12)' : b.payment_status === 'Free' ? 'rgba(100,180,255,0.12)' : 'rgba(255,68,68,0.1)',
+                          color: b.payment_status === 'Paid' ? '#00c2a8' : b.payment_status === 'Free' ? '#7eb3ff' : '#ff4444',
+                          padding: '3px 9px', borderRadius: '4px', fontSize: '0.68rem', fontWeight: '800',
+                          whiteSpace: 'nowrap',
+                        }}>
+                          {b.payment_status === 'Paid' ? '✓ PAID' : b.payment_status === 'Free' ? '★ FREE' : 'UNPAID'}
+                        </span>
+                      </div>
+
+                      {/* Package + amount */}
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '0.5rem' }}>
+                        <span style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.8rem' }}>{b.package_name}</span>
+                        <span style={{ fontWeight: '700', fontSize: '0.85rem' }}>₹{Number(b.amount).toLocaleString('en-IN')}</span>
+                      </div>
+
+                      {/* Receipt button */}
+                      <div style={{ marginTop: '0.75rem' }}>
+                        <button
+                          onClick={() => onViewReceipt(b)}
+                          style={{ background: 'rgba(0,194,168,0.15)', color: '#00c2a8', border: '1px solid rgba(0,194,168,0.3)', borderRadius: '6px', padding: '5px 14px', fontSize: '0.75rem', fontWeight: '700', cursor: 'pointer' }}
+                        >
+                          📄 View Receipt
+                        </button>
+                      </div>
+                    </div>
+                  ))
+                }
+              </div>
+            )}
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
 export default function AdminDashboard() {
   const [bookings, setBookings] = useState([]);
   const [password, setPassword] = useState('');
@@ -161,6 +376,7 @@ export default function AdminDashboard() {
   const [receiptBooking, setReceiptBooking] = useState(null);
   const [invoiceBooking, setInvoiceBooking] = useState(null);
   const [resendStatus, setResendStatus] = useState({});
+  const [activeTab, setActiveTab] = useState('bookings');
   const adminPassword = '2026';
 
   const fetchBookings = async () => {
@@ -238,7 +454,7 @@ export default function AdminDashboard() {
       {receiptBooking && <ReceiptModal booking={receiptBooking} onClose={() => setReceiptBooking(null)} />}
 
       <div style={{ maxWidth: '1400px', margin: '0 auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '3rem' }}>
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '2rem' }}>
           <h1 style={{ fontSize: '2.5rem', fontWeight: '800' }}>
             Global <span style={{ color: '#00c2a8' }}>Bookings</span>
           </h1>
@@ -248,7 +464,37 @@ export default function AdminDashboard() {
           </div>
         </div>
 
-        <div className="summary-card" style={{ padding: '0', overflowX: 'auto' }}>
+        {/* Tab Switcher */}
+        <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '2rem' }}>
+          {[
+            { key: 'bookings', label: '📋 Bookings List' },
+            { key: 'calendar', label: '📅 Calendar' },
+          ].map(tab => (
+            <button
+              key={tab.key}
+              onClick={() => setActiveTab(tab.key)}
+              style={{
+                padding: '0.55rem 1.4rem',
+                borderRadius: '8px',
+                border: activeTab === tab.key ? '1.5px solid #00c2a8' : '1.5px solid rgba(255,255,255,0.12)',
+                background: activeTab === tab.key ? 'rgba(0,194,168,0.15)' : 'rgba(255,255,255,0.04)',
+                color: activeTab === tab.key ? '#00c2a8' : 'rgba(255,255,255,0.55)',
+                fontWeight: '700',
+                fontSize: '0.88rem',
+                cursor: 'pointer',
+                transition: 'all 0.15s',
+              }}
+            >
+              {tab.label}
+            </button>
+          ))}
+        </div>
+
+        {activeTab === 'calendar' && (
+          <CalendarTab bookings={bookings} onViewReceipt={b => setReceiptBooking(b)} />
+        )}
+
+        {activeTab === 'bookings' && <div className="summary-card" style={{ padding: '0', overflowX: 'auto' }}>
           <table style={{ width: '100%', borderCollapse: 'collapse', color: 'white', fontSize: '0.9rem' }}>
             <thead>
               <tr style={{ background: 'rgba(255,255,255,0.05)', textAlign: 'left' }}>
@@ -328,7 +574,7 @@ export default function AdminDashboard() {
           {bookings.length === 0 && (
             <div style={{ padding: '4rem', textAlign: 'center', color: 'rgba(255,255,255,0.3)' }}>No bookings found.</div>
           )}
-        </div>
+        </div>}
       </div>
     </div>
   );
