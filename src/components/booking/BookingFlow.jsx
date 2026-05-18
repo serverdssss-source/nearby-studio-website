@@ -142,28 +142,25 @@ export default function BookingFlow() {
         return `${h}:${String(m).padStart(2, '0')} ${meridiem}`;
     };
 
-    // Add N hours to a time string like "10:00 AM" → returns "02:00 PM"
-    const addHoursToTime = (timeStr, hours) => {
-        const [time, meridiem] = timeStr.trim().split(' ');
+    // Convert "9:00 AM" / "4:30 PM" string → minutes from midnight (for numeric comparison)
+    const timeStrToMins = (timeStr) => {
+        const [time, mer] = timeStr.trim().split(' ');
         let [h, m] = time.split(':').map(Number);
-        if (meridiem === 'PM' && h !== 12) h += 12;
-        if (meridiem === 'AM' && h === 12) h = 0;
-        const totalMinutes = h * 60 + m + hours * 60;
-        const newH = Math.floor(totalMinutes / 60);
-        const newM = totalMinutes % 60;
-        const newMeridiem = newH >= 12 ? 'PM' : 'AM';
-        const displayH = newH > 12 ? newH - 12 : (newH === 0 ? 12 : newH);
-        return `${String(displayH).padStart(2, '0')}:${String(newM).padStart(2, '0')} ${newMeridiem}`;
+        if (mer === 'PM' && h !== 12) h += 12;
+        if (mer === 'AM' && h === 12) h = 0;
+        return h * 60 + m;
     };
 
-    // Return false if end time is after 8 PM (studio closes at 8 PM)
-    const isSlotValid = (endTimeStr) => {
-        const [time, meridiem] = endTimeStr.trim().split(' ');
-        let [h, m] = time.split(':').map(Number);
-        if (meridiem === 'PM' && h !== 12) h += 12;
-        if (meridiem === 'AM' && h === 12) h = 0;
-        // Allow slots ending exactly at 8:00 PM (20:00) but not after
-        return h < 20 || (h === 20 && m === 0);
+    // Add N hours to a time string — returns display string like "02:00 PM"
+    const addHoursToTime = (timeStr, hours) => {
+        const startMins = timeStrToMins(timeStr);
+        const totalMins = startMins + hours * 60;
+        const dayMins = totalMins % (24 * 60); // wrap within 24h for display
+        const newH = Math.floor(dayMins / 60);
+        const newM = dayMins % 60;
+        const mer = newH >= 12 ? 'PM' : 'AM';
+        const displayH = newH > 12 ? newH - 12 : (newH === 0 ? 12 : newH);
+        return `${String(displayH).padStart(2, '0')}:${String(newM).padStart(2, '0')} ${mer}`;
     };
 
     // Valid coupon codes (client-side fast check — server re-validates on booking)
@@ -236,14 +233,18 @@ export default function BookingFlow() {
             const baseHours = selectedDuration ? parseInt(selectedDuration.label.split(' ')[0]) : 2;
             const totalHours = baseHours + extraHours;
 
-            // Fixed start times (studio open 9 AM – 8 PM); end times computed from session hours
+            // Studio open 9 AM – 8 PM. Filter numerically (avoids midnight-wrap string bugs)
+            const CLOSE_MINS = 20 * 60; // 8 PM = 1200 mins from midnight
             const startTimes = ['9:00 AM', '11:30 AM', '2:00 PM', '4:30 PM', '6:00 PM'];
             let generatedSlots = startTimes
+                .filter(s => {
+                    const endMins = timeStrToMins(s) + totalHours * 60;
+                    return !isNaN(endMins) && endMins <= CLOSE_MINS;
+                })
                 .map(s => ({
                     startTime: formatTimeHHMM(s),
                     endTime: formatTimeHHMM(addHoursToTime(s, totalHours))
-                }))
-                .filter(s => isSlotValid(s.endTime)); // remove slots that end after 11 PM
+                }));
 
             const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
             const res = await fetch(`${baseUrl}/api/availability?date=${selectedDate}&packageDuration=${selectedPackage.duration}`);
@@ -259,18 +260,22 @@ export default function BookingFlow() {
             setAvailableSlots(generatedSlots);
         } catch (err) {
             console.error(err);
-            // Fallback also uses correct duration
+            // Fallback — same numeric filter
             const baseHours = selectedDuration ? parseInt(selectedDuration.label.split(' ')[0]) : 2;
             const totalHours = baseHours + extraHours;
+            const CLOSE_MINS = 20 * 60;
             const startTimes = ['9:00 AM', '11:30 AM', '2:00 PM', '4:30 PM', '6:00 PM'];
             setAvailableSlots(
                 startTimes
+                    .filter(s => {
+                        const endMins = timeStrToMins(s) + totalHours * 60;
+                        return !isNaN(endMins) && endMins <= CLOSE_MINS;
+                    })
                     .map(s => ({
                         startTime: formatTimeHHMM(s),
                         endTime: formatTimeHHMM(addHoursToTime(s, totalHours)),
                         disabled: false
                     }))
-                    .filter(s => isSlotValid(s.endTime))
             );
         } finally {
             setIsLoadingSlots(false);
