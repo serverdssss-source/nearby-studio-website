@@ -537,7 +537,7 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="booking-section" style={{ minHeight: '100vh', padding: '120px 2rem 5rem' }}>
+    <div className="booking-section" style={{ minHeight: '100vh', padding: '160px 2rem 5rem' }}>
       <Navbar />
       {receiptBooking && <ReceiptModal booking={receiptBooking} onClose={() => setReceiptBooking(null)} />}
 
