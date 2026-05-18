@@ -175,6 +175,84 @@ app.post('/api/verify', async (req, res) => {
   }
 });
 
+// Route: Validate Coupon Code
+app.post('/api/validate-coupon', (req, res) => {
+  const { code } = req.body;
+  if (!code) return res.status(400).json({ valid: false, message: 'No code provided' });
+
+  const validCodes = (process.env.COUPON_CODES || '').split(',').map(c => c.trim().toUpperCase());
+  const isValid = validCodes.includes(code.trim().toUpperCase());
+
+  res.json({
+    valid: isValid,
+    message: isValid ? 'Coupon applied! Your booking is free.' : 'Invalid coupon code. Please try again.'
+  });
+});
+
+// Route: Create Free Booking (Coupon-Based — In-House)
+app.post('/api/free-booking', async (req, res) => {
+  try {
+    const { couponCode, bookingData } = req.body;
+
+    // Re-validate coupon server-side
+    const validCodes = (process.env.COUPON_CODES || '').split(',').map(c => c.trim().toUpperCase());
+    if (!validCodes.includes((couponCode || '').trim().toUpperCase())) {
+      return res.status(403).json({ error: 'Invalid or expired coupon code' });
+    }
+
+    const countResult = await pool.query('SELECT COUNT(*) FROM bookings');
+    const orderNumber = parseInt(countResult.rows[0].count) + 1;
+    const bookingId = `SS-NBS${orderNumber.toString().padStart(2, '0')}`;
+
+    await pool.query(`
+      INSERT INTO bookings(
+        booking_id, package_id, package_name, booking_date, start_time, end_time, package_description,
+        client_name, client_email, client_phone, client_company, client_gst, client_notes,
+        amount, status, payment_status, razorpay_order_id
+      ) VALUES($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, 0, 'Confirmed', 'Free', $14)
+    `, [
+      bookingId,
+      bookingData.packageId,
+      bookingData.packageName,
+      bookingData.date,
+      bookingData.startTime,
+      bookingData.endTime,
+      bookingData.packageDescription || '',
+      bookingData.clientDetails.name || 'In-House',
+      bookingData.clientDetails.email || 'inhouse@nearbystudio.in',
+      bookingData.clientDetails.phone || 'N/A',
+      bookingData.clientDetails.company || '',
+      bookingData.clientDetails.gst || '',
+      bookingData.clientDetails.notes || '',
+      `COUPON:${couponCode.trim().toUpperCase()}`
+    ]);
+
+    // Send confirmation email if client email is real
+    const confirmedBooking = {
+      booking_id: bookingId,
+      package_name: bookingData.packageName,
+      booking_date: bookingData.date,
+      start_time: bookingData.startTime,
+      end_time: bookingData.endTime,
+      client_name: bookingData.clientDetails.name || 'In-House',
+      client_email: bookingData.clientDetails.email || '',
+      client_phone: bookingData.clientDetails.phone || '',
+      amount: 0,
+      status: 'Confirmed',
+      payment_status: 'Free'
+    };
+    if (confirmedBooking.client_email && confirmedBooking.client_email !== 'inhouse@nearbystudio.in') {
+      sendConfirmationEmail(confirmedBooking).catch(err => console.error('Free Booking Email Error:', err));
+    }
+
+    console.log(`Free booking confirmed: ${bookingId} using coupon ${couponCode}`);
+    res.json({ success: true, bookingId });
+  } catch (err) {
+    console.error('Free booking error:', err);
+    res.status(500).json({ error: 'Failed to create free booking' });
+  }
+});
+
 // Route: Admin - Get All Bookings
 app.get('/api/admin/bookings', async (req, res) => {
   try {

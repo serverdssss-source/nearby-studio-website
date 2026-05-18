@@ -36,6 +36,12 @@ export default function BookingFlow() {
     const [isConfirmed, setIsConfirmed] = useState(false);
     const [bookingId, setBookingId] = useState('');
 
+    // Coupon state
+    const [couponCode, setCouponCode] = useState('');
+    const [couponApplied, setCouponApplied] = useState(false);
+    const [couponLoading, setCouponLoading] = useState(false);
+    const [couponError, setCouponError] = useState('');
+
     const steps = ['Package', 'Duration', 'Date', 'Time', 'Details', 'Payment'];
 
     const hourlyRates = {
@@ -122,42 +128,156 @@ export default function BookingFlow() {
         return grouped;
     }, []);
 
-    // Handle Fetching the Timeslots when Date is picked
+    // Handle Fetching the Timeslots when Date is picked (pre-fetch on step 3, refresh on step 4)
     useEffect(() => {
-        if (currentStep === 3 && selectedDate && selectedPackage) {
+        if ((currentStep === 3 || currentStep === 4) && selectedDate && selectedPackage) {
             fetchAvailability();
         }
-    }, [currentStep, selectedDate, selectedPackage]);
+    }, [currentStep, selectedDate, selectedPackage, selectedDuration, extraHours]);
+
+    // Helper for formatting time (e.g. "02:00 PM" -> "2:00 PM")
+    const formatTimeHHMM = (timeStr) => {
+        let [time, meridiem] = timeStr.trim().split(' ');
+        let [h, m] = time.split(':').map(Number);
+        return `${h}:${String(m).padStart(2, '0')} ${meridiem}`;
+    };
+
+    // Add N hours to a time string like "10:00 AM" → returns "02:00 PM"
+    const addHoursToTime = (timeStr, hours) => {
+        const [time, meridiem] = timeStr.trim().split(' ');
+        let [h, m] = time.split(':').map(Number);
+        if (meridiem === 'PM' && h !== 12) h += 12;
+        if (meridiem === 'AM' && h === 12) h = 0;
+        const totalMinutes = h * 60 + m + hours * 60;
+        const newH = Math.floor(totalMinutes / 60);
+        const newM = totalMinutes % 60;
+        const newMeridiem = newH >= 12 ? 'PM' : 'AM';
+        const displayH = newH > 12 ? newH - 12 : (newH === 0 ? 12 : newH);
+        return `${String(displayH).padStart(2, '0')}:${String(newM).padStart(2, '0')} ${newMeridiem}`;
+    };
+
+    // Return false if end time is 11 PM or later (studio closed)
+    const isSlotValid = (endTimeStr) => {
+        const [time, meridiem] = endTimeStr.trim().split(' ');
+        let [h] = time.split(':').map(Number);
+        if (meridiem === 'PM' && h !== 12) h += 12;
+        if (meridiem === 'AM' && h === 12) h = 0;
+        return h < 23;
+    };
+
+    // Coupon handlers
+    const handleApplyCoupon = async () => {
+        if (!couponCode.trim()) return;
+        setCouponLoading(true);
+        setCouponError('');
+        try {
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/validate-coupon`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code: couponCode.trim() })
+            });
+            const data = await res.json();
+            if (data.valid) {
+                setCouponApplied(true);
+                setCouponError('');
+            } else {
+                setCouponError(data.message || 'Invalid coupon code.');
+                setCouponApplied(false);
+            }
+        } catch (err) {
+            setCouponError('Could not validate coupon. Please try again.');
+        } finally {
+            setCouponLoading(false);
+        }
+    };
+
+    const handleFreeBooking = async () => {
+        setIsProcessing(true);
+        try {
+            const totalHoursLabel = selectedDuration
+                ? (hourlyRates[selectedPackage.name]
+                    ? `${parseInt(selectedDuration.label.split(' ')[0]) + extraHours} Hours`
+                    : selectedDuration.label)
+                : '';
+
+            const res = await fetch(`${import.meta.env.VITE_API_URL}/api/free-booking`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    couponCode: couponCode.trim(),
+                    bookingData: {
+                        packageId: selectedPackage.id,
+                        packageName: `${selectedPackage.name} (${totalHoursLabel})`,
+                        packageDescription: selectedPackage.features ? selectedPackage.features.join(', ') : '',
+                        date: selectedDate,
+                        startTime: selectedSlot.startTime,
+                        endTime: selectedSlot.endTime,
+                        clientDetails: {
+                            name: clientDetails.name || 'In-House Booking',
+                            email: clientDetails.email || '',
+                            phone: clientDetails.phone || 'N/A',
+                            company: clientDetails.company || '',
+                            gst: clientDetails.gst || '',
+                            notes: clientDetails.notes || ''
+                        }
+                    }
+                })
+            });
+            if (!res.ok) throw new Error('Booking failed');
+            const data = await res.json();
+            setBookingId(data.bookingId);
+            setIsConfirmed(true);
+            setCurrentStep(7);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        } catch (err) {
+            alert('Error creating free booking. Please try again.');
+            setIsProcessing(false);
+        }
+    };
 
     const fetchAvailability = async () => {
         setIsLoadingSlots(true);
         try {
-            let generatedSlots = [
-                { startTime: '10:00 AM', endTime: '12:00 PM' },
-                { startTime: '12:30 PM', endTime: '2:30 PM' },
-                { startTime: '3:00 PM', endTime: '5:00 PM' },
-                { startTime: '6:00 PM', endTime: '8:00 PM' }
-            ];
+            // Compute actual total session hours
+            const baseHours = selectedDuration ? parseInt(selectedDuration.label.split(' ')[0]) : 2;
+            const totalHours = baseHours + extraHours;
+
+            // Fixed start times; end times computed from total session hours
+            const startTimes = ['10:00 AM', '12:30 PM', '3:00 PM', '6:00 PM'];
+            let generatedSlots = startTimes
+                .map(s => ({
+                    startTime: formatTimeHHMM(s),
+                    endTime: formatTimeHHMM(addHoursToTime(s, totalHours))
+                }))
+                .filter(s => isSlotValid(s.endTime)); // remove slots that end after 11 PM
 
             const baseUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
             const res = await fetch(`${baseUrl}/api/availability?date=${selectedDate}&packageDuration=${selectedPackage.duration}`);
             if (res.ok) {
                 const data = await res.json();
                 const booked = data.bookedSlots || [];
+                // Match by start time only — a booked slot blocks regardless of duration
                 generatedSlots = generatedSlots.map(slot => ({
                     ...slot,
-                    disabled: booked.some(b => b.startTime === slot.startTime && b.endTime === slot.endTime)
+                    disabled: booked.some(b => formatTimeHHMM(b.startTime) === slot.startTime)
                 }));
             }
             setAvailableSlots(generatedSlots);
         } catch (err) {
             console.error(err);
-            setAvailableSlots([
-                { startTime: '10:00 AM', endTime: '12:00 PM', disabled: false },
-                { startTime: '12:30 PM', endTime: '2:30 PM', disabled: false },
-                { startTime: '3:00 PM', endTime: '5:00 PM', disabled: false },
-                { startTime: '6:00 PM', endTime: '8:00 PM', disabled: false }
-            ]);
+            // Fallback also uses correct duration
+            const baseHours = selectedDuration ? parseInt(selectedDuration.label.split(' ')[0]) : 2;
+            const totalHours = baseHours + extraHours;
+            const startTimes = ['10:00 AM', '12:30 PM', '3:00 PM', '6:00 PM'];
+            setAvailableSlots(
+                startTimes
+                    .map(s => ({
+                        startTime: formatTimeHHMM(s),
+                        endTime: formatTimeHHMM(addHoursToTime(s, totalHours)),
+                        disabled: false
+                    }))
+                    .filter(s => isSlotValid(s.endTime))
+            );
         } finally {
             setIsLoadingSlots(false);
         }
@@ -264,7 +384,7 @@ export default function BookingFlow() {
         if (currentStep === 2) return selectedDuration !== null;
         if (currentStep === 3) return selectedDate !== '';
         if (currentStep === 4) return selectedSlot !== null;
-        if (currentStep === 5) return clientDetails.name && clientDetails.email && clientDetails.phone;
+        if (currentStep === 5) return couponApplied || (clientDetails.name && clientDetails.email && clientDetails.phone);
         return true;
     };
 
@@ -422,24 +542,74 @@ export default function BookingFlow() {
             );
         }
 
-        // 5. CLIENT DETAILS
+        // 5. CLIENT DETAILS + COUPON
         if (currentStep === 5) {
             return (
                 <motion.div key="step-details" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                    <h2 className="step-title" style={{ marginBottom: "2rem" }}>Your Details</h2>
-                    <div className="booking-form">
+                    <h2 className="step-title" style={{ marginBottom: "1.5rem" }}>Your Details</h2>
+
+                    {/* ── Coupon Code Section ── */}
+                    <div style={{ marginBottom: '2rem', padding: '1.25rem 1.5rem', background: 'rgba(0,194,168,0.05)', border: '1px solid rgba(0,194,168,0.2)', borderRadius: '12px' }}>
+                        <label style={{ display: 'block', marginBottom: '0.75rem', fontSize: '0.85rem', color: 'rgba(255,255,255,0.6)', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+                            Have a Coupon Code?
+                        </label>
+                        {couponApplied ? (
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', color: '#00c2a8', fontWeight: '600', fontSize: '1rem' }}>
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#00c2a8" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                                Coupon applied — This booking is <strong style={{ marginLeft: '4px' }}>FREE</strong>!
+                                <button
+                                    onClick={() => { setCouponApplied(false); setCouponCode(''); }}
+                                    style={{ marginLeft: 'auto', background: 'none', border: 'none', color: 'rgba(255,255,255,0.4)', cursor: 'pointer', fontSize: '0.8rem', textDecoration: 'underline' }}
+                                >
+                                    Remove
+                                </button>
+                            </div>
+                        ) : (
+                            <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'flex-start', flexWrap: 'wrap' }}>
+                                <input
+                                    type="text"
+                                    value={couponCode}
+                                    onChange={e => { setCouponCode(e.target.value.toUpperCase()); setCouponError(''); }}
+                                    onKeyDown={e => e.key === 'Enter' && handleApplyCoupon()}
+                                    placeholder="Enter coupon code"
+                                    style={{ flex: 1, minWidth: '160px', background: 'rgba(255,255,255,0.05)', border: '1px solid rgba(255,255,255,0.1)', borderRadius: '8px', padding: '0.7rem 1rem', color: '#fff', fontSize: '0.95rem', outline: 'none', letterSpacing: '0.08em' }}
+                                />
+                                <button
+                                    onClick={handleApplyCoupon}
+                                    disabled={couponLoading || !couponCode.trim()}
+                                    className="btn-next"
+                                    style={{ padding: '0.7rem 1.4rem', minWidth: 'auto', opacity: (!couponCode.trim() ? 0.5 : 1) }}
+                                >
+                                    {couponLoading ? <span className="spinner"></span> : 'Apply'}
+                                </button>
+                            </div>
+                        )}
+                        {couponError && (
+                            <p style={{ marginTop: '0.5rem', color: '#ff6b6b', fontSize: '0.85rem' }}>{couponError}</p>
+                        )}
+                    </div>
+
+                    {/* ── Details Form (hidden / optional when coupon applied) ── */}
+                    {couponApplied ? (
+                        <div style={{ padding: '1.5rem', background: 'rgba(255,255,255,0.02)', borderRadius: '12px', textAlign: 'center', color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem' }}>
+                            <p>Your coupon unlocks a <strong style={{ color: '#00c2a8' }}>free in-house booking</strong>. No payment required.</p>
+                            <p style={{ marginTop: '0.5rem', fontSize: '0.8rem' }}>Optionally fill in your details below for a confirmation email.</p>
+                        </div>
+                    ) : null}
+
+                    <div className="booking-form" style={{ marginTop: couponApplied ? '1.5rem' : '0' }}>
                         <div className="b-form-group">
-                            <label>Full Name *</label>
-                            <input type="text" name="name" value={clientDetails.name} onChange={handleInputChange} placeholder="Enter your full name" required />
+                            <label>Full Name {couponApplied ? '(Optional)' : '*'}</label>
+                            <input type="text" name="name" value={clientDetails.name} onChange={handleInputChange} placeholder="Enter your full name" required={!couponApplied} />
                         </div>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
                             <div className="b-form-group">
-                                <label>Email Address *</label>
-                                <input type="email" name="email" value={clientDetails.email} onChange={handleInputChange} placeholder="john@example.com" required />
+                                <label>Email Address {couponApplied ? '(Optional)' : '*'}</label>
+                                <input type="email" name="email" value={clientDetails.email} onChange={handleInputChange} placeholder="john@example.com" required={!couponApplied} />
                             </div>
                             <div className="b-form-group">
-                                <label>Phone Number *</label>
-                                <input type="tel" name="phone" value={clientDetails.phone} onChange={handleInputChange} placeholder="+91 XXXXX XXXXX" required />
+                                <label>Phone Number {couponApplied ? '(Optional)' : '*'}</label>
+                                <input type="tel" name="phone" value={clientDetails.phone} onChange={handleInputChange} placeholder="+91 XXXXX XXXXX" required={!couponApplied} />
                             </div>
                         </div>
                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
@@ -522,10 +692,39 @@ export default function BookingFlow() {
                         </span>
                     </div>
 
-                    <div className="summary-total" style={{ borderTop: "1px dashed rgba(255,255,255,0.2)", marginTop: "1.5rem", paddingTop: "1.5rem" }}>
-                        <span>Total <span style={{ fontSize: "0.75rem", fontWeight: "normal", color: "rgba(255,255,255,0.5)" }}>(Inc. GST)</span></span>
-                        <span>₹{((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))).toLocaleString('en-IN')}</span>
+                    <div className="summary-item">
+                        <span className="summary-label">Subtotal</span>
+                        <span className="summary-value">₹{((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))).toLocaleString('en-IN')}</span>
                     </div>
+
+                    <div className="summary-item">
+                        <span className="summary-label">CGST (9%)</span>
+                        <span className="summary-value">₹{Math.round(((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))) * 0.09).toLocaleString('en-IN')}</span>
+                    </div>
+
+                    <div className="summary-item">
+                        <span className="summary-label">SGST (9%)</span>
+                        <span className="summary-value">₹{Math.round(((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))) * 0.09).toLocaleString('en-IN')}</span>
+                    </div>
+
+                    <div className="summary-total" style={{ borderTop: "1px dashed rgba(255,255,255,0.2)", marginTop: "1rem", paddingTop: "1rem" }}>
+                        <span>Total <span style={{ fontSize: "0.75rem", fontWeight: "normal", color: "rgba(255,255,255,0.5)" }}>(Incl. GST)</span></span>
+                        {couponApplied ? (
+                            <span>
+                                <span style={{ textDecoration: 'line-through', opacity: 0.4, marginRight: '8px', fontSize: '0.85rem' }}>
+                                    ₹{(Math.round(((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))) * 1.18)).toLocaleString('en-IN')}
+                                </span>
+                                <span style={{ color: '#00c2a8' }}>₹0 FREE</span>
+                            </span>
+                        ) : (
+                            <span>₹{(Math.round(((selectedDuration?.price || 0) + (extraHours * (hourlyRates[selectedPackage.name]?.extra || 0))) * 1.18)).toLocaleString('en-IN')}</span>
+                        )}
+                    </div>
+                    {couponApplied && (
+                        <div style={{ marginTop: '0.75rem', padding: '0.5rem 0.75rem', background: 'rgba(0,194,168,0.1)', borderRadius: '8px', fontSize: '0.8rem', color: '#00c2a8', textAlign: 'center' }}>
+                            ✓ Coupon applied — Booking is free
+                        </div>
+                    )}
                 </div>
             </div>
         );
@@ -584,13 +783,23 @@ export default function BookingFlow() {
                                         </button>
 
                                         {currentStep < 6 ? (
-                                            <button
-                                                className="btn-next"
-                                                onClick={() => setCurrentStep(prev => prev + 1)}
-                                                disabled={!canProceed() || isLoadingSlots}
-                                            >
-                                                Continue
-                                            </button>
+                                            currentStep === 5 && couponApplied ? (
+                                                <button
+                                                    className="btn-next payment-btn"
+                                                    onClick={handleFreeBooking}
+                                                    disabled={isProcessing}
+                                                >
+                                                    {isProcessing ? <><span className="spinner"></span>Booking...</> : 'Book for Free — ₹0'}
+                                                </button>
+                                            ) : (
+                                                <button
+                                                    className="btn-next"
+                                                    onClick={() => setCurrentStep(prev => prev + 1)}
+                                                    disabled={!canProceed() || isLoadingSlots}
+                                                >
+                                                    Continue
+                                                </button>
+                                            )
                                         ) : (
                                             <button
                                                 className="btn-next payment-btn"
