@@ -156,13 +156,14 @@ export default function BookingFlow() {
         return `${String(displayH).padStart(2, '0')}:${String(newM).padStart(2, '0')} ${newMeridiem}`;
     };
 
-    // Return false if end time is 11 PM or later (studio closed)
+    // Return false if end time is after 8 PM (studio closes at 8 PM)
     const isSlotValid = (endTimeStr) => {
         const [time, meridiem] = endTimeStr.trim().split(' ');
-        let [h] = time.split(':').map(Number);
+        let [h, m] = time.split(':').map(Number);
         if (meridiem === 'PM' && h !== 12) h += 12;
         if (meridiem === 'AM' && h === 12) h = 0;
-        return h < 23;
+        // Allow slots ending exactly at 8:00 PM (20:00) but not after
+        return h < 20 || (h === 20 && m === 0);
     };
 
     // Valid coupon codes (client-side fast check — server re-validates on booking)
@@ -235,8 +236,8 @@ export default function BookingFlow() {
             const baseHours = selectedDuration ? parseInt(selectedDuration.label.split(' ')[0]) : 2;
             const totalHours = baseHours + extraHours;
 
-            // Fixed start times; end times computed from total session hours
-            const startTimes = ['10:00 AM', '12:30 PM', '3:00 PM', '6:00 PM'];
+            // Fixed start times (studio open 9 AM – 8 PM); end times computed from session hours
+            const startTimes = ['9:00 AM', '11:30 AM', '2:00 PM', '4:30 PM', '6:00 PM'];
             let generatedSlots = startTimes
                 .map(s => ({
                     startTime: formatTimeHHMM(s),
@@ -261,7 +262,7 @@ export default function BookingFlow() {
             // Fallback also uses correct duration
             const baseHours = selectedDuration ? parseInt(selectedDuration.label.split(' ')[0]) : 2;
             const totalHours = baseHours + extraHours;
-            const startTimes = ['10:00 AM', '12:30 PM', '3:00 PM', '6:00 PM'];
+            const startTimes = ['9:00 AM', '11:30 AM', '2:00 PM', '4:30 PM', '6:00 PM'];
             setAvailableSlots(
                 startTimes
                     .map(s => ({
@@ -509,14 +510,56 @@ export default function BookingFlow() {
 
         // 4. TIME SLOT SELECTION
         if (currentStep === 4) {
+            const allSlotsUnavailable = !isLoadingSlots && availableSlots.length === 0;
+            const allBooked = !isLoadingSlots && availableSlots.length > 0 && availableSlots.every(s => s.disabled);
+
+            const suggestNextDate = () => {
+                const next = new Date(selectedDate);
+                next.setDate(next.getDate() + 1);
+                const iso = next.toISOString().split('T')[0];
+                setSelectedDate(iso);
+                setSelectedSlot(null);
+                setCurrentStep(3);
+            };
+
+            const nextDateLabel = () => {
+                const next = new Date(new Date(selectedDate).getTime() + 86400000);
+                return next.toLocaleDateString('en-IN', { weekday: 'short', month: 'short', day: 'numeric' });
+            };
+
             return (
                 <motion.div key="step-time" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -20 }}>
-                    <h2 className="step-title" style={{ marginBottom: "2rem" }}>Select an arriving Time Slot for {selectedDate}</h2>
+                    <h2 className="step-title" style={{ marginBottom: "2rem" }}>
+                        Select a Time Slot — {selectedDate}
+                        <span style={{ display: 'block', fontSize: '0.8rem', color: 'rgba(255,255,255,0.4)', fontWeight: 400, marginTop: '4px' }}>
+                            Studio hours: 9:00 AM – 8:00 PM
+                        </span>
+                    </h2>
 
                     {isLoadingSlots ? (
                         <div style={{ textAlign: 'center', padding: '3rem' }}>
                             <span className="spinner"></span> Checking system availability...
                         </div>
+                    ) : (allSlotsUnavailable || allBooked) ? (
+                        <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }}
+                            style={{ textAlign: 'center', padding: '3rem 2rem', background: 'rgba(255,100,100,0.05)', border: '1px solid rgba(255,100,100,0.2)', borderRadius: '16px' }}>
+                            <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>🚫</div>
+                            <h3 style={{ color: '#ff6b6b', marginBottom: '0.75rem' }}>
+                                {allBooked ? 'All slots are booked for this date' : 'No available slots for this date'}
+                            </h3>
+                            <p style={{ color: 'rgba(255,255,255,0.5)', fontSize: '0.9rem', marginBottom: '0.4rem' }}>
+                                {allSlotsUnavailable
+                                    ? `Your ${(selectedDuration ? parseInt(selectedDuration.label.split(' ')[0]) + extraHours : 2)}-hour session would end after 8:00 PM on ${selectedDate}.`
+                                    : `All time slots on ${selectedDate} are already taken.`}
+                            </p>
+                            <p style={{ color: 'rgba(255,255,255,0.4)', fontSize: '0.85rem', marginBottom: '2rem' }}>
+                                Please choose a different date — studio opens daily at 9:00 AM.
+                            </p>
+                            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center', flexWrap: 'wrap' }}>
+                                <button className="btn-back" onClick={() => setCurrentStep(3)}>← Pick Another Date</button>
+                                <button className="btn-next" onClick={suggestNextDate}>Try {nextDateLabel()} →</button>
+                            </div>
+                        </motion.div>
                     ) : (
                         <div className="time-grid">
                             {availableSlots.map((slot, i) => (
@@ -525,8 +568,12 @@ export default function BookingFlow() {
                                     className={`time-slot ${slot.disabled ? 'disabled' : ''} ${selectedSlot?.startTime === slot.startTime ? 'selected' : ''}`}
                                     onClick={() => !slot.disabled && setSelectedSlot(slot)}
                                 >
-                                    {slot.startTime} - {slot.endTime}
-                                    {slot.disabled && <div style={{ fontSize: "0.7rem", marginTop: "4px", color: "#ff4d4d" }}>Booked</div>}
+                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '8px' }}>
+                                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                                        <span>{slot.startTime} – {slot.endTime}</span>
+                                    </div>
+                                    {slot.disabled && <div style={{ fontSize: '0.7rem', marginTop: '4px', color: '#ff4d4d' }}>Booked</div>}
+                                    {!slot.disabled && selectedSlot?.startTime === slot.startTime && <div style={{ fontSize: '0.7rem', marginTop: '4px', color: '#00c2a8' }}>Selected ✓</div>}
                                 </div>
                             ))}
                         </div>
