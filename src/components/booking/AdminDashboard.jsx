@@ -280,6 +280,94 @@ function CalendarTab({ bookings, onViewReceipt }) {
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}><span style={{ width: 10, height: 10, borderRadius: '50%', background: 'rgba(0,194,168,0.7)', display: 'inline-block' }} /> Has bookings</span>
           <span style={{ display: 'flex', alignItems: 'center', gap: '5px' }}><span style={{ width: 10, height: 10, borderRadius: '3px', border: '1.5px solid rgba(0,194,168,0.4)', display: 'inline-block' }} /> Today</span>
         </div>
+
+        {/* Download Excel Button */}
+        {(() => {
+          // Collect bookings for this month
+          const monthBookings = bookings.filter(b => {
+            const d = b.booking_date ? b.booking_date.split('T')[0] : '';
+            return d.startsWith(`${calYear}-${pad(calMonth + 1)}`);
+          });
+          const totalAmt = monthBookings.reduce((s, b) => s + Number(b.amount || 0), 0);
+
+          const downloadCSV = () => {
+            const headers = ['Booking ID','Client Name','Email','Phone','Company','Package','Date','Start Time','End Time','Amount (₹)','Payment Status','Booking Status','Notes'];
+            const rows = monthBookings
+              .slice()
+              .sort((a, b) => {
+                const da = a.booking_date || ''; const db = b.booking_date || '';
+                return da < db ? -1 : da > db ? 1 : 0;
+              })
+              .map(b => {
+                const dateStr = b.booking_date ? new Date(b.booking_date + 'T12:00:00').toLocaleDateString('en-IN') : '';
+                return [
+                  b.booking_id,
+                  b.client_name,
+                  b.client_email,
+                  b.client_phone,
+                  b.client_company || '',
+                  b.package_name,
+                  dateStr,
+                  b.start_time,
+                  b.end_time,
+                  Number(b.amount || 0),
+                  b.payment_status,
+                  b.status,
+                  (b.client_notes || '').replace(/,/g, ';'),
+                ].map(v => `"${String(v).replace(/"/g, '""')}"`).join(',');
+              });
+
+            // Summary footer rows
+            rows.push('');
+            rows.push(`"Total Bookings","${monthBookings.length}"`);
+            rows.push(`"Total Amount","₹${totalAmt.toLocaleString('en-IN')}"`);
+            rows.push(`"Paid","${monthBookings.filter(b => b.payment_status === 'Paid').length}"`);
+            rows.push(`"Free","${monthBookings.filter(b => b.payment_status === 'Free').length}"`);
+            rows.push(`"Unpaid","${monthBookings.filter(b => b.payment_status === 'Unpaid').length}"`);
+
+            const csv = [headers.map(h => `"${h}"`).join(','), ...rows].join('\n');
+            const blob = new Blob(['﻿' + csv], { type: 'text/csv;charset=utf-8;' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `NearbyStudio_Bookings_${monthNames[calMonth]}_${calYear}.csv`;
+            a.click();
+            URL.revokeObjectURL(url);
+          };
+
+          return (
+            <div style={{ marginTop: '1.25rem', borderTop: '1px solid rgba(255,255,255,0.08)', paddingTop: '1.25rem' }}>
+              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', flexWrap: 'wrap', gap: '0.75rem' }}>
+                <div>
+                  <div style={{ fontSize: '0.75rem', color: 'rgba(255,255,255,0.4)', marginBottom: '2px' }}>{monthNames[calMonth]} {calYear}</div>
+                  <div style={{ fontWeight: '700', fontSize: '0.92rem' }}>
+                    {monthBookings.length} booking{monthBookings.length !== 1 ? 's' : ''}
+                    <span style={{ color: '#00c2a8', marginLeft: '0.6rem' }}>₹{totalAmt.toLocaleString('en-IN')}</span>
+                  </div>
+                </div>
+                <button
+                  onClick={downloadCSV}
+                  disabled={monthBookings.length === 0}
+                  style={{
+                    background: monthBookings.length === 0 ? 'rgba(255,255,255,0.04)' : 'rgba(0,194,168,0.15)',
+                    color: monthBookings.length === 0 ? 'rgba(255,255,255,0.2)' : '#00c2a8',
+                    border: `1.5px solid ${monthBookings.length === 0 ? 'rgba(255,255,255,0.08)' : 'rgba(0,194,168,0.4)'}`,
+                    borderRadius: '8px',
+                    padding: '0.5rem 1.1rem',
+                    fontWeight: '700',
+                    fontSize: '0.82rem',
+                    cursor: monthBookings.length === 0 ? 'not-allowed' : 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '6px',
+                  }}
+                >
+                  ⬇ Download Excel
+                </button>
+              </div>
+            </div>
+          );
+        })()}
       </div>
 
       {/* Day Detail Panel */}
