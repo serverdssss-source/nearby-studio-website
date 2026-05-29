@@ -9,6 +9,21 @@ import './Podcast.css'
 export default function Podcast() {
   const [activePart, setActivePart] = useState('a')
 
+  const setupImages = [
+    {
+      src: encodeURI('/ImageGallery/Brown_Setup_1 1.webp'),
+      alt: 'Brown podcast setup with two chairs and microphones'
+    },
+    {
+      src: encodeURI('/ImageGallery/Brown_Setup_1 3.webp'),
+      alt: 'Blue podcast setup with microphones and curtains'
+    },
+    {
+      src: encodeURI('/ImageGallery/Brown_Setup_1 5.webp'),
+      alt: 'Brown sofa podcast setup with studio lighting'
+    }
+  ]
+
   const packages = {
     a: [
       {
@@ -27,7 +42,7 @@ export default function Podcast() {
         set: 'Set 1 — Part A',
         target: 'Founders & Startup Owners',
         duration: '2.5 hrs',
-        price: '₹24,999',
+        price: '₹14,999',
         features: ['1 Camera Setup', '40 min podcast', '3 Reels edited', 'Basic colour correction, graphics & editing', 'Basic inserts • 1 Iteration', '2 Collar Mics', '2 Rotation Chairs', '1 White Table', '1 Sofa • Tea Table • Plain Frame']
       },
       {
@@ -36,7 +51,7 @@ export default function Podcast() {
         set: 'Set 2 — Part A',
         target: 'Corporate Heads',
         duration: '2.5 hrs',
-        price: '₹54,999',
+        price: '₹44,999',
         features: ['Up to 4 Guests', '1 Round Table', '4 Rotating Chairs', '3 Camera Setup', 'Premium lighting • 4 Collar Mics', '4 Reels <90 sec each • 1 Hook Teaser', '40–60 min Podcast • Podcast Switcher', '1 Iteration'],
         delivery: '7 Days'
       },
@@ -67,7 +82,7 @@ export default function Podcast() {
         set: 'Set 5 — Part B',
         target: 'Founders & Startup Owners',
         duration: '2.5 hrs',
-        price: '₹34,999',
+        price: '₹24,999',
         features: ['3 Camera Setup', 'Podcast Switcher', '5 Reels <90 sec each', '30–40 min Podcast (up to 1 hr)', 'Basic colour correction, graphics & editing', 'Basic inserts • 1 Iteration', '2 Collar Mics', '2 Rotation Chairs • Sofa', '1 White Table']
       },
       {
@@ -167,43 +182,59 @@ export default function Podcast() {
           ))}
         </div>
 
-        <div className="packages-grid">
-          {filteredPackages.map((pkg, index) => (
-            <motion.div
-              key={pkg.id}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              transition={{ delay: index * 0.1 }}
-              className={`package-card ${pkg.custom ? 'custom' : ''}`}
-            >
-              <h3 className="card-name">{pkg.name}</h3>
-              <div className="card-target">{pkg.target}</div>
-              <div className="card-meta">
-                <div>
-                  <span className="meta-label">Duration</span>
-                  <span className="meta-value">{pkg.duration}</span>
-                </div>
-                <div>
-                  <span className="meta-label">Investment</span>
-                  <span className="meta-price">{pkg.price}</span>
-                </div>
-              </div>
-              <ul className="features">
-                {pkg.features.map((feature, i) => (
-                  <li key={i}>{feature}</li>
-                ))}
-              </ul>
-              {pkg.custom && <span className="custom-badge">Fully Customisable</span>}
-              <span className="delivery-badge">Delivery: 7 Days</span>
-              <Link
-                className="enquiry-btn"
-                to="/book"
-                state={{ package: { id: pkg.id || pkg.name, name: pkg.name, duration: pkg.duration || 'Custom', price: parseInt(String(pkg.price || '0').replace(/,/g, '').match(/\\d+/)?.[0] || '0', 10), features: pkg.features || [] } }}
+        <div className="pricing-layout">
+          <div className="packages-grid">
+            {filteredPackages.map((pkg, index) => (
+              <motion.div
+                key={pkg.id}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1 }}
+                className={`package-card ${pkg.custom ? 'custom' : ''}`}
               >
-                BOOK NOW
-              </Link>
-            </motion.div>
-          ))}
+                <h3 className="card-name">{pkg.name}</h3>
+                <div className="card-target">{pkg.target}</div>
+                <div className="card-meta">
+                  <div>
+                    <span className="meta-label">Duration</span>
+                    <span className="meta-value">{pkg.duration}</span>
+                  </div>
+                  <div>
+                    <span className="meta-label">Investment</span>
+                    <span className="meta-price">{pkg.price}</span>
+                  </div>
+                </div>
+                <ul className="features">
+                  {pkg.features.map((feature, i) => (
+                    <li key={i}>{feature}</li>
+                  ))}
+                </ul>
+                {pkg.custom && <span className="custom-badge">Fully Customisable</span>}
+                <span className="delivery-badge">Delivery: 7 Days</span>
+                <Link
+                  className="enquiry-btn"
+                  to="/book"
+                  state={{ package: { id: pkg.id || pkg.name, name: pkg.name, duration: pkg.duration || 'Custom', price: parseInt(String(pkg.price || '0').replace(/,/g, '').match(/\\d+/)?.[0] || '0', 10), features: pkg.features || [] } }}
+                >
+                  BOOK NOW
+                </Link>
+              </motion.div>
+            ))}
+          </div>
+
+          <aside className="setup-rail" aria-label="Podcast setup gallery">
+            {setupImages.map((image, index) => (
+              <motion.div
+                key={image.src}
+                initial={{ opacity: 0, x: 16 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                transition={{ delay: index * 0.12 }}
+                className="setup-image-card"
+              >
+                <img src={image.src} alt={image.alt} className="setup-image" loading="lazy" />
+              </motion.div>
+            ))}
+          </aside>
         </div>
 
         <div className="note-strip">

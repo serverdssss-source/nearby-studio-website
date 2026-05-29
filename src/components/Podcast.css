@@ -147,12 +147,47 @@
    PACKAGES GRID
 ================================= */
 
+.pricing-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 2rem;
+  max-width: 1400px;
+  margin: 0 auto;
+  align-items: start;
+}
+
 .packages-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
   gap: 2rem;
-  max-width: 1400px;
-  margin: 0 auto;
+  max-width: none;
+  margin: 0;
+}
+
+.setup-rail {
+  display: grid;
+  gap: 1rem;
+  position: sticky;
+  top: 7rem;
+}
+
+.setup-image-card {
+  overflow: hidden;
+  border: 1px solid #252525;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+}
+
+.setup-image {
+  display: block;
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.setup-image-card:hover .setup-image {
+  transform: scale(1.04);
 }
 
 
@@ -362,6 +397,9 @@
 ================================= */
 
 @media (max-width: 768px) {
+  .pricing-layout {
+    grid-template-columns: 1fr;
+  }
 
   .section-tabs {
     grid-template-columns: 1fr;
@@ -369,6 +407,14 @@
 
   .packages-grid {
     grid-template-columns: 1fr;
+  }
+
+  .setup-rail {
+    position: static;
+  }
+
+  .setup-image {
+    height: 220px;
   }
 
   .podcast-section::after {
