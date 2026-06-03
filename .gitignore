@@ -13,3 +13,6 @@ public/nearby studio logo 1.mov
 .env.*
 !.env.example
 !.env.production
+
+.vercel
+.env*.local
