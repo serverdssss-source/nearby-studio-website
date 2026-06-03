@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { lazy, Suspense, useEffect } from "react";
+import { Analytics } from '@vercel/analytics/react';
 import './App.css';
 import ScrollToTopButton from './components/ScrollToTop';
 
@@ -90,27 +91,30 @@ function ScrollToTopOnRouteChange() {
 
 function App() {
   return (
-    <Router>
-      <ScrollToTopOnRouteChange />
-      <ScrollToTopButton />
-      <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/book" element={<BookingPage />} />
-          <Route path="/contactus" element={<ContactSection />} />
-          <Route path="/podcast" element={<Podcast />} />
-          <Route path="/studios" element={<Studios />} />
-          <Route path="/fashionshoot" element={<FashionShoot />} />
-          <Route path="/greenscreenshoot" element={<GreenScreen />} />
-          <Route path="/privacy-policy" element={<PrivacyPolicy />} />
-          <Route path="/adminbs" element={<AdminDashboard />} />
-          <Route path="/Podcast" element={<Navigate to="/podcast" replace />} />
-          <Route path="/Studios" element={<Navigate to="/studios" replace />} />
-          <Route path="/FashionShoot" element={<Navigate to="/fashionshoot" replace />} />
-          <Route path="/GreenScreenShoot" element={<Navigate to="/greenscreenshoot" replace />} />
-        </Routes>
-      </Suspense>
-    </Router>
+    <>
+      <Router>
+        <ScrollToTopOnRouteChange />
+        <ScrollToTopButton />
+        <Suspense fallback={<LoadingFallback />}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/book" element={<BookingPage />} />
+            <Route path="/contactus" element={<ContactSection />} />
+            <Route path="/podcast" element={<Podcast />} />
+            <Route path="/studios" element={<Studios />} />
+            <Route path="/fashionshoot" element={<FashionShoot />} />
+            <Route path="/greenscreenshoot" element={<GreenScreen />} />
+            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/adminbs" element={<AdminDashboard />} />
+            <Route path="/Podcast" element={<Navigate to="/podcast" replace />} />
+            <Route path="/Studios" element={<Navigate to="/studios" replace />} />
+            <Route path="/FashionShoot" element={<Navigate to="/fashionshoot" replace />} />
+            <Route path="/GreenScreenShoot" element={<Navigate to="/greenscreenshoot" replace />} />
+          </Routes>
+        </Suspense>
+      </Router>
+      <Analytics />
+    </>
   );
 }
 
