@@ -9,20 +9,79 @@ import './Podcast.css'
 export default function Podcast() {
   const [activePart, setActivePart] = useState('a')
 
-  const setupImages = [
-    {
-      src: encodeURI('/ImageGallery/Brown_Setup_1 1.webp'),
-      alt: 'Brown podcast setup with two chairs and microphones'
-    },
-    {
-      src: encodeURI('/ImageGallery/Brown_Setup_1 3.webp'),
-      alt: 'Blue podcast setup with microphones and curtains'
-    },
-    {
-      src: encodeURI('/ImageGallery/Brown_Setup_1 5.webp'),
-      alt: 'Brown sofa podcast setup with studio lighting'
-    }
-  ]
+  let setupImages = []
+  if (activePart === 'a') {
+    setupImages = [
+      {
+        src: encodeURI('/book_our_show/podcast/custom_setup_1.webp'),
+        alt: 'Custom podcast setup view 1'
+      },
+      {
+        src: encodeURI('/book_our_show/podcast/custom_setup_3.webp'),
+        alt: 'Custom podcast setup view 3'
+      },
+      {
+        src: encodeURI('/book_our_show/podcast/custom_setup_4.webp'),
+        alt: 'Custom podcast setup view 4'
+      }
+    ]
+  } else if (activePart === 'b') {
+    setupImages = [
+      {
+        src: encodeURI('/book_our_show/founder/founder_room.webp'),
+        alt: 'Founders Room setup 1'
+      },
+      {
+        src: encodeURI('/book_our_show/founder/founders_room_1.webp'),
+        alt: 'Founders Room setup 2'
+      }
+    ]
+  } else if (activePart === 'c') {
+    setupImages = [
+      {
+        src: encodeURI('/book_our_show/corporate heads/organic_setup.webp'),
+        alt: 'Organic Setup'
+      },
+      {
+        src: encodeURI('/book_our_show/corporate heads/pure_white_monochrome_setup.webp'),
+        alt: 'Pure White Monochrome Setup'
+      },
+      {
+        src: encodeURI('/book_our_show/corporate heads/round_table.webp'),
+        alt: 'Round Table Setup'
+      },
+    ]
+  } else if (activePart === 'd') {
+    setupImages = [
+      {
+        src: encodeURI('/book_our_show/content_creators/content_creator_setup.webp'),
+        alt: 'Content Creator Setup'
+      },
+      {
+        src: encodeURI('/book_our_show/content_creators/influncer_content_creators.webp'),
+        alt: 'Blue podcast setup with microphones and curtains'
+      },
+      {
+        src: encodeURI('/book_our_show/content_creators/content_creator_2.webp'),
+        alt: 'Brown sofa podcast setup with studio lighting'
+      }
+    ]
+  } else {
+    setupImages = [
+      {
+        src: encodeURI('/ImageGallery/Brown_Setup_1 1.webp'),
+        alt: 'Brown podcast setup with two chairs and microphones'
+      },
+      {
+        src: encodeURI('/ImageGallery/Brown_Setup_1 3.webp'),
+        alt: 'Blue podcast setup with microphones and curtains'
+      },
+      {
+        src: encodeURI('/ImageGallery/Brown_Setup_1 5.webp'),
+        alt: 'Brown sofa podcast setup with studio lighting'
+      }
+    ]
+  }
 
   const packages = {
     a: [
@@ -182,14 +241,14 @@ export default function Podcast() {
           ))}
         </div>
 
-        <div className="pricing-layout">
+        <div className={`pricing-layout ${(activePart === 'a' || activePart === 'b') ? 'custom-layout' : ''}`}>
           <div className="packages-grid">
             {filteredPackages.map((pkg, index) => (
               <motion.div
                 key={pkg.id}
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1 }}
+                transition={{ delay: index * 0.05 }}
                 className={`package-card ${pkg.custom ? 'custom' : ''}`}
               >
                 <h3 className="card-name">{pkg.name}</h3>
@@ -220,21 +279,67 @@ export default function Podcast() {
                 </Link>
               </motion.div>
             ))}
+
+            {activePart === 'a' && (
+              <>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.05 }}
+                  className="custom-setup-img-card img-1"
+                >
+                  <img src={encodeURI('/book_our_show/podcast/custom_setup_1.webp')} alt="Custom setup 1" loading="lazy" />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.1 }}
+                  className="custom-setup-img-card img-3"
+                >
+                  <img src={encodeURI('/book_our_show/podcast/custom_setup_3.webp')} alt="Custom setup 3" loading="lazy" />
+                </motion.div>
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.15 }}
+                  className="custom-setup-img-card img-4"
+                >
+                  <img src={encodeURI('/book_our_show/podcast/custom_setup_4.webp')} alt="Custom setup 4" loading="lazy" />
+                </motion.div>
+              </>
+            )}
+            {activePart === 'b' && (
+              <div className="founders-span-container">
+                {setupImages.map((image, index) => (
+                  <motion.div
+                    key={`${image.src}-${index}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.05 + index * 0.05 }}
+                    className="founders-span-item"
+                  >
+                    <img src={image.src} alt={image.alt} loading="lazy" />
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
 
-          <aside className="setup-rail" aria-label="Podcast setup gallery">
-            {setupImages.map((image, index) => (
-              <motion.div
-                key={image.src}
-                initial={{ opacity: 0, x: 16 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.12 }}
-                className="setup-image-card"
-              >
-                <img src={image.src} alt={image.alt} className="setup-image" loading="lazy" />
-              </motion.div>
-            ))}
-          </aside>
+          {activePart !== 'a' && activePart !== 'b' && (
+            <aside className="setup-rail" aria-label="Podcast setup gallery">
+              {setupImages.map((image, index) => (
+                <motion.div
+                  key={`${image.src}-${index}`}
+                  initial={{ opacity: 0, x: 16 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.06 }}
+                  className="setup-image-card"
+                >
+                  <img src={image.src} alt={image.alt} className="setup-image" loading="lazy" />
+                </motion.div>
+              ))}
+            </aside>
+          )}
         </div>
 
         <div className="note-strip">

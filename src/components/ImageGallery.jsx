@@ -4,9 +4,9 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 const MOBILE_BREAKPOINT = 768
 
 const IMAGES = [
-  { src: '/ImageGallery/Brown_Setup_1 1.webp', id: '_4' },
-  { src: '/ImageGallery/Brown_Setup_1 3.webp', id: '_3' },
-  { src: '/ImageGallery/Brown_Setup_1 5.webp', id: '_2' },
+  { src: '/book_our_show/corporate heads/black_monochrome_setup.webp', id: '_4' },
+  { src: '/book_our_show/content_creators/content_creator_setup.webp', id: '_3' },
+  { src: '/book_our_show/founder/founder_room.webp', id: '_2' },
   { src: '/ImageGallery/nearby studio_pitch.webp', id: '_1' },
 ]
 

@@ -164,6 +164,7 @@
   margin: 0;
 }
 
+
 .setup-rail {
   display: grid;
   gap: 1rem;
@@ -181,7 +182,7 @@
 .setup-image {
   display: block;
   width: 100%;
-  height: 180px;
+  height: 210px;
   object-fit: cover;
   transition: transform 0.35s ease;
 }
@@ -189,6 +190,65 @@
 .setup-image-card:hover .setup-image {
   transform: scale(1.04);
 }
+
+/* Custom Layout Overrides */
+.pricing-layout.custom-layout {
+  grid-template-columns: 1fr;
+}
+
+.custom-setup-img-card {
+  overflow: hidden;
+  border: 1px solid #252525;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+}
+
+.custom-setup-img-card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.35s ease;
+}
+
+.custom-setup-img-card:hover img {
+  transform: scale(1.04);
+}
+
+@media (min-width: 992px) {
+  .custom-setup-img-card.img-2 {
+    grid-column: 1 / -1;
+    max-height: 400px;
+  }
+}
+
+/* Founders Room images spanning 2 columns */
+.founders-span-container {
+  grid-column: span 2;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.founders-span-item {
+  overflow: hidden;
+  border: 1px solid #252525;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(255, 255, 255, 0.01));
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.28);
+}
+
+.founders-span-item img {
+  display: block;
+  width: 100%;
+  height: 350px;
+  object-fit: cover;
+  transition: transform 0.35s ease;
+}
+
+.founders-span-item:hover img {
+  transform: scale(1.04);
+}
+
 
 
 /* ===============================
@@ -399,6 +459,10 @@
 @media (max-width: 768px) {
   .pricing-layout {
     grid-template-columns: 1fr;
+  }
+
+  .founders-span-container {
+    grid-column: span 1;
   }
 
   .section-tabs {
