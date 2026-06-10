@@ -3,6 +3,7 @@ import { motion } from 'framer-motion'
 import Navbar from './Navbar'
 import ContactForm from './ContactForm'
 import InstagramTail from './Instagram_tail'
+import FashionGallery from './FashionGallery'
 import './FashionShoot.css'
 
 export default function FashionShoot() {
@@ -132,6 +133,8 @@ export default function FashionShoot() {
           <div className="note-icon">!</div>
           Bring your own storage device to copy the data · All prices + GST · Sessions by appointment only
         </div>
+
+        <FashionGallery />
 
         <InstagramTail />
       </section>
