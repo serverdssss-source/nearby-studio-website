@@ -27,6 +27,7 @@ const BookingPage = lazy(() => import("./pages/BookingPage.tsx"));
 const AdminDashboard = lazy(() => import("./components/booking/AdminDashboard"));
 const BlogList = lazy(() => import("./pages/BlogList"));
 const BlogPost = lazy(() => import("./pages/BlogPost"));
+const BlogPostOutgrownHome = lazy(() => import("./pages/BlogPostOutgrownHome"));
 
 // Optimized loading fallback
 const LoadingFallback = () => (
@@ -114,6 +115,7 @@ function App() {
             <Route path="/GreenScreenShoot" element={<Navigate to="/greenscreenshoot" replace />} />
             <Route path="/blog" element={<BlogList />} />
             <Route path="/blog/podcast-recording-studio-rajajinagar" element={<BlogPost />} />
+            <Route path="/blog/5-signs-youve-outgrown-shooting-content-at-home" element={<BlogPostOutgrownHome />} />
           </Routes>
         </Suspense>
       </Router>

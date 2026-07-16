@@ -13,6 +13,22 @@ const BlogList = () => {
         <h1 className="blog-title">Our Blog</h1>
         
         <div className="blog-list">
+          <Link to="/blog/5-signs-youve-outgrown-shooting-content-at-home" className="blog-card">
+            <div className="blog-card-content">
+              <h2 className="blog-card-title">5 Signs You've Outgrown Shooting Content at Home (And Need a Studio)</h2>
+              <p className="blog-card-excerpt">
+                Every content creator starts the same way — a ring light, a corner of the living room, and whatever backdrop doesn't have laundry piled behind it. That's fine when you're posting for fun...
+              </p>
+              <div className="blog-card-meta">
+                <span className="blog-card-date">July 16, 2026</span>
+              </div>
+              <div className="blog-card-author">
+                <div className="blog-card-avatar">N</div>
+                <span className="blog-card-author-name">Nearby Studio</span>
+              </div>
+            </div>
+          </Link>
+
           <Link to="/blog/podcast-recording-studio-rajajinagar" className="blog-card">
             <div className="blog-card-content">
               <h2 className="blog-card-title">Podcast Recording Studio in Rajajinagar, Bengaluru: Full Setup Guide + Rental Costs</h2>
