@@ -1,0 +1,39 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import Navbar from '../components/Navbar';
+import ContactForm from '../components/ContactForm';
+import './Blog.css';
+
+const BlogList = () => {
+  return (
+    <>
+      <main className="blog-section">
+        <Navbar />
+        <div className="blog-container" style={{ maxWidth: '1200px' }}>
+        <h1 className="blog-title">Our Blog</h1>
+        
+        <div className="blog-list">
+          <Link to="/blog/podcast-recording-studio-rajajinagar" className="blog-card">
+            <div className="blog-card-content">
+              <h2 className="blog-card-title">Podcast Recording Studio in Rajajinagar, Bengaluru: Full Setup Guide + Rental Costs</h2>
+              <p className="blog-card-excerpt">
+                If you've been searching for a podcast recording studio in Rajajinagar, Bengaluru, you've probably run into the same problem everyone does: either the space looks great but has zero information on pricing...
+              </p>
+              <div className="blog-card-meta">
+                <span className="blog-card-date">July 16, 2026</span>
+              </div>
+              <div className="blog-card-author">
+                <div className="blog-card-avatar">N</div>
+                <span className="blog-card-author-name">Nearby Studio</span>
+              </div>
+            </div>
+          </Link>
+        </div>
+      </div>
+    </main>
+      <ContactForm />
+    </>
+  );
+};
+
+export default BlogList;

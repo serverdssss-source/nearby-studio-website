@@ -25,6 +25,8 @@ const GreenScreen = lazy(() => import("./components/GreenScreen"));
 const PrivacyPolicy = lazy(() => import("./components/PrivacyPolicy"));
 const BookingPage = lazy(() => import("./pages/BookingPage.tsx"));
 const AdminDashboard = lazy(() => import("./components/booking/AdminDashboard"));
+const BlogList = lazy(() => import("./pages/BlogList"));
+const BlogPost = lazy(() => import("./pages/BlogPost"));
 
 // Optimized loading fallback
 const LoadingFallback = () => (
@@ -110,6 +112,8 @@ function App() {
             <Route path="/Studios" element={<Navigate to="/studios" replace />} />
             <Route path="/FashionShoot" element={<Navigate to="/fashionshoot" replace />} />
             <Route path="/GreenScreenShoot" element={<Navigate to="/greenscreenshoot" replace />} />
+            <Route path="/blog" element={<BlogList />} />
+            <Route path="/blog/podcast-recording-studio-rajajinagar" element={<BlogPost />} />
           </Routes>
         </Suspense>
       </Router>
