@@ -13,6 +13,21 @@ const BlogList = () => {
         <h1 className="blog-title">Our Blog</h1>
         
         <div className="blog-list">
+          <Link to="/blog/why-podcast-production-matters" className="blog-card">
+            <div className="blog-card-content">
+              <h2 className="blog-card-title">Why Podcast Production Actually Matters for Your Brand</h2>
+              <p className="blog-card-excerpt">
+                Most founders and business heads still file "podcast" under marketing — one more content format to hand off to the social media team. That's underselling it. A well-produced podcast does things a marketing calendar can't...
+              </p>
+              <div className="blog-card-meta">
+                <span className="blog-card-date">July 17, 2026</span>
+              </div>
+              <div className="blog-card-author">
+                <div className="blog-card-avatar">N</div>
+                <span className="blog-card-author-name">Nearby Studio</span>
+              </div>
+            </div>
+          </Link>
           <Link to="/blog/fashion-shoot-vs-product-shoot-rajajinagar" className="blog-card">
             <div className="blog-card-content">
               <h2 className="blog-card-title">Fashion Shoot vs. Product Shoot in Rajajinagar, Bengaluru: Do You Need a Different Studio Setup?</h2>
