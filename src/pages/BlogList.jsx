@@ -13,6 +13,21 @@ const BlogList = () => {
         <h1 className="blog-title">Our Blog</h1>
         
         <div className="blog-list">
+          <Link to="/blog/fashion-shoot-vs-product-shoot-rajajinagar" className="blog-card">
+            <div className="blog-card-content">
+              <h2 className="blog-card-title">Fashion Shoot vs. Product Shoot in Rajajinagar, Bengaluru: Do You Need a Different Studio Setup?</h2>
+              <p className="blog-card-excerpt">
+                If you're booking a studio in Rajajinagar, Bengaluru for the first time, this question trips up more people than you'd expect: is a fashion shoot setup and a product shoot setup actually different...
+              </p>
+              <div className="blog-card-meta">
+                <span className="blog-card-date">July 17, 2026</span>
+              </div>
+              <div className="blog-card-author">
+                <div className="blog-card-avatar">N</div>
+                <span className="blog-card-author-name">Nearby Studio</span>
+              </div>
+            </div>
+          </Link>
           <Link to="/blog/5-signs-youve-outgrown-shooting-content-at-home" className="blog-card">
             <div className="blog-card-content">
               <h2 className="blog-card-title">5 Signs You've Outgrown Shooting Content at Home (And Need a Studio)</h2>
