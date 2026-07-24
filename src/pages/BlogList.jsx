@@ -13,6 +13,21 @@ const BlogList = () => {
         <h1 className="blog-title">Our Blog</h1>
         
         <div className="blog-list">
+          <Link to="/blog/green-screen-shoots-bengaluru" className="blog-card">
+            <div className="blog-card-content">
+              <h2 className="blog-card-title">Green Screen Shoots in Bengaluru: What They're Actually Used For (Beyond VFX)</h2>
+              <p className="blog-card-excerpt">
+                Say "green screen" and most people picture a Marvel movie set — actors in motion-capture suits, superhero backdrops, million-dollar VFX budgets. That image stops a lot of creators and small brands from even considering it...
+              </p>
+              <div className="blog-card-meta">
+                <span className="blog-card-date">July 24, 2026</span>
+              </div>
+              <div className="blog-card-author">
+                <div className="blog-card-avatar">N</div>
+                <span className="blog-card-author-name">Nearby Studio</span>
+              </div>
+            </div>
+          </Link>
           <Link to="/blog/why-podcast-production-matters" className="blog-card">
             <div className="blog-card-content">
               <h2 className="blog-card-title">Why Podcast Production Actually Matters for Your Brand</h2>

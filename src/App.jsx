@@ -30,6 +30,7 @@ const BlogPost = lazy(() => import("./pages/BlogPost"));
 const BlogPostOutgrownHome = lazy(() => import("./pages/BlogPostOutgrownHome"));
 const BlogPostFashionVsProduct = lazy(() => import("./pages/BlogPostFashionVsProduct"));
 const BlogPostWhyPodcastProductionMatters = lazy(() => import("./pages/BlogPostWhyPodcastProductionMatters"));
+const BlogPostGreenScreenShoots = lazy(() => import("./pages/BlogPostGreenScreenShoots"));
 
 // Optimized loading fallback
 const LoadingFallback = () => (
@@ -120,6 +121,7 @@ function App() {
             <Route path="/blog/5-signs-youve-outgrown-shooting-content-at-home" element={<BlogPostOutgrownHome />} />
             <Route path="/blog/fashion-shoot-vs-product-shoot-rajajinagar" element={<BlogPostFashionVsProduct />} />
             <Route path="/blog/why-podcast-production-matters" element={<BlogPostWhyPodcastProductionMatters />} />
+            <Route path="/blog/green-screen-shoots-bengaluru" element={<BlogPostGreenScreenShoots />} />
           </Routes>
         </Suspense>
       </Router>
