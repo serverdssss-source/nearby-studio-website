@@ -6,6 +6,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/beyond-four-walls",
+    title: "Beyond Four Walls: How Nearby Studio Fits Into the Sripada Studios Ecosystem",
+    excerpt: "Book a room, bring your gear, shoot, leave — that's how most people think about studio rentals. It's also where most studios stop. Nearby Studio was built differently...",
+    date: "July 25, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/green-screen-shoots-bengaluru",
     title: "Green Screen Shoots in Bengaluru: What They're Actually Used For (Beyond VFX)",
     excerpt: "Say \"green screen\" and most people picture a Marvel movie set — actors in motion-capture suits, superhero backdrops, million-dollar VFX budgets. That image stops a lot of creators and small brands from even considering it...",
