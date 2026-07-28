@@ -13,7 +13,7 @@ export default async function handler(req, res) {
     let source = 'none'
 
     // Try Instagram Basic Display API (graph.instagram.com)
-    if (accessToken && userId) {
+    if (accessToken) {
       const params = new URLSearchParams({
         fields: 'id,caption,media_type,media_url,thumbnail_url,permalink,timestamp',
         limit: '6', // Increased to match UI grid
