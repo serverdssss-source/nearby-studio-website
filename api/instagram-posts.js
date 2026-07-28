@@ -35,7 +35,7 @@ export default async function handler(req, res) {
           }
         }).filter((item) => Boolean(item.image))
         if (posts.length > 0) source = 'instagram-basic'
-      } else {
+      } else if (userId) {
         // Fallback to Facebook Graph API if UserId is provided but Basic Display fails
         // (For cases where the token might be a Facebook Page token)
         const fbGraphUrl = `https://graph.facebook.com/v22.0/${userId}/media?${params.toString()}`
