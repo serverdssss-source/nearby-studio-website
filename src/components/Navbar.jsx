@@ -270,6 +270,24 @@ const Navbar = () => {
           </a>
         </li>
 
+        <li className={location.pathname === '/blog' ? 'active' : ''}>
+          <Link
+            to="/blog"
+            onClick={() => {
+              setOpen(false);
+              setBookOpen(false);
+            }}
+            onMouseEnter={() => handleEnter(7)}
+            onMouseLeave={() => handleLeave(7)}
+          >
+            <span className="hover-circle" ref={el => circleRefs.current[7] = el}></span>
+            <span className="label-stack">
+              <span className="pill-label" ref={el => labelRefs.current[7] = el}>Blog</span>
+              <span className="pill-label-hover" ref={el => hoverLabelRefs.current[7] = el}>Blog</span>
+            </span>
+          </Link>
+        </li>
+
       </ul>
     </nav>
   );

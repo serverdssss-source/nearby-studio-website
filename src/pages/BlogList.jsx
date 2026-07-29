@@ -6,6 +6,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/top-5-places-to-visit-near-rajajinagar-bengaluru",
+    title: "Top 5 Places to Visit Near Rajajinagar, Bengaluru",
+    excerpt: "Rajajinagar is one of those Bengaluru neighborhoods that quietly has a lot going on right within it — old-city character, a solid food scene, temples, malls, and even an indoor snow park...",
+    date: "July 29, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/beyond-four-walls",
     title: "Beyond Four Walls: How Nearby Studio Fits Into the Sripada Studios Ecosystem",
     excerpt: "Book a room, bring your gear, shoot, leave — that's how most people think about studio rentals. It's also where most studios stop. Nearby Studio was built differently...",
