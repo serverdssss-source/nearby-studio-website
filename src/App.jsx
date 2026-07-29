@@ -33,6 +33,7 @@ const BlogPostWhyPodcastProductionMatters = lazy(() => import("./pages/BlogPostW
 const BlogPostGreenScreenShoots = lazy(() => import("./pages/BlogPostGreenScreenShoots"));
 const BlogPostBeyondFourWalls = lazy(() => import("./pages/BlogPostBeyondFourWalls"));
 const BlogPostTop5PlacesRajajinagar = lazy(() => import("./pages/BlogPostTop5PlacesRajajinagar"));
+const BlogPostTop10Equipment = lazy(() => import("./pages/BlogPostTop10Equipment"));
 
 // Optimized loading fallback
 const LoadingFallback = () => (
@@ -126,6 +127,7 @@ function App() {
             <Route path="/blog/green-screen-shoots-bengaluru" element={<BlogPostGreenScreenShoots />} />
             <Route path="/blog/beyond-four-walls" element={<BlogPostBeyondFourWalls />} />
             <Route path="/blog/top-5-places-to-visit-near-rajajinagar-bengaluru" element={<BlogPostTop5PlacesRajajinagar />} />
+            <Route path="/blog/top-10-equipment-must-haves-in-a-professional-studio" element={<BlogPostTop10Equipment />} />
           </Routes>
         </Suspense>
       </Router>

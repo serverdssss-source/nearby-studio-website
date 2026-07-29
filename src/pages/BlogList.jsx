@@ -6,6 +6,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/top-10-equipment-must-haves-in-a-professional-studio",
+    title: "Top 10 Equipment Must-Haves in a Professional Studio",
+    excerpt: "Anyone can put a camera in a room and call it a studio. What actually separates a professional production space from a converted spare room is the equipment behind the scenes...",
+    date: "July 29, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/top-5-places-to-visit-near-rajajinagar-bengaluru",
     title: "Top 5 Places to Visit Near Rajajinagar, Bengaluru",
     excerpt: "Rajajinagar is one of those Bengaluru neighborhoods that quietly has a lot going on right within it — old-city character, a solid food scene, temples, malls, and even an indoor snow park...",
