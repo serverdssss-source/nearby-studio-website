@@ -6,6 +6,20 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/top-10-green-screen-shoot-ideas",
+    title: "Top 10 Green Screen Shoot Ideas Worth Trying",
+    excerpt: "Green screen tends to get mentally filed under \"big-budget VFX\" — but in practice, it's one of the most versatile tools available to creators and brands, and most of the best use cases have nothing to do with superhero movies...",
+    date: "July 31, 2026",
+    author: "Nearby Studio"
+  },
+  {
+    path: "/blog/bengalurus-startups-need-better-content",
+    title: "Bengaluru's Startups Need Better Content. Here's Why.",
+    excerpt: "Bengaluru has more startups per square kilometer than almost anywhere else in the country — funding rounds, product launches, and \"we're hiring\" posts everywhere you look. And yet, scroll through most startup LinkedIn and Instagram pages, and the content looks eerily similar...",
+    date: "July 31, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/top-10-equipment-must-haves-in-a-professional-studio",
     title: "Top 10 Equipment Must-Haves in a Professional Studio",
     excerpt: "Anyone can put a camera in a room and call it a studio. What actually separates a professional production space from a converted spare room is the equipment behind the scenes...",
