@@ -6,6 +6,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/how-to-plan-successful-studio-shoot",
+    title: "How to Plan a Successful Studio Shoot: A Step-by-Step Guide for First-Timers",
+    excerpt: "A good studio shoot rarely happens by accident — it's the result of a handful of decisions made before anyone walks into the room, not scrambled together on the day...",
+    date: "August 3, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/top-10-green-screen-shoot-ideas",
     title: "Top 10 Green Screen Shoot Ideas Worth Trying",
     excerpt: "Green screen tends to get mentally filed under \"big-budget VFX\" — but in practice, it's one of the most versatile tools available to creators and brands, and most of the best use cases have nothing to do with superhero movies...",
