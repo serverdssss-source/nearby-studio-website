@@ -6,6 +6,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/how-to-prep-first-podcast-recording",
+    title: "How to Prep for Your First Podcast Recording: A Beginner's Checklist",
+    excerpt: "Your first podcast recording doesn't need to be perfect — but a little prep goes a long way toward making the session feel smooth instead of stressful...",
+    date: "August 11, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/how-to-plan-successful-studio-shoot",
     title: "How to Plan a Successful Studio Shoot: A Step-by-Step Guide for First-Timers",
     excerpt: "A good studio shoot rarely happens by accident — it's the result of a handful of decisions made before anyone walks into the room, not scrambled together on the day...",
