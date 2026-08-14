@@ -6,6 +6,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/10-easy-posing-tips-for-your-first-fashion-shoot",
+    title: "10 Easy Posing Tips for Your First Fashion Shoot (No Modeling Experience Needed)",
+    excerpt: "Booking your first fashion shoot is exciting — until you actually stand in front of the camera and suddenly forget what to do with your hands. That awkward, frozen feeling is completely normal...",
+    date: "August 14, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/how-to-prep-first-podcast-recording",
     title: "How to Prep for Your First Podcast Recording: A Beginner's Checklist",
     excerpt: "Your first podcast recording doesn't need to be perfect — but a little prep goes a long way toward making the session feel smooth instead of stressful...",

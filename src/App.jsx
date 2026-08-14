@@ -38,6 +38,7 @@ const BlogPostBengaluruStartupsContent = lazy(() => import("./pages/BlogPostBeng
 const BlogPostTop10GreenScreenShootIdeas = lazy(() => import("./pages/BlogPostTop10GreenScreenShootIdeas"));
 const BlogPostHowToPlanStudioShoot = lazy(() => import("./pages/BlogPostHowToPlanStudioShoot"));
 const BlogPostFirstPodcastPrep = lazy(() => import("./pages/BlogPostFirstPodcastPrep"));
+const BlogPostEasyPosingTips = lazy(() => import("./pages/BlogPostEasyPosingTips"));
 
 // Optimized loading fallback
 const LoadingFallback = () => (
@@ -136,6 +137,7 @@ function App() {
             <Route path="/blog/top-10-green-screen-shoot-ideas" element={<BlogPostTop10GreenScreenShootIdeas />} />
             <Route path="/blog/how-to-plan-successful-studio-shoot" element={<BlogPostHowToPlanStudioShoot />} />
             <Route path="/blog/how-to-prep-first-podcast-recording" element={<BlogPostFirstPodcastPrep />} />
+            <Route path="/blog/10-easy-posing-tips-for-your-first-fashion-shoot" element={<BlogPostEasyPosingTips />} />
           </Routes>
         </Suspense>
       </Router>
