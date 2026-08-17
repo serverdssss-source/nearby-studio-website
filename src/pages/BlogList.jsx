@@ -6,6 +6,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/posing-tips-for-founders",
+    title: "Posing Tips for Founders: How to Look Natural, Not Stiff, in Brand Photos",
+    excerpt: "Most founders are comfortable pitching investors, running meetings, and making tough calls — and then completely freeze the moment someone points a camera at them. It's a strange but common gap...",
+    date: "August 17, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/10-easy-posing-tips-for-your-first-fashion-shoot",
     title: "10 Easy Posing Tips for Your First Fashion Shoot (No Modeling Experience Needed)",
     excerpt: "Booking your first fashion shoot is exciting — until you actually stand in front of the camera and suddenly forget what to do with your hands. That awkward, frozen feeling is completely normal...",
