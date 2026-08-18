@@ -6,6 +6,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/composition-techniques-cinematic-footage",
+    title: "The Rule of Thirds and Beyond: Composition Techniques That Make Footage Feel Cinematic",
+    excerpt: "Most people can tell the difference between footage that looks \"cinematic\" and footage that looks amateur — they just can't always explain why. More often than not, the answer isn't the camera...",
+    date: "August 18, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/posing-tips-for-founders",
     title: "Posing Tips for Founders: How to Look Natural, Not Stiff, in Brand Photos",
     excerpt: "Most founders are comfortable pitching investors, running meetings, and making tough calls — and then completely freeze the moment someone points a camera at them. It's a strange but common gap...",

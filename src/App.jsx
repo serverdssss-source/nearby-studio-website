@@ -40,6 +40,7 @@ const BlogPostHowToPlanStudioShoot = lazy(() => import("./pages/BlogPostHowToPla
 const BlogPostFirstPodcastPrep = lazy(() => import("./pages/BlogPostFirstPodcastPrep"));
 const BlogPostEasyPosingTips = lazy(() => import("./pages/BlogPostEasyPosingTips"));
 const BlogPostPosingTipsForFounders = lazy(() => import("./pages/BlogPostPosingTipsForFounders"));
+const BlogPostCompositionTechniques = lazy(() => import("./pages/BlogPostCompositionTechniques"));
 
 // Optimized loading fallback
 const LoadingFallback = () => (
@@ -140,6 +141,7 @@ function App() {
             <Route path="/blog/how-to-prep-first-podcast-recording" element={<BlogPostFirstPodcastPrep />} />
             <Route path="/blog/10-easy-posing-tips-for-your-first-fashion-shoot" element={<BlogPostEasyPosingTips />} />
             <Route path="/blog/posing-tips-for-founders" element={<BlogPostPosingTipsForFounders />} />
+            <Route path="/blog/composition-techniques-cinematic-footage" element={<BlogPostCompositionTechniques />} />
           </Routes>
         </Suspense>
       </Router>
