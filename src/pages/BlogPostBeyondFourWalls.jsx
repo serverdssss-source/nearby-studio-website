@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostBeyondFourWalls = () => {
   return (
     <>
+      <SEO 
+        title="Beyond Four Walls: How Nearby Studio Fits Into the Sripada Studios Ecosystem | Nearby Studio"
+        description="Book a room, bring your gear, shoot, leave — that's how most people think about studio rentals. It's also where most studios stop. Nearby Studio was bui..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

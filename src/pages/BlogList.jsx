@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const postsData = [
@@ -137,6 +138,11 @@ const BlogList = () => {
 
   return (
     <>
+      <SEO 
+        title="Our Blog | Nearby Studio"
+        description="Read the latest articles about studio production, podcasting, composition, and professional shooting at Nearby Studio."
+        canonical="https://www.nearbystudios.in/blog"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container" style={{ maxWidth: '1200px' }}>

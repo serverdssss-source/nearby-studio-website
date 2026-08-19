@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostBengaluruStartupsContent = () => {
   return (
     <>
+      <SEO 
+        title="Bengaluru's Startups Need Better Content. Here's Why. | Nearby Studio"
+        description="Bengaluru has more startups per square kilometer than almost anywhere else in the country — funding rounds, product launches, and &quot;we're hiring&quot; posts..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

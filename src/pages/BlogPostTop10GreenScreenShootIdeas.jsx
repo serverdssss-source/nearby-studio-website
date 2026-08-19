@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostTop10GreenScreenShootIdeas = () => {
   return (
     <>
+      <SEO 
+        title="Top 10 Green Screen Shoot Ideas Worth Trying | Nearby Studio"
+        description="Green screen tends to get mentally filed under &quot;big-budget VFX&quot; — but in practice, it's one of the most versatile tools available to creators and bran..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

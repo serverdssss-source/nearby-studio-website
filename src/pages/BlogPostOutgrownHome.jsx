@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostOutgrownHome = () => {
   return (
     <>
+      <SEO 
+        title="5 Signs You've Outgrown Shooting Content at Home (And Need a Studio) | Nearby Studio"
+        description="Every content creator starts the same way — a ring light, a corner of the living room, and whatever backdrop doesn't have laundry piled behind it. That'..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

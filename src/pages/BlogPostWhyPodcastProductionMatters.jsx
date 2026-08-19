@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostWhyPodcastProductionMatters = () => {
   return (
     <>
+      <SEO 
+        title="Why Podcast Production Actually Matters for Your Brand | Nearby Studio"
+        description="Most founders and business heads still file &quot;podcast&quot; under marketing — one more content format to hand off to the social media team. That's undersell..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

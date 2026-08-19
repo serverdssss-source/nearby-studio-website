@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostGreenScreenShoots = () => {
   return (
     <>
+      <SEO 
+        title="Green Screen Shoots in Bengaluru: What They're Actually Used For (Beyond VFX) | Nearby Studio"
+        description="Say &quot;green screen&quot; and most people picture a Marvel movie set — actors in motion-capture suits, superhero backdrops, million-dollar VFX budgets. That ..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostCompositionTechniques = () => {
   return (
     <>
+      <SEO 
+        title="The Rule of Thirds and Beyond: Composition Techniques That Make Footage Feel Cinematic | Nearby Studio"
+        description="Most people can tell the difference between footage that looks &quot;cinematic&quot; and footage that looks amateur — they just can't always explain why. More o..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

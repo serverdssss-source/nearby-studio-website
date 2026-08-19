@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostTop10Equipment = () => {
   return (
     <>
+      <SEO 
+        title="Top 10 Equipment Must-Haves in a Professional Studio | Nearby Studio"
+        description="Anyone can put a camera in a room and call it a studio. What actually separates a professional production space from a converted spare room is the equip..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

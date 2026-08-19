@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostPosingTipsForFounders = () => {
   return (
     <>
+      <SEO 
+        title="Posing Tips for Founders: How to Look Natural, Not Stiff, in Brand Photos | Nearby Studio"
+        description="Most founders are comfortable pitching investors, running meetings, and making tough calls — and then completely freeze the moment someone points a came..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

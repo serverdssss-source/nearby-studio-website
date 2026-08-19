@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPost = () => {
   return (
     <>
+      <SEO 
+        title="Podcast Recording Studio in Rajajinagar, Bengaluru: Full Setup Guide + Rental Costs | Nearby Studio"
+        description="If you've been searching for a podcast recording studio in Rajajinagar, Bengaluru, you've probably run into the same problem everyone does: either the s..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

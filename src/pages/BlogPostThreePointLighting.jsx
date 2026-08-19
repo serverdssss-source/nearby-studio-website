@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostThreePointLighting = () => {
   return (
     <>
+      <SEO 
+        title="Three-Point Lighting Explained: The Setup Behind Every Professional Shot | Nearby Studio"
+        description="Almost every professionally lit shot you've ever seen — interviews, product photos, YouTube videos, corporate headshots — is built on the same basic pri..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

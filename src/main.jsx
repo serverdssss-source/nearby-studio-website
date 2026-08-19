@@ -3,11 +3,14 @@ import ReactDOM from 'react-dom/client'
 import { SpeedInsights } from '@vercel/speed-insights/react'
 import App from './App'
 import './index.css'
+import { HelmetProvider } from 'react-helmet-async'
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <App />
-    <SpeedInsights />
+    <HelmetProvider>
+      <App />
+      <SpeedInsights />
+    </HelmetProvider>
   </React.StrictMode>,
 )

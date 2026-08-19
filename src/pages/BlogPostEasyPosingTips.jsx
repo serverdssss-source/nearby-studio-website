@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostEasyPosingTips = () => {
   return (
     <>
+      <SEO 
+        title="10 Easy Posing Tips for Your First Fashion Shoot (No Modeling Experience Needed) | Nearby Studio"
+        description="Booking your first fashion shoot is exciting — until you actually stand in front of the camera and suddenly forget what to do with your hands. That awkw..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostFirstPodcastPrep = () => {
   return (
     <>
+      <SEO 
+        title="How to Prep for Your First Podcast Recording: A Beginner's Checklist | Nearby Studio"
+        description="Your first podcast recording doesn't need to be perfect — but a little prep goes a long way toward making the session feel smooth instead of stressful. ..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

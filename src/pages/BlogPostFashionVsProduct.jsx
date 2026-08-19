@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostFashionVsProduct = () => {
   return (
     <>
+      <SEO 
+        title="Fashion Shoot vs. Product Shoot in Rajajinagar, Bengaluru: Do You Need a Different Studio Setup? | Nearby Studio"
+        description="If you're booking a studio in Rajajinagar, Bengaluru for the first time, this question trips up more people than you'd expect: is a fashion shoot setup ..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostHowToPlanStudioShoot = () => {
   return (
     <>
+      <SEO 
+        title="How to Plan a Successful Studio Shoot: A Step-by-Step Guide for First-Timers | Nearby Studio"
+        description="A good studio shoot rarely happens by accident — it's the result of a handful of decisions made before anyone walks into the room, not scrambled togethe..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">

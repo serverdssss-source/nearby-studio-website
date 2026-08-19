@@ -2,11 +2,17 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
+import SEO from '../components/SEO';
 import './Blog.css';
 
 const BlogPostTop5PlacesRajajinagar = () => {
   return (
     <>
+      <SEO 
+        title="Top 5 Places to Visit Near Rajajinagar, Bengaluru | Nearby Studio"
+        description="Rajajinagar doesn't get talked about as much as some of Bengaluru's flashier neighborhoods, but it packs in a surprising amount — heritage temples, a pr..."
+        type="article"
+      />
       <main className="blog-section">
         <Navbar />
         <div className="blog-container">
