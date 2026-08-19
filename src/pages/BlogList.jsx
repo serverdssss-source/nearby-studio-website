@@ -6,6 +6,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/three-point-lighting-explained",
+    title: "Three-Point Lighting Explained: The Setup Behind Every Professional Shot",
+    excerpt: "Almost every professionally lit shot you've ever seen — interviews, product photos, YouTube videos, corporate headshots — is built on the same basic principle: three-point lighting...",
+    date: "August 19, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/composition-techniques-cinematic-footage",
     title: "The Rule of Thirds and Beyond: Composition Techniques That Make Footage Feel Cinematic",
     excerpt: "Most people can tell the difference between footage that looks \"cinematic\" and footage that looks amateur — they just can't always explain why. More often than not, the answer isn't the camera...",
