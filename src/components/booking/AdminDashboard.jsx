@@ -9,7 +9,7 @@ import './BookingFlow.css';
 const STUDIO = {
   studioName: 'Nearby Studio',
   studioGSTNumber: '29ABRCS9041A1Z2',
-  studioAddress: 'No:4/2, 1st Floor, Chord Rd, Rajaji Nagar Industrial Town, Rajajinagar, Bengaluru, Karnataka 560 010',
+  studioAddress: 'No.4/2, 1st Main Road, West of Chord Road, Rajajinagar Industrial Town, Bengaluru - 560010',
   studioPhone: '+91 9060870117',
   studioWebsite: 'www.nearbystudio.in',
   studioEmail: 'nearbystudiosocial@gmail.com',

@@ -191,7 +191,7 @@ export default function SripadaInvoice({
 
   // Static footer/contact details (matches provided invoice design)
   const footerAddress =
-    "No:4/2, 1st Floor, Chord Rd, Rajaji Nagar Industrial Town, Rajajinagar, Bengaluru, Karnataka 560 010";
+    "No.4/2, 1st Main Road, West of Chord Road, Rajajinagar Industrial Town, Bengaluru - 560010";
   const footerWebsite = "www.nearbystudio.in";
   const footerEmail = "nearbystudiosocial@gmail.com";
   const footerPhone = "+91 9060870117";

@@ -35,11 +35,11 @@ export default function ContactForm() {
               <div className="contact-item">
                 <span className="label">ADDRESS</span>
                 <p>
-                  No:4/2, 1st Chord Road
+                  No.4/2, 1st Main Road
                   <br />
-                  Rajajinagar Industrial Town
+                  West of Chord Road, Rajajinagar Industrial Town
                   <br />
-                  Bengaluru, Karnataka 560010
+                  Bengaluru - 560010
                 </p>
               </div>
             </div>
