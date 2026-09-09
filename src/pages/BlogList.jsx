@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/7-camera-techniques-cinematic-look",
+    title: "7 Camera Techniques That Make Content Look Cinematic (No Big Budget Required)",
+    excerpt: "There's a specific look certain videos have — a depth, a polish, a sense that every shot was chosen on purpose — that makes them feel like \"real\" films rather than casual recordings...",
+    date: "September 9, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/three-point-lighting-explained",
     title: "Three-Point Lighting Explained: The Setup Behind Every Professional Shot",
     excerpt: "Almost every professionally lit shot you've ever seen — interviews, product photos, YouTube videos, corporate headshots — is built on the same basic principle: three-point lighting...",
