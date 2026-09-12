@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/can-ai-replace-studio-shoot",
+    title: "Can AI Replace a Studio Shoot? What AI Can (and Can't) Do for Your Content",
+    excerpt: "AI editing tools have gotten good enough that a fair question keeps coming up: do you still need to actually book a studio and shoot anything? Here's where AI genuinely helps, and where it hits a hard wall...",
+    date: "September 12, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/7-camera-techniques-cinematic-look",
     title: "7 Camera Techniques That Make Content Look Cinematic (No Big Budget Required)",
     excerpt: "There's a specific look certain videos have — a depth, a polish, a sense that every shot was chosen on purpose — that makes them feel like \"real\" films rather than casual recordings...",
