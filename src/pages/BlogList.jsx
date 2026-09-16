@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/depth-of-field-explained",
+    title: "Depth of Field Explained: Why That \"Blurry Background\" Look Actually Matters",
+    excerpt: "You've seen it in almost every professionally shot video or photo — the subject crisp and sharp, the background melted into a soft, creamy blur. Here's what depth of field actually is, why it matters, and how to get it right...",
+    date: "September 16, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/can-ai-replace-studio-shoot",
     title: "Can AI Replace a Studio Shoot? What AI Can (and Can't) Do for Your Content",
     excerpt: "AI editing tools have gotten good enough that a fair question keeps coming up: do you still need to actually book a studio and shoot anything? Here's where AI genuinely helps, and where it hits a hard wall...",
