@@ -45,6 +45,7 @@ const BlogPostThreePointLighting = lazy(() => import("./pages/BlogPostThreePoint
 const BlogPost7CameraTechniques = lazy(() => import("./pages/BlogPost7CameraTechniques"));
 const BlogPostCanAIReplaceStudioShoot = lazy(() => import("./pages/BlogPostCanAIReplaceStudioShoot"));
 const BlogPostDepthOfField = lazy(() => import("./pages/BlogPostDepthOfField"));
+const BlogPost5MythsStudioRentals = lazy(() => import("./pages/BlogPost5MythsStudioRentals"));
 
 // Optimized loading fallback
 const LoadingFallback = () => (
@@ -150,6 +151,7 @@ function App() {
             <Route path="/blog/7-camera-techniques-cinematic-look" element={<BlogPost7CameraTechniques />} />
             <Route path="/blog/can-ai-replace-studio-shoot" element={<BlogPostCanAIReplaceStudioShoot />} />
             <Route path="/blog/depth-of-field-explained" element={<BlogPostDepthOfField />} />
+            <Route path="/blog/5-myths-about-studio-rentals" element={<BlogPost5MythsStudioRentals />} />
           </Routes>
         </Suspense>
       </Router>

@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/5-myths-about-studio-rentals",
+    title: "5 Myths About Studio Rentals That Stop People From Booking",
+    excerpt: "Plenty of people who'd genuinely benefit from a proper studio session never end up booking one — not because they don't need it, but because of a few assumptions that sound reasonable but don't actually hold up...",
+    date: "September 18, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/depth-of-field-explained",
     title: "Depth of Field Explained: Why That \"Blurry Background\" Look Actually Matters",
     excerpt: "You've seen it in almost every professionally shot video or photo — the subject crisp and sharp, the background melted into a soft, creamy blur. Here's what depth of field actually is, why it matters, and how to get it right...",
