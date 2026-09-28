@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/podcast-studio-for-directors-actors-production-houses-bengaluru",
+    title: "A Podcast Studio for Directors, Actors and Production Houses in Bengaluru",
+    excerpt: "A film release used to run on a simple loop: a trailer, a press meet, a few interviews, and a lot of hope. Now a director can sit down for forty unhurried minutes and reach more people than a press conference ever managed...",
+    date: "September 28, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/5-myths-about-studio-rentals",
     title: "5 Myths About Studio Rentals That Stop People From Booking",
     excerpt: "Plenty of people who'd genuinely benefit from a proper studio session never end up booking one — not because they don't need it, but because of a few assumptions that sound reasonable but don't actually hold up...",

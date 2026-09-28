@@ -46,6 +46,7 @@ const BlogPost7CameraTechniques = lazy(() => import("./pages/BlogPost7CameraTech
 const BlogPostCanAIReplaceStudioShoot = lazy(() => import("./pages/BlogPostCanAIReplaceStudioShoot"));
 const BlogPostDepthOfField = lazy(() => import("./pages/BlogPostDepthOfField"));
 const BlogPost5MythsStudioRentals = lazy(() => import("./pages/BlogPost5MythsStudioRentals"));
+const BlogPostFilmPodcastStudio = lazy(() => import("./pages/BlogPostFilmPodcastStudio"));
 
 // Optimized loading fallback
 const LoadingFallback = () => (
@@ -152,6 +153,7 @@ function App() {
             <Route path="/blog/can-ai-replace-studio-shoot" element={<BlogPostCanAIReplaceStudioShoot />} />
             <Route path="/blog/depth-of-field-explained" element={<BlogPostDepthOfField />} />
             <Route path="/blog/5-myths-about-studio-rentals" element={<BlogPost5MythsStudioRentals />} />
+            <Route path="/blog/podcast-studio-for-directors-actors-production-houses-bengaluru" element={<BlogPostFilmPodcastStudio />} />
           </Routes>
         </Suspense>
       </Router>
