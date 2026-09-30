@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/event-videography-corporate-launches-product-unveilings",
+    title: "The Importance of Event Videography for Corporate Launches and Product Unveilings",
+    excerpt: "A product launch or corporate event lasts a few hours. With the right coverage, the same event becomes weeks of usable content: a recap film, social clips, testimonials, and material that keeps working long after the venue has been cleared out...",
+    date: "September 30, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/how-to-choose-the-right-studio-bengaluru",
     title: "How to Choose the Right Studio for Your Shoot in Bengaluru",
     excerpt: "Bengaluru has no shortage of studio spaces to choose from, which sounds like a good problem to have until you're actually trying to pick one. Here's what actually matters when comparing studios, and the questions worth asking before you book...",
