@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/how-to-choose-the-right-studio-bengaluru",
+    title: "How to Choose the Right Studio for Your Shoot in Bengaluru",
+    excerpt: "Bengaluru has no shortage of studio spaces to choose from, which sounds like a good problem to have until you're actually trying to pick one. Here's what actually matters when comparing studios, and the questions worth asking before you book...",
+    date: "September 30, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/podcast-studio-for-directors-actors-production-houses-bengaluru",
     title: "A Podcast Studio for Directors, Actors and Production Houses in Bengaluru",
     excerpt: "A film release used to run on a simple loop: a trailer, a press meet, a few interviews, and a lot of hope. Now a director can sit down for forty unhurried minutes and reach more people than a press conference ever managed...",
