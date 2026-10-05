@@ -2,11 +2,12 @@
 User-agent: *
 Allow: /
 Disallow: /admin/
+Disallow: /adminbs
 Disallow: /api/
 Disallow: /*.json$
 
 # Sitemap location
-Sitemap: https://www.nearbystudios.in/sitemap.xml
+Sitemap: https://www.nearbystudio.in/sitemap.xml
 
 # Crawl-delay
 Crawl-delay: 1

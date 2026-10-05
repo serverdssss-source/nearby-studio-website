@@ -6,6 +6,7 @@ import ScrollToTopButton from './components/ScrollToTop';
 
 // Critical components - load immediately (above fold)
 import Navbar from './components/Navbar';
+import SEO from './components/SEO';
 
 // Lazy load below-the-fold components
 const Hero_1 = lazy(() => import('./components/Hero_1'));
@@ -70,6 +71,10 @@ const LoadingFallback = () => (
 function HomePage() {
   return (
     <main className="min-h-screen bg-#0f0f12">
+      <SEO
+        title="Studio Rental in Rajajinagar, Bengaluru | Podcast, Photo & Video Studio | Nearby Studio"
+        description="Rent a professional studio in Rajajinagar, Bengaluru for podcasts, fashion and model shoots, green screen, reels and brand content. Fully equipped, easy hourly booking."
+      />
       <Navbar />
       <Suspense fallback={<LoadingFallback />}>
         <Hero_1 />
@@ -122,13 +127,13 @@ function App() {
         <Suspense fallback={<LoadingFallback />}>
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/book" element={<BookingPage />} />
-            <Route path="/contactus" element={<ContactSection />} />
-            <Route path="/podcast" element={<Podcast />} />
-            <Route path="/studios" element={<Studios />} />
-            <Route path="/fashionshoot" element={<FashionShoot />} />
-            <Route path="/greenscreenshoot" element={<GreenScreen />} />
-            <Route path="/privacy-policy" element={<PrivacyPolicy />} />
+            <Route path="/book" element={<><SEO title="Book a Studio Slot in Bengaluru | Nearby Studio" description="Check availability and book Nearby Studio in Rajajinagar, Bengaluru by the hour for podcasts, photo shoots and video production." /><BookingPage /></>} />
+            <Route path="/contactus" element={<><SEO title="Contact Nearby Studio | Studio Rental in Rajajinagar, Bengaluru" description="Get in touch with Nearby Studio in Rajajinagar, Bengaluru for studio bookings, pricing and custom shoot requirements." /><ContactSection /></>} />
+            <Route path="/podcast" element={<><SEO title="Podcast Studio in Bengaluru (Rajajinagar) | Nearby Studio" description="Record your video or audio podcast at Nearby Studio, Rajajinagar, Bengaluru. Multi-camera setups, pro microphones, lighting and editing support." /><Podcast /></>} />
+            <Route path="/studios" element={<><SEO title="Studio Spaces for Rent in Bengaluru | Nearby Studio" description="Explore Nearby Studio's shoot spaces in Rajajinagar, Bengaluru: sets, backdrops, lighting and equipment for photo, video and podcast production." /><Studios /></>} />
+            <Route path="/fashionshoot" element={<><SEO title="Fashion & Model Shoot Studio in Bengaluru | Nearby Studio" description="Book a fashion, model or product shoot studio in Rajajinagar, Bengaluru with professional lighting, backdrops and styling space." /><FashionShoot /></>} />
+            <Route path="/greenscreenshoot" element={<><SEO title="Green Screen Studio in Bengaluru | Nearby Studio" description="Shoot ads, explainers and VFX content in Nearby Studio's green screen studio in Rajajinagar, Bengaluru, with evenly lit chroma setups." /><GreenScreen /></>} />
+            <Route path="/privacy-policy" element={<><SEO title="Privacy Policy | Nearby Studio" description="How Nearby Studio collects, uses and protects your information." /><PrivacyPolicy /></>} />
             <Route path="/adminbs" element={<AdminDashboard />} />
             <Route path="/Podcast" element={<Navigate to="/podcast" replace />} />
             <Route path="/Studios" element={<Navigate to="/studios" replace />} />

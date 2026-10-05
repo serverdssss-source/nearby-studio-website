@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useEffect, useRef, useState } from 'react'
+import WebGLBoundary from './WebGLBoundary';
 import './CompanyInfo.css'
 const ColorBlends = lazy(() => import('./ColorBlends'))
 
@@ -28,6 +29,7 @@ function CompanyInfo() {
     <section className="company-info-section" ref={sectionRef}>
       {/* Background Layer */}
       <div className="company-bg">
+        <WebGLBoundary>
         <Suspense fallback={null}>
           <ColorBlends
             colors={["#00c2a8", "#0f0f12", "#00433a"]}
@@ -44,6 +46,7 @@ function CompanyInfo() {
             color=""
           />
         </Suspense>
+        </WebGLBoundary>
       </div>
 
       <div className="company-info-container">

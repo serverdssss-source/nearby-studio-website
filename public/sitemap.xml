@@ -1,164 +1,195 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
-        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
-  
-  <!-- Homepage -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://www.nearbystudios.in/</loc>
-    <lastmod>2024-01-15</lastmod>
+    <loc>https://www.nearbystudio.in/</loc>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
-  
-  <!-- Services Pages -->
   <url>
-    <loc>https://www.nearbystudios.in/podcast-studio</loc>
-    <lastmod>2024-01-15</lastmod>
+    <loc>https://www.nearbystudio.in/book</loc>
+    <lastmod>2026-03-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
   </url>
-  
   <url>
-    <loc>https://www.nearbystudios.in/model-shoot-studio</loc>
-    <lastmod>2024-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.nearbystudios.in/content-creation-studio</loc>
-    <lastmod>2024-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <url>
-    <loc>https://www.nearbystudios.in/video-production-studio</loc>
-    <lastmod>2024-01-15</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
-  </url>
-  
-  <!-- About & Contact -->
-  <url>
-    <loc>https://www.nearbystudios.in/about</loc>
-    <lastmod>2024-01-15</lastmod>
+    <loc>https://www.nearbystudio.in/contactus</loc>
+    <lastmod>2026-03-23</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.7</priority>
   </url>
-  
   <url>
-    <loc>https://www.nearbystudios.in/contact</loc>
-    <lastmod>2024-01-15</lastmod>
+    <loc>https://www.nearbystudio.in/podcast</loc>
+    <lastmod>2026-06-08</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <priority>0.9</priority>
   </url>
-  
-  <!-- Gallery -->
   <url>
-    <loc>https://www.nearbystudios.in/gallery</loc>
-    <lastmod>2024-01-15</lastmod>
+    <loc>https://www.nearbystudio.in/studios</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/fashionshoot</loc>
+    <lastmod>2026-06-10</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/greenscreenshoot</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/privacy-policy</loc>
+    <lastmod>2026-03-23</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/blog</loc>
+    <lastmod>2026-09-30</lastmod>
     <changefreq>weekly</changefreq>
-    <priority>0.6</priority>
+    <priority>0.8</priority>
   </url>
-  
-
-  <!-- Blog Posts -->
   <url>
-    <loc>https://www.nearbystudios.in/blog/three-point-lighting-explained</loc>
+    <loc>https://www.nearbystudio.in/blog/podcast-recording-studio-rajajinagar</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/composition-techniques-cinematic-footage</loc>
+    <loc>https://www.nearbystudio.in/blog/5-signs-youve-outgrown-shooting-content-at-home</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/posing-tips-for-founders</loc>
+    <loc>https://www.nearbystudio.in/blog/fashion-shoot-vs-product-shoot-rajajinagar</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/10-easy-posing-tips-for-your-first-fashion-shoot</loc>
+    <loc>https://www.nearbystudio.in/blog/why-podcast-production-matters</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/how-to-prep-first-podcast-recording</loc>
+    <loc>https://www.nearbystudio.in/blog/green-screen-shoots-bengaluru</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/how-to-plan-successful-studio-shoot</loc>
+    <loc>https://www.nearbystudio.in/blog/beyond-four-walls</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/top-10-green-screen-shoot-ideas</loc>
+    <loc>https://www.nearbystudio.in/blog/top-5-places-to-visit-near-rajajinagar-bengaluru</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/bengalurus-startups-need-better-content</loc>
+    <loc>https://www.nearbystudio.in/blog/top-10-equipment-must-haves-in-a-professional-studio</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/top-10-equipment-must-haves-in-a-professional-studio</loc>
+    <loc>https://www.nearbystudio.in/blog/bengalurus-startups-need-better-content</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/top-5-places-to-visit-near-rajajinagar-bengaluru</loc>
+    <loc>https://www.nearbystudio.in/blog/top-10-green-screen-shoot-ideas</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/beyond-four-walls</loc>
+    <loc>https://www.nearbystudio.in/blog/how-to-plan-successful-studio-shoot</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/green-screen-shoots-bengaluru</loc>
+    <loc>https://www.nearbystudio.in/blog/how-to-prep-first-podcast-recording</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/why-podcast-production-matters</loc>
+    <loc>https://www.nearbystudio.in/blog/10-easy-posing-tips-for-your-first-fashion-shoot</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/fashion-shoot-vs-product-shoot-rajajinagar</loc>
+    <loc>https://www.nearbystudio.in/blog/posing-tips-for-founders</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/5-signs-youve-outgrown-shooting-content-at-home</loc>
+    <loc>https://www.nearbystudio.in/blog/composition-techniques-cinematic-footage</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
-    <loc>https://www.nearbystudios.in/blog/podcast-recording-studio-rajajinagar</loc>
+    <loc>https://www.nearbystudio.in/blog/three-point-lighting-explained</loc>
     <lastmod>2026-08-19</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
-
+  <url>
+    <loc>https://www.nearbystudio.in/blog/7-camera-techniques-cinematic-look</loc>
+    <lastmod>2026-09-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/blog/can-ai-replace-studio-shoot</loc>
+    <lastmod>2026-09-12</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/blog/depth-of-field-explained</loc>
+    <lastmod>2026-09-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/blog/5-myths-about-studio-rentals</loc>
+    <lastmod>2026-09-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/blog/podcast-studio-for-directors-actors-production-houses-bengaluru</loc>
+    <lastmod>2026-09-28</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/blog/how-to-choose-the-right-studio-bengaluru</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/blog/event-videography-corporate-launches-product-unveilings</loc>
+    <lastmod>2026-09-30</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
 </urlset>

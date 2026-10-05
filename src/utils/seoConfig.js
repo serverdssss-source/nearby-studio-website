@@ -2,7 +2,7 @@
 
 export const seoConfig = {
   siteName: "NearBy Studios",
-  siteUrl: "https://www.nearbystudios.in",
+  siteUrl: "https://www.nearbystudio.in",
   defaultTitle: "Studio Rental in Bengaluru | NearBy Studios - Best Rates",
   defaultDescription: "Looking for affordable studio rental in Bengaluru? NearBy Studios offers premium space for model shoots, podcasts, reels & content creation at best prices.",
   defaultKeywords: [
@@ -27,7 +27,7 @@ export const seoConfig = {
   business: {
     name: "NearBy Studios",
     phone: "+91-XXXXXXXXXX", // Replace with actual phone
-    email: "info@nearbystudios.in",
+    email: "info@nearbystudio.in",
     address: {
       street: "Your Street Address",
       city: "Bengaluru",
@@ -56,42 +56,42 @@ export const seoConfig = {
       title: "Studio Rental in Bengaluru | NearBy Studios - Best Rates",
       description: "Looking for affordable studio rental in Bengaluru? NearBy Studios offers premium space for model shoots, podcasts, reels & content creation at best prices.",
       keywords: "studio rental Bengaluru, podcast studio, model shoot studio, content creation studio Bangalore",
-      canonical: "https://www.nearbystudios.in/"
+      canonical: "https://www.nearbystudio.in/"
     },
     
     podcastStudio: {
       title: "Podcast Studio in Bengaluru | Professional Recording Space",
       description: "Book our premium podcast studio in Bengaluru with soundproof rooms, professional mics & equipment. Perfect for podcasters, YouTubers & content creators.",
       keywords: "podcast studio Bengaluru, podcast recording studio, audio recording studio Bangalore, soundproof studio",
-      canonical: "https://www.nearbystudios.in/podcast-studio"
+      canonical: "https://www.nearbystudio.in/podcast-studio"
     },
     
     modelShoot: {
       title: "Model Shoot Studio in Bengaluru | Fashion Photography Space",
       description: "Professional model shoot studio in Bengaluru with premium lighting, backdrops & equipment. Ideal for fashion shoots, portfolio shoots & brand campaigns.",
       keywords: "model shoot studio Bengaluru, fashion photography studio, portfolio shoot studio Bangalore, modeling studio",
-      canonical: "https://www.nearbystudios.in/model-shoot-studio"
+      canonical: "https://www.nearbystudio.in/model-shoot-studio"
     },
     
     contentCreation: {
       title: "Content Creation Studio Bengaluru | Reels & Video Production",
       description: "Rent our content creation studio in Bengaluru for Instagram reels, YouTube videos & social media content. Equipped with lights, cameras & props.",
       keywords: "content creation studio Bengaluru, reels studio, YouTube studio, video production studio Bangalore",
-      canonical: "https://www.nearbystudios.in/content-creation-studio"
+      canonical: "https://www.nearbystudio.in/content-creation-studio"
     },
     
     videoProduction: {
       title: "Video Production Studio in Bengaluru | Professional Filming",
       description: "Full-service video production studio in Bengaluru with 4K cameras, lighting & editing facilities. Perfect for commercials, corporate videos & films.",
       keywords: "video production studio Bengaluru, filming studio Bangalore, commercial video studio, corporate video production",
-      canonical: "https://www.nearbystudios.in/video-production-studio"
+      canonical: "https://www.nearbystudio.in/video-production-studio"
     },
     
     contact: {
       title: "Contact NearBy Studios | Book Studio in Bengaluru",
       description: "Contact NearBy Studios to book your studio session in Bengaluru. Call us or fill the form for instant booking. Best rates guaranteed!",
       keywords: "book studio Bengaluru, studio booking Bangalore, contact studio rental",
-      canonical: "https://www.nearbystudios.in/contact"
+      canonical: "https://www.nearbystudio.in/contact"
     }
   }
 };

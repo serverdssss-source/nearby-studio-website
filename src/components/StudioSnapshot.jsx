@@ -1,4 +1,5 @@
 import React, { lazy, Suspense, useEffect, useRef, memo, useState } from 'react'
+import WebGLBoundary from './WebGLBoundary';
 import { Link } from 'react-router-dom'
 import './StudioSnapshot.css'
 const SplashCursor = lazy(() => import('./SplashCursor'));
@@ -77,9 +78,11 @@ const StudioSnapshot = memo(() => {
   return (
     <section className="service-hero-section" ref={sectionRef}>
       {!isMobile && (
-        <Suspense fallback={null}>
-          <SplashCursor />
-        </Suspense>
+        <WebGLBoundary>
+          <Suspense fallback={null}>
+            <SplashCursor />
+          </Suspense>
+        </WebGLBoundary>
       )}
       <div className="abs-gallery-grid">
         {galleryImages.map((img, index) => (

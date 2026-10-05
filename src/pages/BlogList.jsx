@@ -190,7 +190,7 @@ const BlogList = () => {
       <SEO 
         title="Our Blog | Nearby Studio"
         description="Read the latest articles about studio production, podcasting, composition, and professional shooting at Nearby Studio."
-        canonical="https://www.nearbystudios.in/blog"
+        canonical="https://www.nearbystudio.in/blog"
       />
       <main className="blog-section">
         <Navbar />

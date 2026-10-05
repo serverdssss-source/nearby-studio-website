@@ -22,6 +22,6 @@ When the user asks you to add a new blog post and provides the content, you MUST
    - Provide the `path` (matching the route in App.jsx), `title`, `excerpt`, current `date`, and `author: "Nearby Studio"`.
 
 4. **Update the Sitemap**:
-   - In `public/sitemap.xml`, append a new `<url>` block under the `<!-- Blog Posts -->` section with the URL (`https://www.nearbystudios.in/blog/your-url-slug`), setting `<lastmod>` to the current date, `<changefreq>` to `monthly`, and `<priority>` to `0.8`.
+   - Run `npm run sitemap`. It regenerates `public/sitemap.xml` from the routes in `src/App.jsx` (it also runs automatically on `npm run build`). Do not edit the sitemap by hand.
 
 Follow all of these steps sequentially whenever a new blog post is requested.

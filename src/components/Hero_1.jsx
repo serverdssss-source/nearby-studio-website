@@ -1,5 +1,6 @@
 import React, { lazy, Suspense, useRef, useEffect, useState, memo, useCallback } from 'react';
 import { Renderer, Program, Triangle, Mesh } from 'ogl';
+import WebGLBoundary from './WebGLBoundary';
 const SplashCursor = lazy(() => import('./SplashCursor'));
 
 /* =========================
@@ -444,11 +445,14 @@ const Hero_1 = memo(function Hero_1() {
                 }}
             >
             {!isMobile && showCursor && (
-                <Suspense fallback={null}>
-                    <SplashCursor />
-                </Suspense>
+                <WebGLBoundary>
+                    <Suspense fallback={null}>
+                        <SplashCursor />
+                    </Suspense>
+                </WebGLBoundary>
             )}
             {/* Light Rays Background */}
+            <WebGLBoundary>
             <LightRays
                 raysOrigin={isMobile ? "center" : "top-center"}
                 raysColor="#00C2A8"
@@ -462,6 +466,7 @@ const Hero_1 = memo(function Hero_1() {
                 fadeDistance={isMobile ? 0.85 : 1}
                 saturation={1}
             />
+            </WebGLBoundary>
 
             {/* Center Logo */}
             <div

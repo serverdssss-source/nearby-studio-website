@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "vite --host",
-    "build": "vite build",
+    "build": "node scripts/generate-sitemap.js && vite build",
+    "sitemap": "node scripts/generate-sitemap.js",
     "build:report": "vite build && node scripts/report-build.js",
     "preview": "vite preview",
     "convert-images": "node scripts/convert-to-webp.js",
