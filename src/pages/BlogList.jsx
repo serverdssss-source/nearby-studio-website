@@ -7,6 +7,20 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/fashion-shoot-studio-bangalore-guide-models-brands",
+    title: "Fashion Shoot Studio in Bangalore: A Complete Guide for Models and Brands",
+    excerpt: "Whether you're a model building a portfolio or a brand shooting a seasonal lookbook, the studio you choose shapes the final images more than most people expect. Here's everything worth knowing before booking one in Bangalore...",
+    date: "October 6, 2026",
+    author: "Nearby Studio"
+  },
+  {
+    path: "/blog/green-screen-studio-rental-bangalore-pricing-booking",
+    title: "Green Screen Studio Rental in Bangalore: Pricing, Booking, and What's Included",
+    excerpt: "Searching for a green screen studio in Bangalore usually turns up plenty of listings and very little actual information. Here's a straight answer on cost, what's included, and how booking works...",
+    date: "October 6, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/event-videography-corporate-launches-product-unveilings",
     title: "The Importance of Event Videography for Corporate Launches and Product Unveilings",
     excerpt: "A product launch or corporate event lasts a few hours. With the right coverage, the same event becomes weeks of usable content: a recap film, social clips, testimonials, and material that keeps working long after the venue has been cleared out...",
