@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostFashionVsProduct = () => {
@@ -12,6 +13,7 @@ const BlogPostFashionVsProduct = () => {
         title="Fashion Shoot vs. Product Shoot in Rajajinagar, Bengaluru: Do You Need a Different Studio Setup? | Nearby Studio"
         description="If you're booking a studio in Rajajinagar, Bengaluru for the first time, this question trips up more people than you'd expect: is a fashion shoot setup ..."
         type="article"
+        ogImage="/Snapshots1/7.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -29,6 +31,11 @@ const BlogPostFashionVsProduct = () => {
           </p>
 
           <h2>The Core Difference: What's the Hero of the Frame?</h2>
+
+          <div className="blog-figure-pair">
+            <BlogImage src="/Snapshots1/7.webp" alt="Full-length saree fashion shoot with styled props in a Rajajinagar studio" width={1080} height={1350} />
+            <BlogImage src="/Snapshots1/13.webp" alt="Skincare product shoot with a bottle and box on a mint green backdrop" width={1080} height={1350} />
+          </div>
           <p>
             Every studio decision comes down to one question: <strong>what is the camera supposed to make you fall in love with?</strong>
           </p>

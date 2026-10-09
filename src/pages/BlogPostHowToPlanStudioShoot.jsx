@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostHowToPlanStudioShoot = () => {
@@ -12,6 +13,7 @@ const BlogPostHowToPlanStudioShoot = () => {
         title="How to Plan a Successful Studio Shoot: A Step-by-Step Guide for First-Timers | Nearby Studio"
         description="A good studio shoot rarely happens by accident — it's the result of a handful of decisions made before anyone walks into the room, not scrambled togethe..."
         type="article"
+        ogImage="/book_our_show/podcast/custom_setup_1.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostHowToPlanStudioShoot = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">How to Plan a Successful Studio Shoot: A Step-by-Step Guide for First-Timers</h1>
+
+          <BlogImage src="/book_our_show/podcast/custom_setup_1.webp" alt="Single armchair against a red backdrop with a studio light, ready for a shoot" width={1023} height={1537} priority />
           
           <p>
             A good studio shoot rarely happens by accident — it's the result of a handful of decisions made <em>before</em> anyone walks into the room, not scrambled together on the day. Whether you're a founder shooting your first brand video or a creator planning a content batch, here's the actual sequence worth following.
@@ -49,6 +53,8 @@ const BlogPostHowToPlanStudioShoot = () => {
           <p>
             A video meant for Instagram Reels needs a different shape (vertical, fast-paced, hook in the first 3 seconds) than one meant for a website homepage or YouTube. Deciding the platform before the shoot — not after — shapes everything from framing to pacing to how many cutdowns you'll need from the same session.
           </p>
+
+          <BlogImage src="/Snapshots1/19.webp" alt="Planned product shot of a serum bottle with papaya and a water splash" width={1080} height={1350} />
 
           <h2>6. Pick the Right Format</h2>
           <p>

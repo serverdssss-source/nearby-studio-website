@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPost5MythsStudioRentals = () => {
@@ -12,6 +13,7 @@ const BlogPost5MythsStudioRentals = () => {
         title="5 Myths About Studio Rentals That Stop People From Booking | Nearby Studio"
         description="Plenty of people who'd genuinely benefit from a proper studio session never end up booking one — not because they don't need it, but because of a few assumptions that don't actually hold up. Here are the five that come up most often."
         type="article"
+        ogImage="/Snapshots1/10.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -21,11 +23,15 @@ const BlogPost5MythsStudioRentals = () => {
         <article className="blog-content">
           <h1 className="blog-title">5 Myths About Studio Rentals That Stop People From Booking</h1>
 
+          <BlogImage src="/Snapshots1/10.webp" alt="Fitness creator filming yoga content in a studio session" width={1080} height={1350} priority />
+
           <p>
             Plenty of people who'd genuinely benefit from a proper studio session never end up booking one — not because they don't need it, but because of a few assumptions that sound reasonable but don't actually hold up. Here are the five that come up most often, and why they're worth reconsidering.
           </p>
 
           <h2>Myth 1: "Studios Are Only for Big Brands With Big Budgets"</h2>
+
+          <BlogImage src="/Snapshots1/1.webp" alt="Small-brand product shoot of a snack jar on a pastel backdrop" width={1080} height={1350} />
           <p>
             This is probably the biggest one, and it's simply outdated. Studio packages today are built in tiers specifically because the range of clients has expanded — solo creators, small founders, first-time photographers, not just large companies with dedicated marketing budgets. A single 2-hour custom session often costs less than a nice dinner out, and even the more comprehensive packages are priced for small businesses and individual creators, not just enterprise clients.
           </p>

@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/inside-nearby-studio-rajajinagar-setup-walkthrough",
+    title: "What's Inside Nearby Studio, Rajajinagar: A Walkthrough of Every Setup",
+    excerpt: "Photos can only tell you so much about a studio. Here is a plain walkthrough of what's inside Nearby Studio in Rajajinagar, Bengaluru, setup by setup, and who each one is built for...",
+    date: "October 9, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/fashion-shoot-studio-bangalore-guide-models-brands",
     title: "Fashion Shoot Studio in Bangalore: A Complete Guide for Models and Brands",
     excerpt: "Whether you're a model building a portfolio or a brand shooting a seasonal lookbook, the studio you choose shapes the final images more than most people expect. Here's everything worth knowing before booking one in Bangalore...",

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostEasyPosingTips = () => {
@@ -12,6 +13,7 @@ const BlogPostEasyPosingTips = () => {
         title="10 Easy Posing Tips for Your First Fashion Shoot (No Modeling Experience Needed) | Nearby Studio"
         description="Booking your first fashion shoot is exciting — until you actually stand in front of the camera and suddenly forget what to do with your hands. That awkw..."
         type="article"
+        ogImage="/model_shoot/imgs/12.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostEasyPosingTips = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">10 Easy Posing Tips for Your First Fashion Shoot (No Modeling Experience Needed)</h1>
+
+          <BlogImage src="/model_shoot/imgs/12.webp" alt="Model in a casual pose with movement, pointing away from the camera on a white backdrop" width={1080} height={1350} priority />
           
           <p>
             Booking your first fashion shoot is exciting — until you actually stand in front of the camera and suddenly forget what to do with your hands. That awkward, frozen feeling is completely normal, and it has nothing to do with how you'll actually look in the photos. Posing is a skill, not a talent you're born with, and a handful of simple, repeatable poses can carry you through an entire session. Here are ten worth practicing before you walk in.
@@ -61,6 +65,8 @@ const BlogPostEasyPosingTips = () => {
           </p>
 
           <h2>8. Practice the Over-the-Shoulder Look</h2>
+
+          <BlogImage src="/model_shoot/navarasa/5.webp" alt="Model giving an over-the-shoulder look in a traditional half saree" width={1080} height={1350} />
           <p>
             Turn your body away from the camera, then glance back over your shoulder. This is one of the most reliable, flattering poses in fashion photography — it shows the outfit from a different angle while keeping the face as the clear focal point.
           </p>

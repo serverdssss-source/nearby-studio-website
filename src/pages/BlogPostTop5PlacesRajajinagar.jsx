@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostTop5PlacesRajajinagar = () => {
@@ -12,6 +13,7 @@ const BlogPostTop5PlacesRajajinagar = () => {
         title="Top 5 Places to Visit Near Rajajinagar, Bengaluru | Nearby Studio"
         description="Rajajinagar doesn't get talked about as much as some of Bengaluru's flashier neighborhoods, but it packs in a surprising amount — heritage temples, a pr..."
         type="article"
+        ogImage="/ImageGallery/Brown_Setup_1 1.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -46,6 +48,8 @@ const BlogPostTop5PlacesRajajinagar = () => {
           </p>
 
           <h2>5. Nearby Studio</h2>
+
+          <BlogImage src="/ImageGallery/Brown_Setup_1 1.webp" alt="Styled podcast set with lamps, plants and a bookshelf at Nearby Studio" width={1536} height={1024} />
           <p>
             Right in the middle of it all is Nearby Studio — a premium studio rental and creative production space built for podcasts, ad films, product and fashion shoots, and everything in between. If you're in Rajajinagar for content work, it's the one stop that turns a day of exploring the neighborhood into a day of actually getting your shoot done, with a soundproofed room, multi-camera setups, and a dedicated makeup and dressing room all in one place.
           </p>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostGreenScreenRental = () => {
@@ -12,6 +13,7 @@ const BlogPostGreenScreenRental = () => {
         title="Green Screen Studio Rental in Bangalore: Pricing, Booking, and What's Included | Nearby Studio"
         description="What a green screen studio rental in Bangalore actually includes, how pricing works, and how to book a properly lit green screen session at Nearby Studio, Rajajinagar."
         type="article"
+        ogImage="/Snapshots1/5.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostGreenScreenRental = () => {
 
         <article className="blog-content">
           <h1 className="blog-title">Green Screen Studio Rental in Bangalore: Pricing, Booking, and What's Included</h1>
+
+          <BlogImage src="/Snapshots1/5.webp" alt="Man presenting to camera in front of an evenly lit green screen in Bengaluru" width={1080} height={1350} priority />
 
           <p>
             Searching for a green screen studio in Bangalore usually turns up the same frustration: plenty of listings, very little actual information. Most pages show a few photos and a "contact us" button, leaving you to guess at cost, what's included, and whether the space will even fit what you're trying to shoot. Here's a straight answer to all three.

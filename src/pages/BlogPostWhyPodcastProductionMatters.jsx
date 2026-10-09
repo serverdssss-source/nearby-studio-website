@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostWhyPodcastProductionMatters = () => {
@@ -12,6 +13,7 @@ const BlogPostWhyPodcastProductionMatters = () => {
         title="Why Podcast Production Actually Matters for Your Brand | Nearby Studio"
         description="Most founders and business heads still file &quot;podcast&quot; under marketing — one more content format to hand off to the social media team. That's undersell..."
         type="article"
+        ogImage="/book_our_show/corporate heads/pure_white_monochrome_setup.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostWhyPodcastProductionMatters = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">Why Podcast Production Actually Matters for Your Brand</h1>
+
+          <BlogImage src="/book_our_show/corporate heads/pure_white_monochrome_setup.webp" alt="Bright white corporate podcast set with two blue armchairs and studio microphones" width={1536} height={1024} priority />
           
           <p>
             Most founders and business heads still file "podcast" under marketing — one more content format to hand off to the social media team. That's underselling it. A well-produced podcast does things a marketing calendar can't: it builds trust faster than ads, helps you hire better, and quietly does the work of a dozen scattered LinkedIn posts in a single recording session.
@@ -40,6 +44,8 @@ const BlogPostWhyPodcastProductionMatters = () => {
           <p>
             Candidates research a company's culture long before an interview — and a podcast where leadership talks honestly about how the team works, what they value, and where the company is headed does more for employer branding than a careers page ever will. It gives potential hires a real sense of who they'd be working with, which either pulls the right people in or filters out the wrong fit early — both outcomes save time later.
           </p>
+
+          <BlogImage src="/ImageGallery/Brown_Setup_1 3.webp" alt="Two-guest interview podcast setup with blue chairs, plants and a bookshelf backdrop" width={1536} height={1024} />
 
           <h2>One Session, Months of Content</h2>
           <p>

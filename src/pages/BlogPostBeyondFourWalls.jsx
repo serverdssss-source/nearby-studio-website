@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostBeyondFourWalls = () => {
@@ -12,6 +13,7 @@ const BlogPostBeyondFourWalls = () => {
         title="Beyond Four Walls: How Nearby Studio Fits Into the Sripada Studios Ecosystem | Nearby Studio"
         description="Book a room, bring your gear, shoot, leave — that's how most people think about studio rentals. It's also where most studios stop. Nearby Studio was bui..."
         type="article"
+        ogImage="/book_our_show/founder/founders_room_1.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostBeyondFourWalls = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">Beyond Four Walls: How Nearby Studio Fits Into the Sripada Studios Ecosystem</h1>
+
+          <BlogImage src="/book_our_show/founder/founders_room_1.webp" alt="Warmly lit studio set at Nearby Studio, Rajajinagar, with two armchairs, a table and microphones" width={1537} height={1023} priority />
           
           <p>
             Book a room, bring your gear, shoot, leave — that's how most people think about studio rentals. It's also where most studios stop. Nearby Studio was built differently: not as a standalone rental space, but as one piece of a larger creative ecosystem under <strong>Sripada Studios Pvt. Ltd.</strong>, a Bengaluru-based creative conglomerate built on originality, bold thinking, and service-oriented execution.
@@ -40,6 +44,8 @@ const BlogPostBeyondFourWalls = () => {
           <p>
             In practice, this shows up in details that are easy to overlook until you compare against a generic rental space: package structures that map to actual content formats (not just "hourly room rate"), lighting and camera setups designed with editing and deliverables in mind, and a sense of what makes content perform — not just what looks fine in the room.
           </p>
+
+          <BlogImage src="/ImageGallery/Brown_Setup_1 1.webp" alt="Styled podcast set with lamps, plants and a bookshelf at Nearby Studio" width={1536} height={1024} />
 
           <h2>Why This Matters If You're Booking</h2>
           <p>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPost7CameraTechniques = () => {
@@ -12,6 +13,7 @@ const BlogPost7CameraTechniques = () => {
         title="7 Camera Techniques That Make Content Look Cinematic (No Big Budget Required) | Nearby Studio"
         description="There's a specific look certain videos have — a depth, a polish, a sense that every shot was chosen on purpose — that makes them feel like 'real' films rather than casual recordings."
         type="article"
+        ogImage="/model_shoot/bharthanatyam/4.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPost7CameraTechniques = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">7 Camera Techniques That Make Content Look Cinematic (No Big Budget Required)</h1>
+
+          <BlogImage src="/model_shoot/bharthanatyam/4.webp" alt="Silhouette of a Bharatanatyam dancer against an orange backlight" width={1080} height={1350} priority />
           
           <p>
             There's a specific look certain videos have — a depth, a polish, a sense that every shot was chosen on purpose — that makes them feel like "real" films rather than casual recordings. It's tempting to assume that comes down to expensive cameras. In reality, most of it comes from technique: a handful of decisions any videographer can apply, regardless of budget. Here are seven worth knowing.
@@ -29,6 +33,8 @@ const BlogPost7CameraTechniques = () => {
           <p>
             That soft, blurred-background look — subject sharp, everything behind them melted into a gentle blur — is one of the fastest ways to make footage feel premium. It's created by shooting with a wide aperture, keeping some distance between your subject and the background, and getting reasonably close to the subject yourself. The effect isn't just pretty — it does real storytelling work, pulling the viewer's eye exactly where you want it and quietly filtering out visual clutter.
           </p>
+
+          <BlogImage src="/model_shoot/bharthanatyam/2.webp" alt="Bharatanatyam dancer in motion with flowing red fabric" width={1080} height={1350} />
 
           <h2>2. Deliberate Camera Movement</h2>
           <p>

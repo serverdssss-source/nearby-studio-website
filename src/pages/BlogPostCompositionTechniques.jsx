@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostCompositionTechniques = () => {
@@ -12,6 +13,7 @@ const BlogPostCompositionTechniques = () => {
         title="The Rule of Thirds and Beyond: Composition Techniques That Make Footage Feel Cinematic | Nearby Studio"
         description="Most people can tell the difference between footage that looks &quot;cinematic&quot; and footage that looks amateur — they just can't always explain why. More o..."
         type="article"
+        ogImage="/model_shoot/bharthanatyam/3.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,12 +22,16 @@ const BlogPostCompositionTechniques = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">The Rule of Thirds and Beyond: Composition Techniques That Make Footage Feel Cinematic</h1>
+
+          <BlogImage src="/model_shoot/bharthanatyam/3.webp" alt="Symmetrical composition of a Bharatanatyam dancer framed by a Nataraja backdrop" width={1080} height={1350} priority />
           
           <p>
             Most people can tell the difference between footage that looks "cinematic" and footage that looks amateur — they just can't always explain why. More often than not, the answer isn't the camera, the lighting, or even the subject. It's composition: where things are placed in the frame, and how that placement guides the eye. Here are the techniques that quietly do most of that work.
           </p>
 
           <h2>1. The Rule of Thirds</h2>
+
+          <BlogImage src="/Snapshots1/11.webp" alt="Armchair placed off-centre using the rule of thirds, with a bookshelf and lamp" width={1080} height={1350} />
           <p>
             Start here, because everything else builds on it. Imagine the frame divided into a 3x3 grid — two horizontal lines, two vertical lines. Instead of placing your subject dead center, position it along one of those lines or at one of the four intersection points. It sounds like a small shift, but it immediately makes a shot feel more intentional and less like a snapshot.
           </p>

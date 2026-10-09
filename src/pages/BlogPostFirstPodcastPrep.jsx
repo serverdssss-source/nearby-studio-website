@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostFirstPodcastPrep = () => {
@@ -12,6 +13,7 @@ const BlogPostFirstPodcastPrep = () => {
         title="How to Prep for Your First Podcast Recording: A Beginner's Checklist | Nearby Studio"
         description="Your first podcast recording doesn't need to be perfect — but a little prep goes a long way toward making the session feel smooth instead of stressful. ..."
         type="article"
+        ogImage="/book_our_show/founder/founders_room_1.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostFirstPodcastPrep = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">How to Prep for Your First Podcast Recording: A Beginner's Checklist</h1>
+
+          <BlogImage src="/book_our_show/founder/founders_room_1.webp" alt="Warmly lit podcast table with two armchairs, microphones and coffee mugs ready for recording" width={1537} height={1023} priority />
           
           <p>
             Your first podcast recording doesn't need to be perfect — but a little prep goes a long way toward making the session feel smooth instead of stressful. Most of what makes a first-timer's episode sound rough isn't a lack of talent on camera, it's just a few small things nobody thought to prepare for. Here's the checklist to actually walk in ready.
@@ -54,6 +58,8 @@ const BlogPostFirstPodcastPrep = () => {
           <p>
             This sounds obvious, but it's the most skipped piece of advice. Tiredness shows up on camera far more than people expect — flatter energy, slower reactions, more filler words. If you can, avoid scheduling your first session right after a red-eye flight or a late night.
           </p>
+
+          <BlogImage src="/Snapshots1/9.webp" alt="Single blue armchair with a podcast microphone on a boom arm for solo episodes" width={1080} height={1350} />
 
           <h2>7. Arrive With Time to Settle In</h2>
           <p>

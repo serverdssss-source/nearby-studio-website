@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostBengaluruStartupsContent = () => {
@@ -12,6 +13,7 @@ const BlogPostBengaluruStartupsContent = () => {
         title="Bengaluru's Startups Need Better Content. Here's Why. | Nearby Studio"
         description="Bengaluru has more startups per square kilometer than almost anywhere else in the country — funding rounds, product launches, and &quot;we're hiring&quot; posts..."
         type="article"
+        ogImage="/book_our_show/corporate heads/round_table.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostBengaluruStartupsContent = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">Bengaluru's Startups Need Better Content. Here's Why.</h1>
+
+          <BlogImage src="/book_our_show/corporate heads/round_table.webp" alt="Round table podcast setup for up to four guests at Nearby Studio" width={1536} height={1024} priority />
           
           <p>
             Bengaluru has more startups per square kilometer than almost anywhere else in the country — funding rounds, product launches, and "we're hiring" posts everywhere you look. And yet, scroll through most startup LinkedIn and Instagram pages, and the content looks eerily similar: a stock photo, a generic caption, maybe a Canva graphic with the logo slapped on. For an ecosystem this competitive, that's a real problem.
@@ -58,6 +62,8 @@ const BlogPostBengaluruStartupsContent = () => {
           <p>
             The good news: this isn't a resourcing problem the way it feels like one. A single, well-planned studio session — a founder interview, a product demo, a few testimonial clips — can produce weeks or months of usable content when shot and edited properly. The gap usually isn't budget; it's not knowing what "good" actually requires, and defaulting to the cheapest, least-planned option instead.
           </p>
+
+          <BlogImage src="/book_our_show/founder/founder_room.webp" alt="Founder interview set with a sofa, armchairs and coffee table" width={1537} height={1023} />
 
           <h2>What Better Content Actually Looks Like</h2>
           <p>

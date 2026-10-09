@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostCanAIReplaceStudioShoot = () => {
@@ -12,6 +13,7 @@ const BlogPostCanAIReplaceStudioShoot = () => {
         title="Can AI Replace a Studio Shoot? What AI Can (and Can't) Do for Your Content | Nearby Studio"
         description="AI editing tools have gotten good enough that a fair question keeps coming up: do you still need to actually book a studio and shoot anything? Here's where AI genuinely helps, and where it hits a hard wall."
         type="article"
+        ogImage="/Snapshots1/21.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostCanAIReplaceStudioShoot = () => {
 
         <article className="blog-content">
           <h1 className="blog-title">Can AI Replace a Studio Shoot? What AI Can (and Can't) Do for Your Content</h1>
+
+          <BlogImage src="/Snapshots1/21.webp" alt="Close-up portrait showing real jewellery detail and skin texture from a studio shoot" width={1080} height={1350} priority />
 
           <p>
             AI editing tools have gotten good enough that a fair question keeps coming up: if software can remove filler words, auto-cut a rough edit, and even generate a voiceover from text, do you still need to actually book a studio and shoot anything? The honest answer is more nuanced than a yes or no — AI has genuinely changed parts of the production process, but there's a hard limit to what it can do, and that limit sits exactly where a studio shoot still matters.
@@ -78,6 +82,8 @@ const BlogPostCanAIReplaceStudioShoot = () => {
           <p>
             AI is genuinely useful in the parts of production that come <em>after</em> the shoot — editing speed, repurposing, cleanup — and largely irrelevant to the parts that happen <em>during</em> it — presence, performance, lighting, audio capture, and real conversation. Treating AI as a way to skip the studio shoot entirely usually means starting from weaker raw material that no editing tool can fully fix afterward. Treating it as a tool to speed up everything <em>after</em> a well-shot session is where it actually earns its place.
           </p>
+
+          <BlogImage src="/Snapshots1/6.webp" alt="Skincare product with pomegranate and saffron styled on a pink set" width={1080} height={1350} />
 
           <h2>Where the Studio Still Matters</h2>
           <p>

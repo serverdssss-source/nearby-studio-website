@@ -19,7 +19,8 @@ const SEO = ({
   // Each page canonicalises to itself (lowercase, no trailing slash) unless told otherwise
   const path = pathname === '/' ? '/' : pathname.replace(/\/+$/, '').toLowerCase();
   const url = canonical || absoluteUrl(path);
-  const image = absoluteUrl(ogImage);
+  // Some image folders/files contain spaces
+  const image = encodeURI(absoluteUrl(ogImage));
 
   const articleSchema = type === 'article' && {
     "@context": "https://schema.org",

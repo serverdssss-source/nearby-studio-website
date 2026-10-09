@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostDepthOfField = () => {
@@ -12,6 +13,7 @@ const BlogPostDepthOfField = () => {
         title="Depth of Field Explained: Why That 'Blurry Background' Look Actually Matters | Nearby Studio"
         description="You've seen it in almost every professionally shot video or photo — the subject crisp and sharp, the background melted into a soft, creamy blur. Here's what depth of field actually is, why it matters, and how to get it right."
         type="article"
+        ogImage="/model_shoot/navarasa/7.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostDepthOfField = () => {
 
         <article className="blog-content">
           <h1 className="blog-title">Depth of Field Explained: Why That "Blurry Background" Look Actually Matters</h1>
+
+          <BlogImage src="/model_shoot/navarasa/7.webp" alt="Portrait with shallow depth of field: sharp subject holding a peacock feather against a soft blurred background" width={1080} height={1350} priority />
 
           <p>
             You've seen it in almost every professionally shot video or photo — the subject crisp and sharp, the background melted into a soft, creamy blur. It's such a common look now that it's easy to overlook, but that effect is doing real work, not just looking pretty. Here's what depth of field actually is, why it matters, and how to get it right.
@@ -46,6 +50,8 @@ const BlogPostDepthOfField = () => {
           <p>
             A flat, fully-in-focus image can feel two-dimensional, almost like a printed backdrop. Introducing blur in the foreground or background gives the shot a genuine sense of layers and space — one of the fastest ways to make footage feel less like a recording and more like a produced piece.
           </p>
+
+          <BlogImage src="/model_shoot/navarasa/8.webp" alt="Warm-toned portrait showing background blur from a wide aperture" width={1080} height={1350} />
 
           <h2>What Actually Controls It</h2>
           <p>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostFashionShootGuide = () => {
@@ -12,6 +13,7 @@ const BlogPostFashionShootGuide = () => {
         title="Fashion Shoot Studio in Bangalore: A Complete Guide for Models and Brands | Nearby Studio"
         description="What to look for in a fashion shoot studio in Bangalore, how models can prepare for a portfolio shoot, and how brands can plan an efficient lookbook or campaign session."
         type="article"
+        ogImage="/Snapshots1/12.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostFashionShootGuide = () => {
 
         <article className="blog-content">
           <h1 className="blog-title">Fashion Shoot Studio in Bangalore: A Complete Guide for Models and Brands</h1>
+
+          <BlogImage src="/Snapshots1/12.webp" alt="Model in a red silk saree posing for a fashion portrait at a Bangalore studio" width={1080} height={1350} priority />
 
           <p>
             Whether you're a model building a portfolio or a brand shooting a seasonal lookbook, the studio you choose shapes the final images more than most people expect. Good lighting, the right amount of space, and a team that knows how to work with both first-timers and experienced talent can be the difference between photos that feel amateur and ones that actually look like a professional shoot. Here's everything worth knowing before booking one in Bangalore.
@@ -52,6 +56,8 @@ const BlogPostFashionShootGuide = () => {
           <p>
             <strong>No experience needed.</strong> A lot of first-time models assume they need prior training to shoot well — in reality, most of it comes down to a few basic poses and a team that knows how to direct you through the session. Simple adjustments like weight on one leg, a slight angle instead of facing the camera head-on, or natural movement between shots go a long way.
           </p>
+
+          <BlogImage src="/model_shoot/imgs/11.webp" alt="Full-length fashion shoot of a model in a navy pantsuit against a white backdrop" width={1080} height={1350} />
 
           <h2>For Brands: Planning a Lookbook or Campaign Shoot</h2>
           <p>

@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPost = () => {
@@ -12,6 +13,7 @@ const BlogPost = () => {
         title="Podcast Recording Studio in Rajajinagar, Bengaluru: Full Setup Guide + Rental Costs | Nearby Studio"
         description="If you've been searching for a podcast recording studio in Rajajinagar, Bengaluru, you've probably run into the same problem everyone does: either the s..."
         type="article"
+        ogImage="/ImageGallery/Brown_Setup_1 5.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPost = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">Podcast Recording Studio in Rajajinagar, Bengaluru: Full Setup Guide + Rental Costs</h1>
+
+          <BlogImage src="/ImageGallery/Brown_Setup_1 5.webp" alt="Podcast set at Nearby Studio Rajajinagar with a brown sofa, two armchairs and boom-arm microphones" width={1536} height={1024} priority />
           
           <p>
             If you've been searching for a <strong>podcast recording studio in Rajajinagar, Bengaluru</strong>, you've probably run into the same problem everyone does: either the space looks great but has zero information on pricing, or the pricing is there but you have no idea what you're actually walking into. This guide fixes that. Below is a complete breakdown of studio setups, what's included, and exactly what you'll pay — no hidden line items, no "contact us for a quote."
@@ -32,6 +36,8 @@ const BlogPost = () => {
           <p>
             Rajajinagar sits well-connected to central and west Bengaluru, making it an easy commute whether you're coming from Malleshwaram, Vijayanagar, Yeshwanthpur, or the CBD. For founders and creators who need a <strong>soundproof, camera-ready setup without driving across the city</strong>, that location matters more than it seems — especially when your guest list includes people with tight schedules.
           </p>
+
+          <BlogImage src="/book_our_show/podcast/custom_setup_2.webp" alt="Wide view of the podcast studio floor at Nearby Studio, Rajajinagar, with sofa seating, mics and overhead lights" width={1536} height={1024} />
 
           <h2>What's Included in Every Setup</h2>
           <p>Regardless of package, every booking at Nearby Studio gives you:</p>

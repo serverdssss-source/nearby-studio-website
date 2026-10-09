@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostThreePointLighting = () => {
@@ -12,6 +13,7 @@ const BlogPostThreePointLighting = () => {
         title="Three-Point Lighting Explained: The Setup Behind Every Professional Shot | Nearby Studio"
         description="Almost every professionally lit shot you've ever seen — interviews, product photos, YouTube videos, corporate headshots — is built on the same basic pri..."
         type="article"
+        ogImage="/model_shoot/imgs/9.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostThreePointLighting = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">Three-Point Lighting Explained: The Setup Behind Every Professional Shot</h1>
+
+          <BlogImage src="/model_shoot/imgs/9.webp" alt="Studio portrait lit with key, fill and background light against a red backdrop" width={1080} height={1350} priority />
           
           <p>
             Almost every professionally lit shot you've ever seen — interviews, product photos, YouTube videos, corporate headshots — is built on the same basic principle: three-point lighting. It sounds technical, but the idea is simple once you break it down, and understanding it is the fastest way to see why some content looks polished and some looks flat, no matter how good the camera is.
@@ -43,6 +47,8 @@ const BlogPostThreePointLighting = () => {
           <p>
             Positioned behind the subject, aimed toward the camera, this light creates a subtle outline or "rim" of light around the subject's edges — hair, shoulders, silhouette. Its whole job is separation: making sure the subject doesn't visually blend into the background, especially when both are similarly lit or colored.
           </p>
+
+          <BlogImage src="/Snapshots1/2.webp" alt="Low-key portrait using a single key light on a black background" width={1080} height={1350} />
 
           <h2>Why All Three Matter Together</h2>
           <p>

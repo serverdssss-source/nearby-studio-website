@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostChooseStudioBengaluru = () => {
@@ -12,6 +13,7 @@ const BlogPostChooseStudioBengaluru = () => {
         title="How to Choose the Right Studio for Your Shoot in Bengaluru | Nearby Studio"
         description="What actually matters when comparing studio spaces in Bengaluru: purpose-built setups, real equipment, clear packages, working space and location, plus the questions worth asking before you book."
         type="article"
+        ogImage="/book_our_show/podcast/custom_setup_4.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostChooseStudioBengaluru = () => {
 
         <article className="blog-content">
           <h1 className="blog-title">How to Choose the Right Studio for Your Shoot in Bengaluru</h1>
+
+          <BlogImage src="/book_our_show/podcast/custom_setup_4.webp" alt="Professional studio in Bengaluru with overhead lighting, seating and soundproofed walls" width={1122} height={1402} priority />
 
           <p>
             Bengaluru has no shortage of studio spaces to choose from, which sounds like a good problem to have until you're actually trying to pick one. Photos on a website only tell you so much, and pricing pages rarely explain what you're really paying for. Here's what actually matters when comparing studios, and the questions worth asking before you commit to a booking.
@@ -70,6 +74,8 @@ const BlogPostChooseStudioBengaluru = () => {
           <p>
             None of these are dealbreakers on their own, but a studio showing several of them at once is worth a second look before booking.
           </p>
+
+          <BlogImage src="/book_our_show/founder/founders_room_1.webp" alt="Warmly lit studio set at Nearby Studio, Rajajinagar, with two armchairs, a table and microphones" width={1537} height={1023} />
 
           <h2>What Nearby Studio Offers</h2>
           <p>

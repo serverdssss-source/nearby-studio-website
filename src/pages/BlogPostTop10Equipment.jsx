@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostTop10Equipment = () => {
@@ -12,6 +13,7 @@ const BlogPostTop10Equipment = () => {
         title="Top 10 Equipment Must-Haves in a Professional Studio | Nearby Studio"
         description="Anyone can put a camera in a room and call it a studio. What actually separates a professional production space from a converted spare room is the equip..."
         type="article"
+        ogImage="/book_our_show/corporate heads/black_monochrome_setup.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostTop10Equipment = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">Top 10 Equipment Must-Haves in a Professional Studio</h1>
+
+          <BlogImage src="/book_our_show/corporate heads/black_monochrome_setup.webp" alt="Studio set with softbox lights, microphones and armchairs on a black backdrop" width={1536} height={1024} priority />
           
           <p>
             Anyone can put a camera in a room and call it a studio. What actually separates a professional production space from a converted spare room is the equipment behind the scenes — the gear that quietly does the work of making footage look and sound polished, without the person on camera having to think about any of it.
@@ -59,6 +63,8 @@ const BlogPostTop10Equipment = () => {
           </p>
 
           <h2>7. Backdrop and Seamless Paper Systems</h2>
+
+          <BlogImage src="/book_our_show/founder/founders_room_1.webp" alt="Warmly lit studio set at Nearby Studio, Rajajinagar, with two armchairs, a table and microphones" width={1537} height={1023} />
           <p>
             For product and fashion shoots specifically, a proper backdrop system (rollable seamless paper, multiple color options, easy quick-change mounting) is what keeps shoots moving fast without constantly reconfiguring the space between setups or products.
           </p>

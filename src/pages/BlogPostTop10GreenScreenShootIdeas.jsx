@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostTop10GreenScreenShootIdeas = () => {
@@ -12,6 +13,7 @@ const BlogPostTop10GreenScreenShootIdeas = () => {
         title="Top 10 Green Screen Shoot Ideas Worth Trying | Nearby Studio"
         description="Green screen tends to get mentally filed under &quot;big-budget VFX&quot; — but in practice, it's one of the most versatile tools available to creators and bran..."
         type="article"
+        ogImage="/Snapshots1/5.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostTop10GreenScreenShootIdeas = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">Top 10 Green Screen Shoot Ideas Worth Trying</h1>
+
+          <BlogImage src="/Snapshots1/5.webp" alt="Man presenting to camera in front of an evenly lit green screen in Bengaluru" width={1080} height={1350} priority />
           
           <p>
             Green screen tends to get mentally filed under "big-budget VFX" — but in practice, it's one of the most versatile tools available to creators and brands, and most of the best use cases have nothing to do with superhero movies. Here are ten genuinely practical green screen shoot ideas worth planning your next session around.

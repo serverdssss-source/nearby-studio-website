@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostGreenScreenShoots = () => {
@@ -12,6 +13,7 @@ const BlogPostGreenScreenShoots = () => {
         title="Green Screen Shoots in Bengaluru: What They're Actually Used For (Beyond VFX) | Nearby Studio"
         description="Say &quot;green screen&quot; and most people picture a Marvel movie set — actors in motion-capture suits, superhero backdrops, million-dollar VFX budgets. That ..."
         type="article"
+        ogImage="/Snapshots1/5.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostGreenScreenShoots = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">Green Screen Shoots in Bengaluru: What They're Actually Used For (Beyond VFX)</h1>
+
+          <BlogImage src="/Snapshots1/5.webp" alt="Man presenting to camera in front of an evenly lit green screen in Bengaluru" width={1080} height={1350} priority />
           
           <p>
             Say "green screen" and most people picture a Marvel movie set — actors in motion-capture suits, superhero backdrops, million-dollar VFX budgets. That image stops a lot of creators and small brands from even considering it, assuming it's overkill for what they need. In reality, green screen is one of the most practical, everyday tools in content production — used constantly for things that have nothing to do with big-budget filmmaking.

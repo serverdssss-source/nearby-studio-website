@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostOutgrownHome = () => {
@@ -12,6 +13,7 @@ const BlogPostOutgrownHome = () => {
         title="5 Signs You've Outgrown Shooting Content at Home (And Need a Studio) | Nearby Studio"
         description="Every content creator starts the same way — a ring light, a corner of the living room, and whatever backdrop doesn't have laundry piled behind it. That'..."
         type="article"
+        ogImage="/book_our_show/content_creators/content_creator_2.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostOutgrownHome = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">5 Signs You've Outgrown Shooting Content at Home (And Need a Studio)</h1>
+
+          <BlogImage src="/book_our_show/content_creators/content_creator_2.webp" alt="Content creator setup with a softbox light, boom-arm mic and warm backdrop" width={1539} height={1022} priority />
           
           <p>
             Every content creator starts the same way — a ring light, a corner of the living room, and whatever backdrop doesn't have laundry piled behind it. That's fine when you're posting for fun. But there's a point where the home setup starts actively working against you: slower output, inconsistent quality, and content that looks like it hasn't grown even though your audience has.
@@ -59,6 +63,8 @@ const BlogPostOutgrownHome = () => {
           <p>
             Shooting in a studio isn't just about better footage — it's about <strong>showing up like someone who takes the work seriously</strong>, which directly affects what opportunities come your way next.
           </p>
+
+          <BlogImage src="/book_our_show/content_creators/content_creator_setup.webp" alt="Two-seat creator set lit with pink and blue coloured lights" width={1537} height={1023} />
 
           <h2>5. You Need Multiple Angles, Reels, and a Full Podcast Out of One Session</h2>
           <p>

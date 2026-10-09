@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostPosingTipsForFounders = () => {
@@ -12,6 +13,7 @@ const BlogPostPosingTipsForFounders = () => {
         title="Posing Tips for Founders: How to Look Natural, Not Stiff, in Brand Photos | Nearby Studio"
         description="Most founders are comfortable pitching investors, running meetings, and making tough calls — and then completely freeze the moment someone points a came..."
         type="article"
+        ogImage="/model_shoot/imgs/11.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostPosingTipsForFounders = () => {
         
         <article className="blog-content">
           <h1 className="blog-title">Posing Tips for Founders: How to Look Natural, Not Stiff, in Brand Photos</h1>
+
+          <BlogImage src="/model_shoot/imgs/11.webp" alt="Confident standing pose in business attire for a professional brand photo" width={1080} height={1350} priority />
           
           <p>
             Most founders are comfortable pitching investors, running meetings, and making tough calls — and then completely freeze the moment someone points a camera at them. It's a strange but common gap: confidence in the boardroom doesn't automatically translate to confidence in front of a lens. The good news is that looking natural in brand photos isn't about being a "photogenic person" — it's a handful of small, learnable habits. Here's what actually helps.
@@ -31,6 +35,8 @@ const BlogPostPosingTipsForFounders = () => {
           </p>
 
           <h2>2. Give Your Hands Something to Do</h2>
+
+          <BlogImage src="/Snapshots1/3.webp" alt="Relaxed brand portrait of an entrepreneur working on a laptop" width={1080} height={1350} />
           <p>
             Hands are where most stiffness shows up first — either jammed in pockets, crossed tightly, or hanging awkwardly by your sides. Give them a small job: rest one hand on a desk or chair, hold a pen or a notebook, gesture naturally like you're mid-sentence. Idle, self-conscious hands are one of the easiest tells of a stiff photo.
           </p>

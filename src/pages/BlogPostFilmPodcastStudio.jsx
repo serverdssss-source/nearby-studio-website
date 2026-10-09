@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Navbar from '../components/Navbar';
 import ContactForm from '../components/ContactForm';
 import SEO from '../components/SEO';
+import BlogImage from '../components/BlogImage';
 import './Blog.css';
 
 const BlogPostFilmPodcastStudio = () => {
@@ -12,6 +13,7 @@ const BlogPostFilmPodcastStudio = () => {
         title="A Podcast Studio for Directors, Actors and Production Houses in Bengaluru | Nearby Studio"
         description="More filmmakers are turning to podcasts to promote their films. Here's what a film podcast needs from a studio, and how Nearby Studio in Rajajinagar sets up multi-guest, multi-camera sessions for directors, actors and production houses."
         type="article"
+        ogImage="/book_our_show/content_creators/influncer_content_creators.webp"
       />
       <main className="blog-section">
         <Navbar />
@@ -20,6 +22,8 @@ const BlogPostFilmPodcastStudio = () => {
 
         <article className="blog-content">
           <h1 className="blog-title">A Podcast Studio for Directors, Actors and Production Houses in Bengaluru</h1>
+
+          <BlogImage src="/book_our_show/content_creators/influncer_content_creators.webp" alt="Moody two-chair podcast set with blue lighting and a Persian rug for film interviews" width={1448} height={1086} priority />
 
           <p>
             A film release used to run on a simple loop: a trailer, a press meet, a few interviews, and a lot of hope. Now a director can sit down for forty unhurried minutes, talk about why a scene was shot the way it was, and reach more people than a press conference ever managed. That shift is why more filmmakers are looking for a podcast studio in Bengaluru, and why the room they record in matters more than most of them expect.
@@ -43,6 +47,8 @@ const BlogPostFilmPodcastStudio = () => {
             <li><strong>Camera coverage.</strong> Cinema audiences expect a visual language. A three-camera setup with a switcher lets the edit cut between speakers and reactions the way a real show does.</li>
             <li><strong>A quiet, controlled room.</strong> Long conversations only work when nobody has to pause for traffic noise or air conditioning hum.</li>
           </ul>
+
+          <BlogImage src="/Snapshots1/4.webp" alt="Cinematic portrait of a man on a phone call seated on a red leather sofa" width={1080} height={1350} />
 
           <h2>What We Set Up at Nearby Studio for Film Conversations</h2>
           <p>
