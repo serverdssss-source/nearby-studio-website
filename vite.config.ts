@@ -4,8 +4,9 @@ import { compression } from 'vite-plugin-compression2'
 import cssInjectedByJsPlugin from 'vite-plugin-css-injected-by-js'
 import path from 'path'
 
-export default defineConfig({
-  plugins: [
+export default defineConfig(({ isSsrBuild }) => ({
+  // The SSR build (src/entry-server.jsx, used only by scripts/prerender.js) skips browser-only plugins
+  plugins: isSsrBuild ? [react()] : [
     react(),
     cssInjectedByJsPlugin(),
     compression({ algorithm: 'gzip', threshold: 1024 }),
@@ -18,7 +19,7 @@ export default defineConfig({
   },
   build: {
     rollupOptions: {
-      output: {
+      output: isSsrBuild ? {} : {
         manualChunks: {
           'vendor-react': ['react', 'react-dom'],
           'vendor-router': ['react-router-dom'],
@@ -40,4 +41,4 @@ export default defineConfig({
   optimizeDeps: {
     include: ['react', 'react-dom'],
   },
-})
+}))

@@ -6,7 +6,12 @@ import './index.css'
 import { HelmetProvider } from 'react-helmet-async'
 
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+// Drop the build-time prerendered HTML (kept for crawlers) and render the app as usual
+const rootElement = document.getElementById('root')
+rootElement.removeAttribute('data-prerendered')
+rootElement.innerHTML = ''
+
+ReactDOM.createRoot(rootElement).render(
   <React.StrictMode>
     <HelmetProvider>
       <App />

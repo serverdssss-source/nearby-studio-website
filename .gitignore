@@ -16,3 +16,4 @@ public/nearby studio logo 1.mov
 
 .vercel
 .env*.local
+dist-ssr

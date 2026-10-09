@@ -120,10 +120,10 @@ function ScrollToTopOnRouteChange() {
   return null;
 }
 
-function App() {
+// Routes without a router, so the build-time prerender can wrap them in a StaticRouter
+export function AppRoutes() {
   return (
     <>
-      <Router>
         <ScrollToTopOnRouteChange />
         <ScrollToTopButton />
         <Suspense fallback={<LoadingFallback />}>
@@ -169,6 +169,15 @@ function App() {
             <Route path="/blog/fashion-shoot-studio-bangalore-guide-models-brands" element={<BlogPostFashionShootGuide />} />
           </Routes>
         </Suspense>
+    </>
+  );
+}
+
+function App() {
+  return (
+    <>
+      <Router>
+        <AppRoutes />
       </Router>
       <Analytics />
     </>
