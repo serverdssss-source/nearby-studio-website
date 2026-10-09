@@ -179,6 +179,22 @@
   color: #00c2a8;
 }
 
+.blog-takeaways {
+  border-left: 3px solid #00c2a8;
+  background: rgba(0, 194, 168, 0.06);
+  border-radius: 0 12px 12px 0;
+  padding: 1.25rem 1.5rem 0.25rem;
+  margin: 2rem 0;
+}
+
+.blog-takeaways p {
+  margin-bottom: 0.75rem;
+}
+
+.blog-takeaways ul {
+  margin-bottom: 1rem;
+}
+
 .blog-figure {
   margin: 2rem 0;
 }

@@ -53,6 +53,7 @@ const BlogPostEventVideography = lazy(() => import("./pages/BlogPostEventVideogr
 const BlogPostGreenScreenRental = lazy(() => import("./pages/BlogPostGreenScreenRental"));
 const BlogPostFashionShootGuide = lazy(() => import("./pages/BlogPostFashionShootGuide"));
 const BlogPostStudioWalkthrough = lazy(() => import("./pages/BlogPostStudioWalkthrough"));
+const BlogPostCommercialPhotography = lazy(() => import("./pages/BlogPostCommercialPhotography"));
 
 // Optimized loading fallback
 const LoadingFallback = () => (
@@ -169,6 +170,7 @@ export function AppRoutes() {
             <Route path="/blog/green-screen-studio-rental-bangalore-pricing-booking" element={<BlogPostGreenScreenRental />} />
             <Route path="/blog/fashion-shoot-studio-bangalore-guide-models-brands" element={<BlogPostFashionShootGuide />} />
             <Route path="/blog/inside-nearby-studio-rajajinagar-setup-walkthrough" element={<BlogPostStudioWalkthrough />} />
+            <Route path="/blog/commercial-photography-studio-rajajinagar-bengaluru" element={<BlogPostCommercialPhotography />} />
           </Routes>
         </Suspense>
     </>

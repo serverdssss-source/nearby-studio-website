@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/commercial-photography-studio-rajajinagar-bengaluru",
+    title: "Commercial Photography Studio in Rajajinagar, Bengaluru: Product, Fashion and Brand Shoots at Nearby Studio",
+    excerpt: "A commercial photography studio is a space you rent to shoot images that promote or sell something. Here's what to expect from a product, fashion or brand shoot at Nearby Studio, how to prepare and how to book...",
+    date: "October 9, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/inside-nearby-studio-rajajinagar-setup-walkthrough",
     title: "What's Inside Nearby Studio, Rajajinagar: A Walkthrough of Every Setup",
     excerpt: "Photos can only tell you so much about a studio. Here is a plain walkthrough of what's inside Nearby Studio in Rajajinagar, Bengaluru, setup by setup, and who each one is built for...",
