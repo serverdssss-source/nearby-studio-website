@@ -11,7 +11,7 @@ const SEO = ({
   title = "Studio Rental in Bengaluru | NearBy Studios - Best Rates",
   description = "Looking for affordable studio rental in Bengaluru? NearBy Studios offers premium space for model shoots, podcasts, reels & content creation at best prices.",
   keywords = "studio rental Bengaluru, podcast studio Bengaluru, model shoot studio, content creation studio",
-  ogImage = "/logo.webp",
+  ogImage = "/share/og-logo.jpg", // vercel.json serves WhatsApp a square copy
   canonical,
   type = "website"
 }) => {
