@@ -90,11 +90,11 @@ const BlogPostCommercialPhotography = () => {
           </p>
           <ul>
             <li><strong>With our photographer: Half Day, ₹12,000 to ₹18,000 for 4 hours.</strong> Includes a cameraman and camera, 15 to 25 edited images plus the original photos, up to 2 costumes, the AC studio and the makeup and dressing room.</li>
-            <li><strong>With our photographer: Full Day, ₹20,000 to ₹30,000 for 8 hours.</strong> The same setup with 30 to 40 edited images and up to 4 costumes, suited to lookbooks and larger product ranges.</li>
-            <li><strong>Room only: Custom Setup, ₹3,499 for 2 hours.</strong> For teams with their own photographer. Includes the AC studio, the soundproof room and the makeup and dressing room.</li>
+            <li><strong>With our photographer: Full Day, ₹20,000 to ₹30,000 for 8 hours.</strong> The same setup with 30 to 40 edited images, up to 4 costumes and shoot guidance with a pose catalogue, suited to lookbooks and larger product ranges.</li>
+            <li><strong>Room only: ₹1,800 for 2 hours, ₹4,449 for 5 hours or ₹7,200 for a full 8-hour day.</strong> For teams with their own photographer. Extra hours are ₹900 each. Includes the soundproof studio, the makeup and dressing room, WiFi, power backup and cafeteria access.</li>
           </ul>
           <p>
-            Full package details are on the <Link to="/fashionshoot">fashion shoot page</Link>. If your shoot doesn't fit one of these, send us your brief and we'll give you a clear quote before you book.
+            Photographer package details are on the <Link to="/fashionshoot">fashion shoot page</Link>, and room-only sessions are on the <Link to="/studios">studios page</Link>. If your shoot doesn't fit one of these, send us your brief and we'll give you a clear quote before you book.
           </p>
 
           <h2>How to prepare for your shoot</h2>
