@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/spacious-studio-movie-interviews-bengaluru",
+    title: "A Spacious Studio for Movie Interviews in Bengaluru: Space, Custom Setup and Everything Included",
+    excerpt: "Movie interviews are rarely a quiet two-person chat. Here's why space matters, what's included at Nearby Studio in Rajajinagar, and how to choose between the Custom Setup and our multi-camera packages...",
+    date: "October 16, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/commercial-photography-studio-rajajinagar-bengaluru",
     title: "Commercial Photography Studio in Rajajinagar, Bengaluru: Product, Fashion and Brand Shoots at Nearby Studio",
     excerpt: "A commercial photography studio is a space you rent to shoot images that promote or sell something. Here's what to expect from a product, fashion or brand shoot at Nearby Studio, how to prepare and how to book...",

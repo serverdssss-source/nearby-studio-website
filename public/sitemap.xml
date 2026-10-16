@@ -212,7 +212,13 @@
   </url>
   <url>
     <loc>https://www.nearbystudio.in/blog/commercial-photography-studio-rajajinagar-bengaluru</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/blog/spacious-studio-movie-interviews-bengaluru</loc>
+    <lastmod>2026-10-16</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
