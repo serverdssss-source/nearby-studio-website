@@ -55,6 +55,7 @@ const BlogPostFashionShootGuide = lazy(() => import("./pages/BlogPostFashionShoo
 const BlogPostStudioWalkthrough = lazy(() => import("./pages/BlogPostStudioWalkthrough"));
 const BlogPostCommercialPhotography = lazy(() => import("./pages/BlogPostCommercialPhotography"));
 const BlogPostMovieInterviewStudio = lazy(() => import("./pages/BlogPostMovieInterviewStudio"));
+const BlogPostLensGuide = lazy(() => import("./pages/BlogPostLensGuide"));
 
 // Optimized loading fallback
 const LoadingFallback = () => (
@@ -173,6 +174,7 @@ export function AppRoutes() {
             <Route path="/blog/inside-nearby-studio-rajajinagar-setup-walkthrough" element={<BlogPostStudioWalkthrough />} />
             <Route path="/blog/commercial-photography-studio-rajajinagar-bengaluru" element={<BlogPostCommercialPhotography />} />
             <Route path="/blog/spacious-studio-movie-interviews-bengaluru" element={<BlogPostMovieInterviewStudio />} />
+            <Route path="/blog/35mm-vs-50mm-vs-85mm-lens-podcast-portrait-product" element={<BlogPostLensGuide />} />
           </Routes>
         </Suspense>
     </>

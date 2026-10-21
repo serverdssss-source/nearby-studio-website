@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/35mm-vs-50mm-vs-85mm-lens-podcast-portrait-product",
+    title: "35mm, 50mm or 85mm: Which Lens Suits Podcasts, Portraits and Products?",
+    excerpt: "A 35mm for tight rooms and wide podcast shots, a 50mm as the all-rounder, and an 85mm for flattering portraits and close-ups. Here's how to pick the right lens for your next shoot...",
+    date: "October 21, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/spacious-studio-movie-interviews-bengaluru",
     title: "A Spacious Studio for Movie Interviews in Bengaluru: Space, Custom Setup and Everything Included",
     excerpt: "Movie interviews are rarely a quiet two-person chat. Here's why space matters, what's included at Nearby Studio in Rajajinagar, and how to choose between the Custom Setup and our multi-camera packages...",

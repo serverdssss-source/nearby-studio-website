@@ -195,6 +195,37 @@
   margin-bottom: 1rem;
 }
 
+.blog-table-wrap {
+  overflow-x: auto;
+  margin: 2rem 0;
+}
+
+.blog-table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+}
+
+.blog-table th,
+.blog-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  text-align: left;
+  vertical-align: top;
+}
+
+.blog-table thead th {
+  color: #00c2a8;
+  font-weight: 600;
+}
+
+.blog-table tbody th {
+  color: #fff;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
 .blog-figure {
   margin: 2rem 0;
 }

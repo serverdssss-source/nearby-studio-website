@@ -2,7 +2,7 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.nearbystudio.in/</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -50,7 +50,7 @@
   </url>
   <url>
     <loc>https://www.nearbystudio.in/blog</loc>
-    <lastmod>2026-10-09</lastmod>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
@@ -219,6 +219,12 @@
   <url>
     <loc>https://www.nearbystudio.in/blog/spacious-studio-movie-interviews-bengaluru</loc>
     <lastmod>2026-10-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://www.nearbystudio.in/blog/35mm-vs-50mm-vs-85mm-lens-podcast-portrait-product</loc>
+    <lastmod>2026-10-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
   </url>
