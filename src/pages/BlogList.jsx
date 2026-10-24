@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/classical-dance-portfolio-shoot-bangalore-bharatanatyam-navarasa",
+    title: "Classical Dance Portfolio Shoots in Bangalore: Bharatanatyam and Navarasa at Nearby Studio",
+    excerpt: "Phone shots from the wings rarely do a dancer justice. Here's how a Bharatanatyam or Navarasa portfolio shoot works at Nearby Studio in Rajajinagar, how to prepare and what it costs...",
+    date: "October 24, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/35mm-vs-50mm-vs-85mm-lens-podcast-portrait-product",
     title: "35mm, 50mm or 85mm: Which Lens Suits Podcasts, Portraits and Products?",
     excerpt: "A 35mm for tight rooms and wide podcast shots, a 50mm as the all-rounder, and an 85mm for flattering portraits and close-ups. Here's how to pick the right lens for your next shoot...",
