@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/kannada-podcast-studio-bengaluru",
+    title: "Kannada Podcast Studio in Bengaluru: Record in Your Own Language",
+    excerpt: "Most of us think, joke and persuade best in the language we grew up speaking. Here's what to plan before recording a Kannada podcast at Nearby Studio in Rajajinagar, and which package suits it...",
+    date: "October 26, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/what-is-a-beauty-dish-portrait-photography",
     title: "What Is a Beauty Dish and Why Do Portrait Photographers Love It?",
     excerpt: "A beauty dish gives portraits crisp, sculpted light that still flatters skin. Here's how it works, how it compares with a softbox and when to reach for one...",
