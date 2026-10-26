@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/what-is-a-beauty-dish-portrait-photography",
+    title: "What Is a Beauty Dish and Why Do Portrait Photographers Love It?",
+    excerpt: "A beauty dish gives portraits crisp, sculpted light that still flatters skin. Here's how it works, how it compares with a softbox and when to reach for one...",
+    date: "October 26, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/classical-dance-portfolio-shoot-bangalore-bharatanatyam-navarasa",
     title: "Classical Dance Portfolio Shoots in Bangalore: Bharatanatyam and Navarasa at Nearby Studio",
     excerpt: "Phone shots from the wings rarely do a dancer justice. Here's how a Bharatanatyam or Navarasa portfolio shoot works at Nearby Studio in Rajajinagar, how to prepare and what it costs...",
