@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/product-photography-studio-bengaluru",
+    title: "Product Photography Studio in Bengaluru: Shoot Photos That Actually Sell (Rajajinagar)",
+    excerpt: "Phone shots look amateur and agencies cost too much for one launch. Here's what a rented product studio in Rajajinagar gives you, the 4 shots to plan for and how to prep...",
+    date: "November 3, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/kannada-podcast-studio-bengaluru",
     title: "Kannada Podcast Studio in Bengaluru: Record in Your Own Language",
     excerpt: "Most of us think, joke and persuade best in the language we grew up speaking. Here's what to plan before recording a Kannada podcast at Nearby Studio in Rajajinagar, and which package suits it...",
