@@ -7,6 +7,13 @@ import './Blog.css';
 
 const postsData = [
   {
+    path: "/blog/real-models-vs-ai-models-brand-photoshoot",
+    title: "Real Models vs AI Models: Why Brands That Want Trust Shoot Real People",
+    excerpt: "AI can generate a flawless model in minutes, but shoppers can't judge fit, fabric or scale from it. Here's why real models build trust and what a model shoot in Rajajinagar includes...",
+    date: "November 11, 2026",
+    author: "Nearby Studio"
+  },
+  {
     path: "/blog/product-photography-studio-bengaluru",
     title: "Product Photography Studio in Bengaluru: Shoot Photos That Actually Sell (Rajajinagar)",
     excerpt: "Phone shots look amateur and agencies cost too much for one launch. Here's what a rented product studio in Rajajinagar gives you, the 4 shots to plan for and how to prep...",
